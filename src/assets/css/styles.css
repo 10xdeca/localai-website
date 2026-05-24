@@ -827,6 +827,7 @@ h1, h2, h3, h4, h5, h6,
 
 .cosmos-section { padding: 5.5rem 0; }
 .cosmos-section--alt { background-color: var(--color-bg); }
+.cosmos-section--raised { background-color: var(--color-surface-raised); }
 
 .cosmos-section__label {
   font-family: 'Share Tech Mono', monospace;
