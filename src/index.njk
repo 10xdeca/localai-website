@@ -27,6 +27,14 @@ fullWidth: true
 <span class="pcb-cta__label">Join Community</span>
 </a>
 </div>
+<div class="hero-scroll-hint" id="heroScrollHint">
+  <div class="hero-scroll-bounce">
+    <div class="hero-scroll-spin" id="heroScrollSpin">
+      <i class="bi bi-chevron-down"></i>
+    </div>
+  </div>
+  <span class="hero-scroll-label">SCROLL</span>
+</div>
 </section>
 
 <!-- ── AWARENESS ───────────────────────────── -->
@@ -191,3 +199,26 @@ fullWidth: true
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  function schedSpin() {
+    setTimeout(function () {
+      var el = document.getElementById('heroScrollSpin');
+      if (!el) return;
+      el.classList.add('do-spin');
+      el.addEventListener('animationend', function done() {
+        el.classList.remove('do-spin');
+        el.removeEventListener('animationend', done);
+        schedSpin();
+      });
+    }, 2800 + Math.random() * 5200);
+  }
+  schedSpin();
+
+  window.addEventListener('scroll', function () {
+    var hint = document.getElementById('heroScrollHint');
+    if (hint) hint.style.opacity = Math.max(0, 1 - window.scrollY / 160).toString();
+  }, { passive: true });
+}());
+</script>
