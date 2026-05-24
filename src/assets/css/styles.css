@@ -829,7 +829,7 @@ h1, h2, h3, h4, h5, h6,
   gap: 0.4rem;
   cursor: pointer;
   opacity: 0;
-  animation: scroll-hint-appear 0.6s ease-out 1s forwards;
+  animation: scroll-hint-appear 0.6s ease-out 3s forwards;
   transition: opacity 0.35s ease;
 }
 
