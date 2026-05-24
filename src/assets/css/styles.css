@@ -260,7 +260,7 @@ h1, h2, h3, h4, h5, h6,
   height: 22px;
   border-radius: 11px;
   background: transparent;
-  border: 1px solid var(--color-primary);
+  border: 1px solid var(--color-border);
   position: relative;
   transition: background 0.35s, border-color 0.35s;
 }
@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5, h6,
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--color-text-muted);
   position: absolute;
   top: 2px;
   left: 2px;
