@@ -1027,6 +1027,73 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* ─────────────────────────────────────────────────
+   PATH CARDS (two-path split section)
+───────────────────────────────────────────────── */
+
+.cosmos-path-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  transition: border-color 0.2s ease;
+}
+
+.cosmos-path-card:hover {
+  border-color: rgba(var(--color-primary-rgb), 0.4);
+}
+
+.cosmos-path-card__icon {
+  font-size: 1.75rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  opacity: 0.85;
+}
+
+.cosmos-path-card__title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+}
+
+.cosmos-path-card__body {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.cosmos-path-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cosmos-path-card__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.cosmos-path-card__list li i {
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────
    AUDIENCE CARDS
 ───────────────────────────────────────────────── */
 
