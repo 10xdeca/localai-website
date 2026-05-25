@@ -1414,8 +1414,6 @@ h1, h2, h3, h4, h5, h6,
 .cosmos-platform-card__qr {
   width: 100%;
   aspect-ratio: 1;
-  border: 1px solid var(--color-border);
-  background: #ffffff;
   overflow: hidden;
   flex-shrink: 0;
 }
