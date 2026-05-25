@@ -107,7 +107,7 @@
    BASE
 ───────────────────────────────────────────────── */
 
-html { height: 100%; }
+html { height: 100%; overflow-x: hidden; }
 
 body {
   font-family: 'Plus Jakarta Sans', 'Ubuntu', sans-serif;
