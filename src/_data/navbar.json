@@ -5,15 +5,16 @@
     "footer": true
   },
   {
-    "title": "Focus Areas",
-    "href": "#",
-    "footer": false,
+    "title": "Resources",
+    "href": "/resources/",
+    "footer": true,
     "children": [
-      { "title": "Models", "href": "#" },
-      { "title": "Coding Harnesses", "href": "#" },
-      { "title": "Connect Applications", "href": "#" },
-      { "title": "TTS & STT", "href": "#" },
-      { "title": "Home Labbing", "href": "#" }
+      { "title": "Where to Start", "href": "/resources/getting-started/" },
+      { "title": "Models", "href": "/resources/models/" },
+      { "title": "Coding Harnesses", "href": "/resources/coding-harnesses/" },
+      { "title": "Connect Applications", "href": "/resources/connect-applications/" },
+      { "title": "TTS & STT", "href": "/resources/tts-stt/" },
+      { "title": "Home Labbing", "href": "/resources/home-labbing/" }
     ]
   },
   {

@@ -221,6 +221,12 @@ h1, h2, h3, h4, h5, h6,
   min-width: 190px;
 }
 
+@media (min-width: 768px) {
+  .dropdown:hover > .dropdown-menu {
+    display: block;
+  }
+}
+
 .cosmos-dropdown-item {
   display: block;
   font-family: 'Share Tech Mono', monospace;
@@ -1774,11 +1780,148 @@ h1, h2, h3, h4, h5, h6,
   color: var(--color-primary);
   font-family: 'Plus Jakarta Sans', sans-serif;
   margin-top: auto;
-  white-space: nowrap;
-  transition: gap 0.15s ease;
 }
 
-.cosmos-focus-card:hover .cosmos-focus-card__link { gap: 0.65rem; }
+.cosmos-focus-card__link .bi-arrow-right {
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.cosmos-focus-card:hover .cosmos-focus-card__link .bi-arrow-right { transform: translateX(4px); }
+
+/* ─────────────────────────────────────────────────
+   RESOURCE PAGE
+───────────────────────────────────────────────── */
+
+.cosmos-resource-section__header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.cosmos-resource-section__header > .bi {
+  font-size: 2rem;
+  color: var(--color-primary);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.cosmos-resource-section__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.cosmos-resource-section__lead {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  max-width: 680px;
+  margin-bottom: 1.75rem;
+  line-height: 1.65;
+}
+
+.cosmos-resource-list__empty {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+  margin: 0;
+}
+
+/* ─────────────────────────────────────────────────
+   RESOURCE PAGE
+───────────────────────────────────────────────── */
+
+.cosmos-resource-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  height: 100%;
+  position: relative;
+}
+
+.cosmos-resource-card .cosmos-resource-card__lead {
+  flex: 1;
+}
+
+.cosmos-resource-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 40px; height: 2px;
+  background: var(--color-primary);
+}
+
+.cosmos-resource-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+.cosmos-resource-card__icon {
+  font-size: 1.75rem;
+  color: var(--color-primary);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.cosmos-resource-card__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.cosmos-resource-card__lead {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.cosmos-resource-list__empty {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  opacity: 0.55;
+  margin: 0;
+}
+
+a.cosmos-resource-card {
+  display: block;
+  text-decoration: none;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+a.cosmos-resource-card:hover {
+  border-color: rgba(var(--color-primary-rgb), 0.45);
+  background: var(--color-surface);
+}
+
+a.cosmos-resource-card:hover .cosmos-focus-card__link .bi-arrow-right { transform: translateX(4px); }
+
+.cosmos-back-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cosmos-back-link:hover { color: var(--color-primary); }
 
 /* ─────────────────────────────────────────────────
    EMPTY STATES
