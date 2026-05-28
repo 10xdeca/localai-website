@@ -1314,22 +1314,49 @@ h1, h2, h3, h4, h5, h6,
   font-family: 'Plus Jakarta Sans', sans-serif;
   transition: gap 0.15s ease;
 }
+.cosmos-audience-card__body { color: #5a5a5a; }
+[data-bs-theme="dark"] .cosmos-audience-card__body { color: #a0a0a0; }
+
 .cosmos-audience-card__link:hover { gap: 0.55rem; }
 
-.cosmos-audience-card--events::before  { background: var(--color-events); }
+/* Events variant */
+.cosmos-audience-card--events {
+  border-color: rgba(var(--color-events-rgb), 0.35);
+  background-color: var(--color-surface-raised);
+  background-image: radial-gradient(circle, rgba(var(--color-events-rgb), 0.18) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.cosmos-audience-card--events::before { background: var(--color-events); }
 .cosmos-audience-card--events .cosmos-audience-card__icon { color: var(--color-events); }
-.cosmos-audience-card--events:hover { border-color: rgba(var(--color-events-rgb), 0.4); }
-.cosmos-audience-card--events .cosmos-audience-card__link { color: var(--color-events); }
+.cosmos-audience-card--events:hover { border-color: rgba(var(--color-events-rgb), 0.6); }
+.cosmos-audience-card__title--events { color: var(--color-events); }
+.cosmos-audience-card__link--events { color: var(--color-events); }
 
-.cosmos-audience-card--resources::before  { background: var(--color-resources); }
+/* Resources variant */
+.cosmos-audience-card--resources {
+  border-color: rgba(var(--color-resources-rgb), 0.35);
+  background-color: var(--color-surface-raised);
+  background-image: radial-gradient(circle, rgba(var(--color-resources-rgb), 0.18) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.cosmos-audience-card--resources::before { background: var(--color-resources); }
 .cosmos-audience-card--resources .cosmos-audience-card__icon { color: var(--color-resources); }
-.cosmos-audience-card--resources:hover { border-color: rgba(var(--color-resources-rgb), 0.4); }
-.cosmos-audience-card--resources .cosmos-audience-card__link { color: var(--color-resources); }
+.cosmos-audience-card--resources:hover { border-color: rgba(var(--color-resources-rgb), 0.6); }
+.cosmos-audience-card__title--resources { color: var(--color-resources); }
+.cosmos-audience-card__link--resources { color: var(--color-resources); }
 
-.cosmos-audience-card--chat::before  { background: var(--color-chat); }
+/* Chat variant */
+.cosmos-audience-card--chat {
+  border-color: rgba(var(--color-chat-rgb), 0.35);
+  background-color: var(--color-surface-raised);
+  background-image: radial-gradient(circle, rgba(var(--color-chat-rgb), 0.18) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.cosmos-audience-card--chat::before { background: var(--color-chat); }
 .cosmos-audience-card--chat .cosmos-audience-card__icon { color: var(--color-chat); }
-.cosmos-audience-card--chat:hover { border-color: rgba(var(--color-chat-rgb), 0.4); }
-.cosmos-audience-card--chat .cosmos-audience-card__link { color: var(--color-chat); }
+.cosmos-audience-card--chat:hover { border-color: rgba(var(--color-chat-rgb), 0.6); }
+.cosmos-audience-card__title--chat { color: var(--color-chat); }
+.cosmos-audience-card__link--chat { color: var(--color-chat); }
 
 /* ─────────────────────────────────────────────────
    CTA SECTION
