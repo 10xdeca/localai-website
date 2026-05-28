@@ -182,6 +182,17 @@ h1, h2, h3, h4, h5, h6,
   box-shadow: 0 0 36px rgba(var(--color-primary-rgb), 0.5);
   transform: translateY(-2px);
 }
+.cosmos-glow-btn--chat {
+  background-color: var(--color-chat) !important;
+  border-color: var(--color-chat) !important;
+  color: #fff !important;
+  box-shadow: 0 0 20px rgba(var(--color-chat-rgb), 0.3);
+}
+.cosmos-glow-btn--chat:hover {
+  background-color: var(--color-chat) !important;
+  border-color: var(--color-chat) !important;
+  box-shadow: 0 0 36px rgba(var(--color-chat-rgb), 0.5);
+}
 
 /* ─────────────────────────────────────────────────
    NAVBAR
@@ -978,6 +989,21 @@ h1, h2, h3, h4, h5, h6,
   background-image: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.12) 1px, transparent 1px);
   background-size: 28px 28px;
 }
+.cosmos-section--dots-events {
+  background-color: var(--color-surface-raised);
+  background-image:
+    radial-gradient(circle, rgba(var(--color-events-rgb), 0.18) 1px, transparent 1px),
+    linear-gradient(rgba(var(--color-events-rgb), 0.05), rgba(var(--color-events-rgb), 0.05));
+  background-size: 28px 28px, 100%;
+}
+.cosmos-section--dots-chat {
+  background-color: var(--color-surface-raised);
+  background-image:
+    radial-gradient(circle, rgba(var(--color-chat-rgb), 0.18) 1px, transparent 1px),
+    linear-gradient(rgba(var(--color-chat-rgb), 0.05), rgba(var(--color-chat-rgb), 0.05));
+  background-size: 28px 28px, 100%;
+}
+
 
 .cosmos-section__label {
   font-family: 'Share Tech Mono', monospace;
@@ -1004,6 +1030,9 @@ h1, h2, h3, h4, h5, h6,
   font-style: normal;
   color: var(--color-primary);
 }
+.cosmos-section__title--events { color: var(--color-events); }
+.cosmos-section__title--resources { color: var(--color-resources); }
+.cosmos-section__title--chat { color: var(--color-chat); }
 
 .cosmos-section__lead {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1428,6 +1457,12 @@ h1, h2, h3, h4, h5, h6,
   background: rgba(var(--color-primary-rgb), 0.06) !important;
 }
 
+.cosmos-cta-section--chat {
+  border-color: rgba(var(--color-chat-rgb), 0.25);
+}
+.cosmos-cta-section--chat::before { background: var(--color-chat); }
+.cosmos-cta-section--chat .cosmos-cta-section__title { color: var(--color-chat); }
+
 /* ─────────────────────────────────────────────────
    VIEW-ALL LINK
 ───────────────────────────────────────────────── */
@@ -1444,6 +1479,10 @@ h1, h2, h3, h4, h5, h6,
   transition: gap 0.15s ease;
 }
 .cosmos-view-all:hover { gap: 0.7rem; color: var(--color-primary-dark); }
+.cosmos-view-all--events { color: var(--color-events); }
+.cosmos-view-all--events:hover { color: var(--color-events); opacity: 0.75; }
+.cosmos-view-all--resources { color: var(--color-resources); }
+.cosmos-view-all--resources:hover { color: var(--color-resources); opacity: 0.75; }
 
 /* ─────────────────────────────────────────────────
    COMMUNITY PAGE
@@ -1704,6 +1743,48 @@ h1, h2, h3, h4, h5, h6,
   margin-top: auto;
 }
 .cosmos-event-card__btn:hover { gap: 0.65rem; color: var(--color-primary-dark); }
+
+/* Event card red overrides inside the events section */
+.cosmos-section--dots-events .cosmos-event-card::before { background: var(--color-events); }
+.cosmos-section--dots-events .cosmos-event-card:hover { border-color: rgba(var(--color-events-rgb), 0.45); }
+.cosmos-section--dots-events .cosmos-event-card__meta i { color: var(--color-events); }
+.cosmos-section--dots-events .cosmos-event-card__btn { color: var(--color-events); }
+.cosmos-section--dots-events .cosmos-event-card__btn:hover { color: var(--color-events); opacity: 0.8; }
+.cosmos-section--dots-events .cosmos-badge--primary {
+  background: rgba(var(--color-events-rgb), 0.1);
+  color: var(--color-events);
+  border-color: rgba(var(--color-events-rgb), 0.18);
+}
+.cosmos-section--dots-events .cosmos-empty-state a { color: var(--color-events); }
+.cosmos-section--dots-events .cosmos-event-card__title { color: #374151; }
+.cosmos-section--dots-events .cosmos-event-card__desc { color: #6b7280; }
+.cosmos-section--dots-events .cosmos-event-card__meta { color: #6b7280; }
+[data-bs-theme="dark"] .cosmos-section--dots-events .cosmos-event-card__title { color: #e5e7eb; }
+[data-bs-theme="dark"] .cosmos-section--dots-events .cosmos-event-card__desc { color: #9ca3af; }
+[data-bs-theme="dark"] .cosmos-section--dots-events .cosmos-event-card__meta { color: #9ca3af; }
+
+/* Resources section: blue focus card accents + neutral body text */
+.cosmos-section--resources-home .cosmos-focus-card::before { background: var(--color-resources); }
+.cosmos-section--resources-home .cosmos-focus-card:hover {
+  border-color: rgba(var(--color-resources-rgb), 0.45);
+  background: rgba(var(--color-resources-rgb), 0.05);
+}
+.cosmos-section--resources-home .cosmos-focus-card__icon { color: var(--color-resources); }
+.cosmos-section--resources-home .cosmos-focus-card__link { color: var(--color-resources); }
+.cosmos-section--resources-home .cosmos-focus-card--featured {
+  border-color: var(--color-resources);
+  background: linear-gradient(135deg, rgba(var(--color-resources-rgb), 0.08) 0%, var(--color-surface-raised) 60%);
+  box-shadow: 0 0 0 1px rgba(var(--color-resources-rgb), 0.2), 0 4px 24px rgba(var(--color-resources-rgb), 0.12);
+}
+.cosmos-section--resources-home .cosmos-focus-card--featured .cosmos-focus-card__title { color: var(--color-resources); }
+.cosmos-section--resources-home .cosmos-focus-card__title { color: #374151; }
+.cosmos-section--resources-home .cosmos-focus-card__desc { color: #6b7280; }
+[data-bs-theme="dark"] .cosmos-section--resources-home .cosmos-focus-card__title { color: #e5e7eb; }
+[data-bs-theme="dark"] .cosmos-section--resources-home .cosmos-focus-card__desc { color: #9ca3af; }
+
+/* Chat section: neutral lead text */
+.cosmos-cta-section--chat .cosmos-cta-section__lead { color: #6b7280; }
+[data-bs-theme="dark"] .cosmos-cta-section--chat .cosmos-cta-section__lead { color: #9ca3af; }
 
 /* ─────────────────────────────────────────────────
    POST CARDS

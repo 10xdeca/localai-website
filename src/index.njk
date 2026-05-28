@@ -37,81 +37,40 @@ fullWidth: true
 </div>
 </section>
 
-<!-- ── TWO PATHS ─────────────────────────── -->
-<section class="cosmos-section" style="padding-top: 0;">
+<!-- ── WHAT IS LOCAL AI ──────────────────────── -->
+<section class="cosmos-section cosmos-section--raised">
   <div class="container">
-    <div class="cosmos-path-stack">
-
-      <div class="cosmos-path-panel">
-        <h3 class="cosmos-path-card__title">Learn, discuss and explore</h3>
-        <ul class="cosmos-path-card__list">
-          <li>
-            <a href="#" class="cosmos-path-card__event-link">
-              <i class="bi bi-chat-dots"></i>
-              <div><strong>Casual meetups</strong><span>Relaxed catchups and open discussion</span></div>
-              <i class="bi bi-arrow-right ms-auto"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="cosmos-path-card__event-link">
-              <i class="bi bi-tools"></i>
-              <div><strong>Workshops</strong><span>For beginners and advanced hobbyists</span></div>
-              <i class="bi bi-arrow-right ms-auto"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="cosmos-path-card__event-link">
-              <i class="bi bi-camera-video"></i>
-              <div><strong>Events</strong><span>Demos, talks and lightning talks</span></div>
-              <i class="bi bi-arrow-right ms-auto"></i>
-            </a>
-          </li>
-        </ul>
-        <a href="https://lu.ma/localai" class="btn btn-primary cosmos-glow-btn align-self-start" target="_blank" rel="noopener">
-          <i class="bi bi-calendar-event me-2"></i>View Upcoming Events
-        </a>
-      </div>
-
-      <div class="cosmos-path-sep"></div>
-
-      <div class="cosmos-path-panel">
-        <h3 class="cosmos-path-card__title">Curated resources for every level</h3>
-        <p class="cosmos-path-card__body">There is a lot of great material out there on local AI but it is scattered and hard to find. We curate and actively maintain lists of the best tools, projects, and links for each focus area, kept up to date as the space moves, so you don't have to dig.</p>
-        <a href="/resources/" class="btn btn-outline-primary align-self-start">
-          <i class="bi bi-book me-2"></i>Browse the resource lists
-        </a>
-      </div>
-
-    </div>
+    <h2 class="cosmos-section__title">What is Local AI?</h2>
+    <p class="cosmos-section__lead">The same kind of AI that powers ChatGPT and Claude can run entirely on your own laptop or desktop.</p>
+    <a href="/about/" class="btn btn-outline-primary mt-2">Find out more <i class="bi bi-arrow-right ms-1"></i></a>
   </div>
 </section>
 
-<!-- ── COMMUNITY CTA ──────────────────────── -->
-<section class="cosmos-section cosmos-section--alt">
-  <div class="container">
-    <div class="cosmos-cta-section">
-      <div class="cosmos-cta-section__orb"></div>
-      <div class="position-relative" style="z-index:1;">
-        <h2 class="cosmos-cta-section__title">Join the conversation</h2>
-        <p class="cosmos-cta-section__lead">Between meetups the community stays connected. Share what you're building, get help with your local AI setup, and stay across the latest open models.</p>
-        <div class="cosmos-cta-section__actions">
-          <a href="/community/" class="btn btn-primary btn-lg cosmos-glow-btn">
-            <i class="bi bi-chat-dots me-2"></i>Chat with the Community
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── POSTS + EVENTS ─────────────────────── -->
-<section class="cosmos-section cosmos-section--dots">
+<!-- ── UPCOMING EVENTS ─────────────────────── -->
+<section class="cosmos-section cosmos-section--dots-events">
   <div class="container">
     <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
       <div>
-        <h2 class="cosmos-section__title mb-0">Curated Resources</h2>
+        <h2 class="cosmos-section__title cosmos-section__title--events mb-0">Upcoming Meetups</h2>
       </div>
-      <a href="/resources/" class="cosmos-view-all d-none d-md-inline-flex">
+      <a href="/events/" class="cosmos-view-all cosmos-view-all--events d-none d-md-inline-flex">
+        All events <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+    {% set type = "upcoming" %}
+    {% include "partials/eventsList.njk" %}
+    <div><a href="/events/" class="cosmos-view-all cosmos-view-all--events d-md-none mt-4">All events <i class="bi bi-arrow-right"></i></a></div>
+  </div>
+</section>
+
+<!-- ── CURATED RESOURCES ─────────────────────── -->
+<section class="cosmos-section cosmos-section--raised cosmos-section--resources-home">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
+      <div>
+        <h2 class="cosmos-section__title cosmos-section__title--resources mb-0">Curated Resources</h2>
+      </div>
+      <a href="/resources/" class="cosmos-view-all cosmos-view-all--resources d-none d-md-inline-flex">
         All focus areas <i class="bi bi-arrow-right"></i>
       </a>
     </div>
@@ -177,35 +136,23 @@ fullWidth: true
         </a>
       </div>
     </div>
-
-    <hr class="cosmos-section-divider my-5" />
-
-    <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
-      <div>
-        <h2 class="cosmos-section__title mb-0">Upcoming Meetups</h2>
-      </div>
-      <a href="/events/" class="cosmos-view-all d-none d-md-inline-flex">
-        All events <i class="bi bi-arrow-right"></i>
-      </a>
-    </div>
-    {% set type = "upcoming" %}
-    {% include "partials/eventsList.njk" %}
-    <div><a href="/events/" class="cosmos-view-all d-md-none mt-4">All events <i class="bi bi-arrow-right"></i></a></div>
+    <div><a href="/resources/" class="cosmos-view-all cosmos-view-all--resources d-md-none mt-4">All focus areas <i class="bi bi-arrow-right"></i></a></div>
   </div>
 </section>
 
-<!-- ── FINAL CTA ──────────────────────────── -->
+<!-- ── JOIN THE CONVERSATION ─────────────────── -->
 <section class="cosmos-section cosmos-section--raised">
-  <div class="container text-center">
-    <h2 class="cosmos-section__title" style="max-width:580px;margin:0 auto 1rem;">Come along and see how it works</h2>
-    <p class="cosmos-section__lead mx-auto mb-4">Attend a meetup, browse our curated resources, or just say hello. No experience required, just curiosity.</p>
-    <div class="d-flex gap-3 justify-content-center flex-wrap">
-      <a href="https://lu.ma/localai" class="btn btn-primary btn-lg cosmos-glow-btn" target="_blank" rel="noopener">
-        <i class="bi bi-calendar-event me-2"></i>Find an Event
-      </a>
-      <a href="/resources/" class="btn btn-outline-primary btn-lg">
-        <i class="bi bi-book me-2"></i>Browse Resources
-      </a>
+  <div class="container">
+    <div class="cosmos-cta-section cosmos-cta-section--chat">
+      <div class="position-relative" style="z-index:1;">
+        <h2 class="cosmos-cta-section__title cosmos-section__title--chat">Join the conversation</h2>
+        <p class="cosmos-cta-section__lead">Between meetups the community stays connected. Share what you're building, get help with your local AI setup, and stay across the latest open models.</p>
+        <div class="cosmos-cta-section__actions">
+          <a href="/community/" class="btn btn-lg cosmos-glow-btn cosmos-glow-btn--chat">
+            <i class="bi bi-chat-dots me-2"></i>Chat with the Community
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
