@@ -23,7 +23,7 @@
     "viewAllExternal": true,
     "subscribeLead": "No events scheduled yet. Follow on lu.ma to be notified the moment one is announced.",
     "subscribeButton": {
-      "label": "Follow on lu.ma",
+      "label": "Follow for events",
       "href": "https://lu.ma/localai",
       "icon": "bi-calendar-plus"
     }

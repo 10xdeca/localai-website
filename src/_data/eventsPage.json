@@ -13,7 +13,7 @@
   "cta": {
     "lead": "Get notified when new events are announced.",
     "button": {
-      "label": "Follow on lu.ma",
+      "label": "Follow for events",
       "href": "https://lu.ma/localai",
       "icon": "bi-calendar-plus"
     }

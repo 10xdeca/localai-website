@@ -55,9 +55,9 @@ fullWidth: true
       {% include "partials/eventsList.njk" %}
     {% else %}
       <div class="py-4 text-center">
-        <p class="cosmos-section__lead mx-auto mb-4" style="max-width:480px;">{{ home.events.subscribeLead }}</p>
+        <p class="cosmos-section__lead mx-auto mb-4" style="max-width:480px;color:var(--bs-secondary-color);">{{ home.events.subscribeLead }}</p>
         <a href="{{ home.events.subscribeButton.href }}" class="btn btn-lg cosmos-glow-btn cosmos-glow-btn--events" target="_blank" rel="noopener">
-          <i class="bi {{ home.events.subscribeButton.icon }} me-2"></i>{{ home.events.subscribeButton.label }}
+          <i class="bi {{ home.events.subscribeButton.icon }} me-2"></i>{{ home.events.subscribeButton.label }}<i class="bi bi-box-arrow-up-right ms-2 small"></i>
         </a>
       </div>
     {% endif %}
