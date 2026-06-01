@@ -12,7 +12,7 @@
       {% if item.children %}
       <div class="dropdown">
         <a class="cosmos-nav-link{% if item.accent %} cosmos-nav-link--{{ item.accent }}{% endif %} dropdown-toggle" href="{{ item.href }}">
-          {{ item.title }}
+          {% if item.icon %}<i class="bi {{ item.icon }} me-1"></i>{% endif %}{{ item.title }}
         </a>
         <ul class="dropdown-menu cosmos-dropdown-menu{% if item.accent %} cosmos-dropdown-menu--{{ item.accent }}{% endif %}">
           {% for child in item.children %}
@@ -22,7 +22,7 @@
       </div>
       {% else %}
       <a class="cosmos-nav-link{% if item.accent %} cosmos-nav-link--{{ item.accent }}{% endif %}{% if page.url == item.href %} active{% endif %}" href="{{ item.href }}">
-        {{ item.title }}
+        {% if item.icon %}<i class="bi {{ item.icon }} me-1"></i>{% endif %}{{ item.title }}
       </a>
       {% endif %}
       {% endfor %}
@@ -30,15 +30,13 @@
 
     <!-- Right controls -->
     <div class="d-flex align-items-center gap-2">
-      <div class="theme-toggle" onclick="toggleTheme()" role="button" aria-label="Toggle colour theme" tabindex="0">
-        <div class="toggle-track">
-          <div class="toggle-thumb"></div>
-        </div>
-      </div>
+      <button class="cosmos-nav-icon-btn" onclick="toggleTheme()" aria-label="Toggle colour theme">
+        <i class="bi bi-moon" id="theme-icon"></i>
+      </button>
       <button class="cosmos-nav-icon-btn" onclick="openSearch()" aria-label="Search">
         <i class="bi bi-search"></i>
       </button>
-      <a href="https://lu.ma/localai" class="cosmos-nav-events d-none d-md-inline-flex" target="_blank" rel="noopener">Events</a>
+      <a href="https://lu.ma/localai" class="cosmos-nav-events d-none d-md-inline-flex" target="_blank" rel="noopener"><i class="bi bi-calendar-event me-1"></i>Events</a>
       <button class="cosmos-nav-icon-btn d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#nav-mobile" aria-expanded="false" aria-label="Toggle navigation">
         <i class="bi bi-list fs-5"></i>
       </button>
@@ -51,7 +49,7 @@
     <div class="container py-3 d-flex flex-column gap-1">
       {% for item in navbar %}
       <a class="cosmos-nav-link{% if item.accent %} cosmos-nav-link--{{ item.accent }}{% endif %}{% if page.url == item.href %} active{% endif %}" href="{{ item.href }}">
-        {{ item.title }}
+        {% if item.icon %}<i class="bi {{ item.icon }} me-1"></i>{% endif %}{{ item.title }}
       </a>
       {% if item.children %}
       {% for child in item.children %}
@@ -93,19 +91,21 @@
 </div>
 
 <script>
+  function updateThemeIcon(theme) {
+    var icon = document.getElementById('theme-icon');
+    if (!icon) return;
+    icon.className = theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon';
+  }
+
   function toggleTheme() {
     var html = document.documentElement;
     var next = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-bs-theme', next);
     localStorage.setItem('theme', next);
+    updateThemeIcon(next);
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    var toggle = document.querySelector('.theme-toggle');
-    if (toggle) {
-      toggle.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); }
-      });
-    }
+    updateThemeIcon(document.documentElement.getAttribute('data-bs-theme') || 'light');
   });
 </script>
