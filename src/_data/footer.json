@@ -28,11 +28,11 @@
       "headingIcon": "bi-chat-dots",
       "headingAccent": "chat",
       "links": [
-        { "label": "Matrix", "href": "#", "icon": "bi-grid-3x3-gap-fill" },
-        { "label": "Telegram", "href": "#", "icon": "bi-telegram" },
-        { "label": "Discord", "href": "#", "icon": "bi-discord" },
-        { "label": "WhatsApp", "href": "#", "icon": "bi-whatsapp" },
-        { "label": "Signal", "href": "#", "icon": "bi-shield-fill-check" }
+        { "label": "Matrix", "href": "https://matrix.to/#/#localai:matrix.electronworkshop.com.au", "icon": "bi-grid-3x3-gap-fill", "external": true },
+        { "label": "Telegram", "href": "https://t.me/locallyai", "icon": "bi-telegram", "external": true },
+        { "label": "Discord", "href": "https://discord.gg/5Hdy9sDJc", "icon": "bi-discord", "external": true },
+        { "label": "WhatsApp", "href": "https://chat.whatsapp.com/Dedt78VhMWt3ilEurODCVa?s=qt&p=a&ilr=1", "icon": "bi-whatsapp", "external": true },
+        { "label": "Signal", "href": "https://signal.group/#CjQKIHZrZTIxzHafWjZyC9xhkgR_TR5vJLax3inH7tcI8KkREhBeU4D-TGlNR8rPLZrp_Z9N", "icon": "bi-shield-fill-check", "external": true }
       ]
     }
   ],

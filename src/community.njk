@@ -4,28 +4,21 @@ title: Community Chat
 description: Join the Local AI community on Telegram. Share what you're building, get help, and stay across the latest open models.
 permalink: /community/
 fullWidth: true
+bodyClass: page-community
 ---
 
 <!-- ── PAGE HERO ───────────────────────────── -->
 <section class="cosmos-page-hero cosmos-page-hero--chat">
   <div class="container">
-    <p class="cosmos-section__label" style="color:var(--color-chat);">{{ community.hero.label }}</p>
     <h1 class="cosmos-section__title cosmos-section__title--chat mb-2">{{ community.hero.title }}</h1>
     <p class="cosmos-section__lead" style="max-width:none;">{{ community.hero.lead }}</p>
   </div>
 </section>
 
-<!-- ── HOW IT WORKS ─────────────────────────── -->
-<section class="cosmos-section cosmos-section--raised">
-  <div class="container">
-    <h2 class="cosmos-section__title cosmos-section__title--chat mb-2">{{ community.howItWorks.title }}</h2>
-    <p class="cosmos-section__lead mb-0" style="max-width:none;">{{ community.howItWorks.lead }}</p>
-  </div>
-</section>
-
 <!-- ── PLATFORMS ─────────────────────────────── -->
-<section class="cosmos-section">
+<section class="cosmos-section" style="padding: 2.5rem 0;">
   <div class="container">
+    <h2 class="mb-3" style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.25rem; font-weight:400; color:var(--color-chat);">{{ community.hero.tagline }}</h2>
     <div class="row g-3 justify-content-center">
       {% for platform in community.platforms %}
       <div class="col-6 col-md-4 col-lg">
@@ -56,15 +49,20 @@ fullWidth: true
 <!-- ── SUBSCRIBE ─────────────────────────────── -->
 <section class="cosmos-section cosmos-section--raised">
   <div class="container text-center">
-    <p class="cosmos-section__label" style="color:var(--color-chat);">{{ community.subscribe.label }}</p>
     <h2 class="cosmos-section__title cosmos-section__title--chat mb-2">{{ community.subscribe.title }}</h2>
-    <p class="cosmos-section__lead mb-4 mx-auto">{{ community.subscribe.lead }}</p>
+    <p class="cosmos-section__lead mb-4" style="max-width:none;">{{ community.subscribe.lead | safe }}</p>
     <form name="{{ community.subscribe.formName }}" data-netlify="true" netlify-honeypot="bot-field" method="POST" class="cosmos-newsletter-form">
       <input type="hidden" name="form-name" value="{{ community.subscribe.formName }}" />
       <p hidden><input name="bot-field" /></p>
-      <div class="d-flex gap-2 justify-content-center">
-        <input type="email" name="email" class="form-control" placeholder="{{ community.subscribe.placeholder }}" required style="max-width:320px;" />
-        <button type="submit" class="btn cosmos-glow-btn cosmos-glow-btn--chat flex-shrink-0">{{ community.subscribe.buttonLabel }}</button>
+      <div class="d-inline-flex flex-column align-items-start">
+        <div class="d-flex gap-2 mb-2">
+          <input type="email" name="email" class="form-control" placeholder="{{ community.subscribe.placeholder }}" required style="max-width:320px;" />
+          <button type="submit" class="btn cosmos-glow-btn cosmos-glow-btn--chat flex-shrink-0">{{ community.subscribe.buttonLabel }}</button>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <input class="form-check-input mt-0 flex-shrink-0" type="checkbox" name="notify_new_platforms" id="notify-platforms" checked />
+          <label class="form-check-label cosmos-newsletter-form__note" for="notify-platforms">{{ community.subscribe.checkboxLabel }}</label>
+        </div>
       </div>
     </form>
   </div>

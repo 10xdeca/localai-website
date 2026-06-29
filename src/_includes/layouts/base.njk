@@ -22,7 +22,7 @@
 <link href="/assets/css/styles.css" rel="stylesheet"/>
 <link rel="icon" href="{{ site.favicon }}" type="image/x-icon"/>
 </head>
-<body class="bg-body">
+<body class="bg-body{{ ' ' + bodyClass if bodyClass }}">
 <div>
 {% include "partials/navbar.njk" %}
 <div data-pagefind-body>

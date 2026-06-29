@@ -109,6 +109,80 @@
 }
 
 /* ─────────────────────────────────────────────────
+   COMMUNITY PAGE — purple background override
+───────────────────────────────────────────────── */
+
+[data-bs-theme="light"] .page-community,
+.page-community {
+  --color-bg: #f5f0ff;
+  --color-surface: #ede8fc;
+  --hero-pcb-bg: #f5f0ff;
+  --color-text: #3b1560;
+  --color-text-muted: #7c5cb5;
+  --color-ink: #1a0a35;
+  --color-border: rgba(109, 40, 217, 0.18);
+  --navbar-bg: #f0faf8;
+  --footer-bg: #f0faf8;
+  --bs-body-bg: #f5f0ff;
+  --bs-body-color: #3b1560;
+  --bs-heading-color: #1a0a35;
+  --bs-border-color: rgba(109, 40, 217, 0.18);
+  background-color: #f5f0ff;
+}
+
+[data-bs-theme="dark"] .page-community {
+  --color-bg: #0c0514;
+  --color-surface: #130a20;
+  --color-surface-raised: #130a20;
+  --hero-pcb-bg: #0c0514;
+  --color-text: #c4a8f0;
+  --color-text-muted: #7a5ab0;
+  --color-ink: #e8d8ff;
+  --color-border: rgba(167, 139, 250, 0.15);
+  --navbar-bg: #050e14;
+  --footer-bg: #050e14;
+  --bs-body-bg: #0c0514;
+  --bs-body-color: #c4a8f0;
+  --bs-heading-color: #e8d8ff;
+  --bs-border-color: rgba(167, 139, 250, 0.15);
+  background-color: #0c0514;
+}
+
+.page-community .cosmos-page-hero {
+  background-color: var(--color-surface-raised);
+  background-image: radial-gradient(circle, rgba(var(--color-chat-rgb), 0.22) 1px, transparent 1px);
+  background-size: 28px 28px;
+  padding-bottom: 0.75rem;
+}
+.page-community .cosmos-page-hero::after {
+  background: none;
+}
+.page-community .cosmos-section,
+.page-community .cosmos-section--raised {
+  background-image: radial-gradient(circle, rgba(var(--color-chat-rgb), 0.15) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+[data-bs-theme="light"] .page-community .footer-wrapper,
+.page-community .footer-wrapper {
+  --color-text: #2a5e58;
+  --color-text-muted: #5a9e98;
+  --color-ink: #0a3330;
+  --color-border: rgba(7, 122, 110, 0.18);
+  --bs-body-color: #2a5e58;
+  --bs-heading-color: #0a3330;
+}
+
+[data-bs-theme="dark"] .page-community .footer-wrapper {
+  --color-text: #b0d8d4;
+  --color-text-muted: #4a8a84;
+  --color-ink: #e0f7f5;
+  --color-border: rgba(0, 200, 180, 0.15);
+  --bs-body-color: #b0d8d4;
+  --bs-heading-color: #e0f7f5;
+}
+
+/* ─────────────────────────────────────────────────
    LOCAL FONT FALLBACK
 ───────────────────────────────────────────────── */
 
@@ -349,7 +423,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 #footer-main {
-  background: var(--color-bg);
+  background: var(--footer-bg);
   border-top: 1px solid rgba(var(--color-primary-rgb), 0.18);
   padding: 3rem;
   display: grid;
@@ -419,7 +493,7 @@ h1, h2, h3, h4, h5, h6,
 .cosmos-footer__heading-link--chat { color: var(--color-chat); }
 
 .footer-bottom {
-  background: var(--color-bg);
+  background: var(--footer-bg);
   border-top: 1px solid rgba(var(--color-primary-rgb), 0.12);
   padding: 1.5rem 3rem;
   display: flex;
@@ -1511,6 +1585,13 @@ h1, h2, h3, h4, h5, h6,
   background-size: 28px 28px, 100%;
 }
 
+.cosmos-page-hero--chat {
+  background-image:
+    radial-gradient(circle, rgba(var(--color-chat-rgb), 0.22) 1px, transparent 1px),
+    linear-gradient(rgba(var(--color-chat-rgb), 0.04), rgba(var(--color-chat-rgb), 0.04));
+  background-size: 28px 28px, 100%;
+}
+
 .cosmos-back-link {
   display: inline-flex;
   align-items: center;
@@ -1590,7 +1671,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .cosmos-platform-card:hover {
-  border-color: rgba(var(--color-primary-rgb), 0.4);
+  border-color: rgba(var(--color-chat-rgb), 0.4);
 }
 
 .cosmos-platform-card--soon {
@@ -1619,7 +1700,7 @@ h1, h2, h3, h4, h5, h6,
 
 .cosmos-platform-card__icon {
   font-size: 2rem;
-  color: var(--color-primary);
+  color: var(--color-chat);
   opacity: 0.8;
 }
 
@@ -1651,7 +1732,7 @@ h1, h2, h3, h4, h5, h6,
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(var(--color-primary-rgb), 0.04);
+  background: rgba(var(--color-chat-rgb), 0.04);
   color: var(--color-text-muted);
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.65rem;
@@ -1665,6 +1746,16 @@ h1, h2, h3, h4, h5, h6,
   }
 }
 
+.cosmos-platform-card .btn-primary {
+  background-color: var(--color-chat) !important;
+  border-color: var(--color-chat) !important;
+}
+.cosmos-platform-card .btn-primary:hover {
+  background-color: var(--color-chat) !important;
+  border-color: var(--color-chat) !important;
+  opacity: 0.88;
+}
+
 .cosmos-newsletter-form .form-control {
   border-color: var(--color-border);
   background: var(--color-surface);
@@ -1675,15 +1766,24 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .cosmos-newsletter-form .form-control:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-chat);
   background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb), 0.15);
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-chat-rgb), 0.15);
 }
 
 .cosmos-section-divider {
   border: none;
   border-top: 1px solid var(--color-border);
+}
+
+.page-community .form-check-input:checked {
+  background-color: var(--color-chat);
+  border-color: var(--color-chat);
+}
+.page-community .form-check-input:focus {
+  border-color: var(--color-chat);
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-chat-rgb), 0.2);
 }
 
 .cosmos-newsletter-form__note {

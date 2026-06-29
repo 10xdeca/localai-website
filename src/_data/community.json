@@ -1,12 +1,9 @@
 {
   "hero": {
     "label": "Stay connected",
-    "title": "Join the community chat",
-    "lead": "Share what you're building, get help with your local AI setup, and stay across the latest open models."
-  },
-  "howItWorks": {
-    "title": "How it works",
-    "lead": "We use Superbridge to connect multiple messaging apps into one group. Pick whichever platform you're already on, and your messages will reach everyone on all the others."
+    "title": "Join the Conversation",
+    "tagline": "One connected chat, choose any platform.",
+    "lead": "Our group chats are superbridged. Join on whichever platform you already use, and your messages reach everyone on all the others. No need to be in multiple groups."
   },
   "platforms": [
     {
@@ -46,11 +43,11 @@
     }
   ],
   "subscribe": {
-    "label": "Stay in the loop",
-    "title": "Get notified",
-    "lead": "We'll let you know when new platforms come online, and when the first event is announced.",
+    "title": "Newsletter",
+    "lead": "Once a month, we round up the latest local events, new open model releases, and community news.<br>All focused on running AI on your own hardware, nothing else.",
     "placeholder": "your@email.com",
-    "buttonLabel": "Notify me",
+    "buttonLabel": "Subscribe",
+    "checkboxLabel": "Notify me when new platforms are added",
     "formName": "community-subscribe"
   }
 }
