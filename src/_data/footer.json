@@ -6,7 +6,7 @@
   },
   "columns": [
     {
-      "heading": "Local AI",
+      "heading": "local AI",
       "headingHref": "/",
       "links": [
         { "label": "About", "href": "/about/" },
@@ -36,7 +36,7 @@
       ]
     }
   ],
-  "copyright": "Local AI",
+  "copyright": "local AI",
   "copyrightParent": {
     "label": "xdeca.com",
     "href": "https://xdeca.com"

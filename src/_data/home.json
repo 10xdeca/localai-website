@@ -1,6 +1,6 @@
 {
   "hero": {
-    "title": "Local AI",
+    "title": "local AI",
     "lead": "We run events, maintain curated resource lists, and host open discussion for running AI on your own device, offline, privately, and without token costs.",
     "ctas": [
       { "label": "Upcoming Events", "href": "https://lu.ma/localai", "accent": "events", "icon": "bi-calendar-event", "external": true },
@@ -9,7 +9,7 @@
     ]
   },
   "whatIsLocalAI": {
-    "title": "What is Local AI?",
+    "title": "What is local AI?",
     "lead": "You can run AI entirely on your laptop or computer, without internet, for free, and without data leaving your device.",
     "button": {
       "label": "Find out more",

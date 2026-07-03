@@ -1,6 +1,6 @@
-# Local AI Group — Website
+# local AI Group — Website
 
-Website for [Local AI Group](https://localai.xdeca.com), a community for people curious about running AI on their own computer. Offline, private, and free. Part of [xdeca.com](https://xdeca.com).
+Website for [local AI Group](https://localai.xdeca.com), a community for people curious about running AI on their own computer. Offline, private, and free. Part of [xdeca.com](https://xdeca.com).
 
 ## Stack
 

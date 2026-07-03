@@ -1,5 +1,5 @@
 /* ================================================
-   SOFT COSMOS — Local AI Group
+   SOFT COSMOS — local AI Group
    localai.xdeca.com
    ================================================ */
 
@@ -180,6 +180,15 @@
   --color-border: rgba(0, 200, 180, 0.15);
   --bs-body-color: #b0d8d4;
   --bs-heading-color: #e0f7f5;
+}
+
+/* ─────────────────────────────────────────────────
+   EVENT DETAIL PAGE — green accent instead of red
+───────────────────────────────────────────────── */
+
+.page-event {
+  --color-events: var(--color-primary);
+  --color-events-rgb: var(--color-primary-rgb);
 }
 
 /* ─────────────────────────────────────────────────
