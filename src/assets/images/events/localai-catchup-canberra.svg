@@ -1,0 +1,35 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&amp;family=Plus+Jakarta+Sans:wght@400;600&amp;family=Share+Tech+Mono&amp;display=swap');
+    </style>
+    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1.2" fill="#077a6e" fill-opacity="0.22"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="600" fill="#f0faf8"/>
+  <rect width="1200" height="600" fill="url(#dots)"/>
+
+  <!-- Frame accent -->
+  <rect x="24" y="24" width="1152" height="552" fill="none" stroke="#077a6e" stroke-opacity="0.25" stroke-width="2"/>
+
+  <!-- Eyebrow -->
+  <text x="80" y="120" font-family="'Share Tech Mono', monospace" font-size="22" letter-spacing="0.18em" fill="#077a6e" fill-opacity="0.65">LOCAL AI &#8226; MEETUP</text>
+
+  <!-- Title -->
+  <text x="80" y="200" font-family="Orbitron, monospace" font-size="50" font-weight="700" fill="#077a6e">localAI Catchup - Canberra</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="246" x2="420" y2="246" stroke="#077a6e" stroke-opacity="0.3" stroke-width="2"/>
+
+  <!-- Details -->
+  <text x="80" y="302" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="600" fill="#0a3330">Friday, 3rd July 2026</text>
+  <text x="80" y="344" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="400" fill="#2a5e58">1:00 PM &#8211; 3:00 PM</text>
+  <text x="80" y="392" font-family="'Plus Jakarta Sans', sans-serif" font-size="26" font-weight="600" fill="#0a3330">CMAG Cafe</text>
+  <text x="80" y="424" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="400" fill="#2a5e58">176 London Cct, Canberra ACT 2601</text>
+
+  <!-- Domain link -->
+  <text x="1120" y="548" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="600" fill="#077a6e" fill-opacity="0.6">localai.xdeca.com</text>
+</svg>

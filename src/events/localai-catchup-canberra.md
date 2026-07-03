@@ -1,10 +1,11 @@
 ---
-title: LocalAI Catchup
+title: localAI Catchup - Canberra
 description: A laid-back discussion on running AI locally in Canberra, hear what others are working on and share your own perspective.
 eventDate: 2026-07-04
 startTime: 1:00 PM
 endTime: 3:00 PM
 location: "CMAG Cafe\n176 London Cct, Canberra ACT 2601"
+image: /assets/images/events/localai-catchup-canberra.svg
 ---
 
 ### {{title}}
