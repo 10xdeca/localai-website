@@ -16,7 +16,8 @@ Hosted by Alexar, the session will be relaxed and focused on useful conversation
 
 **Discussion Topics**
 - Open source x AI at UN Headquarters
-- ORNITH
-- BYO Topic
+- [ORNITH](https://ollama.com/library/ornith)
+- Ollama subscriptions
+- 🤩 BYO Topic!
 
 [RSVP on Luma](https://luma.com/xul29z3w)
