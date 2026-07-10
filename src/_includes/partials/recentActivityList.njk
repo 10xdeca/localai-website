@@ -1,0 +1,46 @@
+{% set activity = collections.recentActivity %}
+{% if activity and activity | length > 0 %}
+<div class="row g-4">
+{% for entry in activity %}
+{% set item = entry.item %}
+{% if entry.type == "event" %}
+{% set cardType = "events" %}
+{% elif item.data.eventPage %}
+{% set cardType = "primary" %}
+{% else %}
+{% set cardType = "resources" %}
+{% endif %}
+<div class="col-md-6 col-lg-4">
+<article class="cosmos-post-card">
+{% if item.data.image %}<div class="cosmos-post-card__image"><img src="{{ item.data.image }}" alt="{{ item.data.title }}"></div>{% endif %}
+<div class="cosmos-post-card__body">
+<div class="d-flex gap-2 flex-wrap align-items-center">
+{% if cardType == "events" %}
+<span class="cosmos-badge cosmos-badge--events"><i class="bi bi-calendar-event"></i>Past Event</span>
+{% elif cardType == "primary" %}
+<span class="cosmos-badge cosmos-badge--orange"><i class="bi bi-stickies"></i>Event Recap</span>
+{% else %}
+<span class="cosmos-badge cosmos-badge--resources"><i class="bi bi-stickies"></i>Post</span>
+{% endif %}
+{% if cardType == "events" %}
+<span class="cosmos-badge cosmos-badge--events">{{ entry.date | formatDate('MMM Do, YYYY') }}</span>
+{% elif cardType == "primary" %}
+<span class="cosmos-badge cosmos-badge--orange">{{ entry.date | formatDate('MMM Do, YYYY') }}</span>
+{% else %}
+<span class="cosmos-badge cosmos-badge--resources">{{ entry.date | formatDate('MMM Do, YYYY') }}</span>
+{% endif %}
+</div>
+<h5 class="cosmos-post-card__title">{{ item.data.title }}</h5>
+{% if item.data.description %}<p class="cosmos-post-card__desc">{{ item.data.description }}</p>{% endif %}
+<a class="cosmos-post-card__link stretched-link" href="{{ item.data.permalink or item.url }}">Read more <i class="bi bi-arrow-right"></i></a>
+</div>
+</article>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div class="cosmos-empty-state">
+<i class="bi bi-clock-history d-block mb-2" style="font-size:1.75rem;opacity:0.4;"></i>
+Nothing to show here yet.
+</div>
+{% endif %}

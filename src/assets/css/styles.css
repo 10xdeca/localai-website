@@ -55,6 +55,8 @@
   --color-resources-rgb: 26, 95, 180;
   --color-chat: #6d28d9;
   --color-chat-rgb: 109, 40, 217;
+  --color-orange: #ea580c;
+  --color-orange-rgb: 234, 88, 12;
 }
 
 /* ─────────────────────────────────────────────────
@@ -106,6 +108,8 @@
   --color-resources-rgb: 96, 165, 250;
   --color-chat: #a78bfa;
   --color-chat-rgb: 167, 139, 250;
+  --color-orange: #fb923c;
+  --color-orange-rgb: 251, 146, 60;
 }
 
 /* ─────────────────────────────────────────────────
@@ -1830,6 +1834,24 @@ h1, h2, h3, h4, h5, h6,
   border: 1px solid var(--color-border);
 }
 
+.cosmos-badge--events {
+  background: rgba(var(--color-events-rgb), 0.1);
+  color: var(--color-events);
+  border: 1px solid rgba(var(--color-events-rgb), 0.18);
+}
+
+.cosmos-badge--resources {
+  background: rgba(var(--color-resources-rgb), 0.1);
+  color: var(--color-resources);
+  border: 1px solid rgba(var(--color-resources-rgb), 0.18);
+}
+
+.cosmos-badge--orange {
+  background: rgba(var(--color-orange-rgb), 0.1);
+  color: var(--color-orange);
+  border: 1px solid rgba(var(--color-orange-rgb), 0.18);
+}
+
 /* ─────────────────────────────────────────────────
    EVENT CARDS
 ───────────────────────────────────────────────── */
@@ -2013,6 +2035,58 @@ h1, h2, h3, h4, h5, h6,
   margin-top: auto;
 }
 .cosmos-post-card__link:hover { gap: 0.65rem; color: var(--color-primary-dark); }
+
+.cosmos-recap-preview {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
+  position: relative;
+}
+
+.cosmos-recap-preview::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 30px; height: 1px;
+  background: var(--color-events);
+  z-index: 1;
+}
+
+.cosmos-recap-preview:hover { border-color: rgba(var(--color-primary-rgb), 0.45); }
+
+.cosmos-recap-preview__image { width: 160px; min-width: 160px; object-fit: cover; }
+
+.cosmos-recap-preview__body { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; align-items: flex-start; }
+
+.cosmos-recap-preview__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 0.4rem;
+}
+
+.cosmos-recap-preview__desc {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin-bottom: 0.5rem;
+}
+
+.cosmos-recap-preview__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
 
 .cosmos-focus-card {
   display: flex;

@@ -28,6 +28,9 @@
       "icon": "bi-calendar-plus"
     }
   },
+  "recentActivity": {
+    "title": "Recent Activity"
+  },
   "resources": {
     "title": "Curated Resources",
     "viewAllLabel": "All focus areas",

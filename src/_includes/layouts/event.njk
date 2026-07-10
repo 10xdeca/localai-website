@@ -21,14 +21,37 @@ bodyClass: page-event
 <section class="cosmos-section">
   <div class="container">
 
-    {{ content | safe }}
-
+    {%- set linkedPost = null %}
     {%- if recapPost %}
-    <p class="mt-4">Read the <a href="{{ recapPost }}" style="color:var(--color-events);">recap post</a>.</p>
+      {%- for p in collections.posts %}
+        {%- if p.url == recapPost %}{% set linkedPost = p %}{% endif %}
+      {%- endfor %}
     {%- endif %}
+
+    {%- if linkedPost %}
+    <a href="{{ linkedPost.url }}" class="cosmos-recap-preview mb-4">
+      {% if linkedPost.data.image %}<img src="{{ linkedPost.data.image }}" alt="" class="cosmos-recap-preview__image">{% endif %}
+      <div class="cosmos-recap-preview__body">
+        <span class="cosmos-badge cosmos-badge--primary mb-2"><i class="bi bi-stickies"></i>Recap</span>
+        <h5 class="cosmos-recap-preview__title">{{ linkedPost.data.title }}</h5>
+        {% if linkedPost.data.description %}<p class="cosmos-recap-preview__desc">{{ linkedPost.data.description }}</p>{% endif %}
+        <span class="cosmos-recap-preview__link">Read the recap <i class="bi bi-arrow-right"></i></span>
+      </div>
+    </a>
+    {%- elif recapPost %}
+    <p class="mb-4">Read the <a href="{{ recapPost }}" style="color:var(--color-events);">recap post</a>.</p>
+    {%- endif %}
+
+    {{ content | safe }}
 
     {%- if gallery and not (content | hasGallery) %}
     {% set path = gallery | stripLeadingSlash %}
+    {% include "partials/gallery.njk" %}
+    {%- endif %}
+
+    {%- set showMergedGallery = mergeGallery or (linkedPost and linkedPost.data.mergeGallery) %}
+    {%- if showMergedGallery and linkedPost and linkedPost.data.gallery and linkedPost.data.gallery != gallery %}
+    {% set path = linkedPost.data.gallery | stripLeadingSlash %}
     {% include "partials/gallery.njk" %}
     {%- endif %}
 

@@ -1,6 +1,8 @@
 ---
 title: Post Template
 description: Want to create a new post? Use this template!
+eleventyExcludeFromCollections: true
+permalink: false
 postDate: 3099-04-14
 author: S.Allen
 # gallery: "/assets/images"

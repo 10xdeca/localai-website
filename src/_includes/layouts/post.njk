@@ -9,12 +9,25 @@ layout: base.njk
 <br>
 {{ content | safe }}
 
+{%- set linkedEvent = null %}
+{%- if eventPage %}
+  {%- for e in collections.events %}
+    {%- if e.url == eventPage %}{% set linkedEvent = e %}{% endif %}
+  {%- endfor %}
+{%- endif %}
+
 {%- if eventPage %}
 <p class="mt-4">Go to <a href="{{eventPage}}">event page</a></p>
 {%- endif %}
 
 {%- if gallery and not (content | hasGallery) %}
 {% set path = gallery | stripLeadingSlash %}
+{% include "partials/gallery.njk" %}
+{%- endif %}
+
+{%- set showMergedGallery = mergeGallery or (linkedEvent and linkedEvent.data.mergeGallery) %}
+{%- if showMergedGallery and linkedEvent and linkedEvent.data.gallery and linkedEvent.data.gallery != gallery %}
+{% set path = linkedEvent.data.gallery | stripLeadingSlash %}
 {% include "partials/gallery.njk" %}
 {%- endif %}
 </div>

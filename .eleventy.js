@@ -377,13 +377,34 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Recent activity - past events and posts mixed together, sorted by date (most recent first)
+  eleventyConfig.addCollection("recentActivity", function (collectionApi) {
+    const now = dayjs().tz(SITE_TIMEZONE);
+
+    const pastEvents = collectionApi.getFilteredByGlob("src/events/*.md")
+      .filter(e => {
+        const endDateTime = getEventEndDateTime(e);
+        return endDateTime && endDateTime.isSameOrBefore(now);
+      })
+      .map(e => ({ type: 'event', date: new Date(e.data.eventDate), item: e }));
+
+    const posts = collectionApi.getFilteredByGlob("src/posts/*.md")
+      .map(p => ({ type: 'post', date: new Date(p.data.postDate), item: p }));
+
+    return [...pastEvents, ...posts]
+      .sort((a, b) => b.date - a.date)
+      .slice(0, 3);
+  });
+
   // Date formatting filter - uses site.json dateFormat as default
   eleventyConfig.addFilter("formatDate", function (dateInput, format) {
     if (!dateInput) return '';
     try {
       // Use provided format, or fall back to site default
+      // Parse as UTC so plain calendar dates (e.g. "2026-07-04") don't shift
+      // to the previous/next day when the build machine's local timezone differs from UTC.
       const dateFormat = format || DEFAULT_DATE_FORMAT;
-      const parsed = dayjs(dateInput);
+      const parsed = dayjs.utc(dateInput);
       return parsed.isValid() ? parsed.format(dateFormat) : String(dateInput);
     } catch (err) {
       console.warn(`Error formatting date: ${dateInput} - ${err.message}`);

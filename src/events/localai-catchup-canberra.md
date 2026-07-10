@@ -7,6 +7,7 @@ endTime: 3:00 PM
 location: "CMAG Cafe\n176 London Cct, Canberra ACT 2601"
 image: /assets/images/events/localai-catchup-canberra.svg
 ogImage: /assets/images/events/localai-catchup-canberra.png
+recapPost: /posts/localai-catchup-canberra-recap/
 ---
 
 ### {{title}}

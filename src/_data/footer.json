@@ -11,8 +11,7 @@
       "links": [
         { "label": "About", "href": "/about/" },
         { "label": "Events", "href": "https://lu.ma/localai", "icon": "bi-calendar-event", "external": true },
-        { "label": "lu.ma/localai", "href": "https://lu.ma/localai", "external": true },
-        { "label": "xdeca.com", "href": "https://xdeca.com", "external": true }
+        { "label": "lu.ma/localai", "href": "https://lu.ma/localai", "external": true }
       ]
     },
     {
@@ -37,9 +36,5 @@
     }
   ],
   "copyright": "local AI",
-  "copyrightParent": {
-    "label": "xdeca.com",
-    "href": "https://xdeca.com"
-  },
   "disclaimer": "Not affiliated with any AI company."
 }

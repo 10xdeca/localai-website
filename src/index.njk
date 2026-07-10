@@ -65,6 +65,16 @@ fullWidth: true
   </div>
 </section>
 
+{% if collections.recentActivity | length %}
+<!-- ── RECENT ACTIVITY ───────────────────────── -->
+<section class="cosmos-section">
+  <div class="container">
+    <h2 class="cosmos-section__title mb-4"><i class="bi bi-clock-history me-2"></i>{{ home.recentActivity.title }}</h2>
+    {% include "partials/recentActivityList.njk" %}
+  </div>
+</section>
+{% endif %}
+
 <!-- ── CURATED RESOURCES ─────────────────────── -->
 <section class="cosmos-section cosmos-section--raised cosmos-section--resources-home">
   <div class="container">
