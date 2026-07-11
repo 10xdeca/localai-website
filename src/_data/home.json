@@ -3,7 +3,7 @@
     "title": "local AI",
     "lead": "We run events, maintain curated resource lists, and host open discussion for running AI on your own device, offline, privately, and without token costs.",
     "ctas": [
-      { "label": "Upcoming Events", "href": "https://lu.ma/localai", "accent": "events", "icon": "bi-calendar-event", "external": true },
+      { "label": "Upcoming Events", "href": "/events/", "accent": "events", "icon": "bi-calendar-event" },
       { "label": "View Resources", "href": "/resources/", "accent": "resources", "icon": "bi-book" },
       { "label": "Online Chat", "href": "/community/", "accent": "chat", "icon": "bi-chat-dots" }
     ]
@@ -19,8 +19,7 @@
   "events": {
     "title": "Upcoming Meetups",
     "viewAllLabel": "All events",
-    "viewAllHref": "https://lu.ma/localai",
-    "viewAllExternal": true,
+    "viewAllHref": "/events/",
     "subscribeLead": "No events scheduled yet. Follow on lu.ma to be notified the moment one is announced.",
     "subscribeButton": {
       "label": "Follow for events",

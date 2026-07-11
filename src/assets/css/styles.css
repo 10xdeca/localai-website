@@ -521,6 +521,16 @@ h1, h2, h3, h4, h5, h6,
   transition: background 0.35s, color 0.35s;
 }
 
+.cosmos-footer__github {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cosmos-footer__github:hover { color: var(--color-primary); }
+
 @media (max-width: 768px) {
   #footer-main { grid-template-columns: 1fr 1fr; padding: 2rem 1.5rem; }
   .footer-bottom { padding: 1.25rem 1.5rem; }

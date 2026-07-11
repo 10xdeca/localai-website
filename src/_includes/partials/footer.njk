@@ -5,7 +5,6 @@
       <a href="/" class="cosmos-footer__brand-name">{{ site.title }}</a>
       <p class="cosmos-footer__tagline">
         {{ footer.tagline }}
-        Part of <a href="{{ footer.parentSite.href }}" class="cosmos-footer__link" target="_blank" rel="noopener">{{ footer.parentSite.label }}</a>.
       </p>
     </div>
 
@@ -37,7 +36,7 @@
   </footer>
 
   <div class="footer-bottom">
-    <span>© {{ global.currentYear }} {{ footer.copyright }}</span>
-    <span>{{ footer.disclaimer }}</span>
+    <span>{{ global.currentYear }} {{ footer.copyright }}</span>
+    <a href="{{ footer.github.href }}" class="cosmos-footer__github" target="_blank" rel="noopener"><i class="bi bi-github me-1"></i>{{ footer.github.label }}</a>
   </div>
 </div>

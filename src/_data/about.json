@@ -34,8 +34,7 @@
         "body": "Casual meetups, workshops for beginners and advanced hobbyists, and demo nights where people show what they're building. In person across Australian cities and online.",
         "link": {
           "label": "View upcoming events",
-          "href": "https://lu.ma/localai",
-          "external": true
+          "href": "/events/"
         }
       },
       {
