@@ -2323,6 +2323,162 @@ a.cosmos-resource-card:hover {
 
 a.cosmos-resource-card:hover .cosmos-focus-card__link .bi-arrow-right { transform: translateX(4px); }
 
+/* Individual tool/link cards within a focus area page */
+.cosmos-tool-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  height: 100%;
+  position: relative;
+  transition: border-color 0.25s ease;
+}
+
+.cosmos-tool-card:hover {
+  border-color: rgba(var(--color-primary-rgb), 0.4);
+}
+
+.cosmos-tool-card--highlight {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.cosmos-tool-card--highlight:hover {
+  border-color: var(--color-primary);
+}
+
+.cosmos-tool-card__ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background: var(--color-primary);
+  color: #fff;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+}
+
+.cosmos-tool-card__screenshot-wrap {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.cosmos-tool-card__zoom-icon {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cosmos-tool-card__screenshot-wrap:hover .cosmos-tool-card__zoom-icon,
+.cosmos-tool-card__screenshot-wrap:focus-visible .cosmos-tool-card__zoom-icon {
+  opacity: 1;
+}
+
+.cosmos-tool-card__screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cosmos-tool-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.5rem;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .cosmos-tool-card {
+    flex-direction: row-reverse;
+  }
+
+  .cosmos-tool-card__screenshot-wrap {
+    aspect-ratio: auto;
+    width: 42%;
+    flex-shrink: 0;
+    border-bottom: none;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .cosmos-tool-card__body {
+    width: 58%;
+  }
+}
+
+.cosmos-tool-card__body::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 1.5rem;
+  width: 40px; height: 2px;
+  background: var(--color-primary);
+}
+
+.cosmos-tool-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+
+.cosmos-tool-card__logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.cosmos-tool-card__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.cosmos-tool-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.cosmos-tool-card__desc {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.cosmos-tool-card__links {
+  display: flex;
+  gap: 0.6rem;
+}
+
 .cosmos-back-link {
   display: inline-flex;
   align-items: center;

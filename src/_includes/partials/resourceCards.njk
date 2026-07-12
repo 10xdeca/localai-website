@@ -1,0 +1,129 @@
+{% if area.resources and area.resources.length %}
+{% set tagVariants = {"gui": "resources", "cli": "resources", "developer": "resources", "easy": "primary", "medium": "primary", "feature-rich": "orange"} %}
+{% set lightboxImages = [] %}
+{% for item in area.resources %}
+{% if item.screenshot %}
+{% set lightboxImages = (lightboxImages.push({src: item.screenshot, name: item.name}), lightboxImages) %}
+{% endif %}
+{% endfor %}
+<div class="row g-4">
+  {% set shotCounter = [] %}
+  {% for item in area.resources %}
+  <div class="col-md-6">
+    <div class="cosmos-tool-card{% if item.highlight %} cosmos-tool-card--highlight{% endif %}">
+      {% if item.highlight %}
+      <div class="cosmos-tool-card__ribbon">{{ item.highlight }}</div>
+      {% endif %}
+      {% if item.screenshot %}
+      {% set shotIndex = shotCounter.length %}
+      {% set shotCounter = (shotCounter.push(0), shotCounter) %}
+      <button type="button" class="cosmos-tool-card__screenshot-wrap" data-lightbox-index="{{ shotIndex }}" aria-label="View larger screenshot of {{ item.name }}">
+        <img src="{{ item.screenshot }}" alt="{{ item.name }} screenshot" class="cosmos-tool-card__screenshot" loading="lazy" />
+        <span class="cosmos-tool-card__zoom-icon"><i class="bi bi-arrows-fullscreen"></i></span>
+      </button>
+      {% endif %}
+      <div class="cosmos-tool-card__body">
+        <div class="cosmos-tool-card__header">
+          <img src="{{ item.logo }}" alt="{{ item.name }} logo" class="cosmos-tool-card__logo" loading="lazy" />
+          <h3 class="cosmos-tool-card__title">{{ item.name }}</h3>
+        </div>
+        {% if item.tags and item.tags.length %}
+        <div class="cosmos-tool-card__tags">
+          {% for tag in item.tags %}
+          <span class="cosmos-badge cosmos-badge--{{ tagVariants[tag] or 'muted' }}">{{ tag }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <p class="cosmos-tool-card__desc">{{ item.description }}</p>
+        <div class="cosmos-tool-card__links">
+          <a href="{{ item.website }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Website<i class="bi bi-box-arrow-up-right ms-1 small"></i></a>
+          <a href="{{ item.docs }}" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener">Docs<i class="bi bi-box-arrow-up-right ms-1 small"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if lightboxImages.length %}
+<div class="modal fade" id="resourceLightboxModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content bg-transparent border-0">
+      <div class="modal-header border-0 position-absolute top-0 end-0 z-3">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0 d-flex align-items-center justify-content-center position-relative gallery-overlay" style="min-height: 60vh;">
+        <button class="btn gallery-nav-btn position-absolute start-0 top-50 translate-middle-y ms-3 z-2" id="resourceLightboxPrev" style="width: 50px; height: 50px;">
+          <i class="bi bi-chevron-left text-white fs-4"></i>
+          <span class="visually-hidden">Previous screenshot</span>
+        </button>
+        <button class="btn gallery-nav-btn position-absolute end-0 top-50 translate-middle-y me-3 z-2" id="resourceLightboxNext" style="width: 50px; height: 50px;">
+          <i class="bi bi-chevron-right text-white fs-4"></i>
+          <span class="visually-hidden">Next screenshot</span>
+        </button>
+        <img id="resourceLightboxImage" class="gallery-main-image rounded" alt="Screenshot">
+        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3">
+          <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2" id="resourceLightboxCaption"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const images = {{ lightboxImages | dump | safe }};
+  const modalEl = document.getElementById('resourceLightboxModal');
+  const modal = new bootstrap.Modal(modalEl);
+  const modalImage = document.getElementById('resourceLightboxImage');
+  const caption = document.getElementById('resourceLightboxCaption');
+  const prevBtn = document.getElementById('resourceLightboxPrev');
+  const nextBtn = document.getElementById('resourceLightboxNext');
+
+  let currentIndex = 0;
+
+  function showImage(index) {
+    const img = images[index];
+    if (img) {
+      modalImage.src = img.src;
+      modalImage.alt = img.name + ' screenshot';
+      caption.textContent = img.name;
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === images.length - 1;
+    }
+  }
+
+  document.querySelectorAll('[data-lightbox-index]').forEach(function(trigger) {
+    trigger.addEventListener('click', function() {
+      currentIndex = parseInt(this.dataset.lightboxIndex, 10);
+      showImage(currentIndex);
+      modal.show();
+    });
+  });
+
+  prevBtn.addEventListener('click', function() {
+    if (currentIndex > 0) { currentIndex--; showImage(currentIndex); }
+  });
+  nextBtn.addEventListener('click', function() {
+    if (currentIndex < images.length - 1) { currentIndex++; showImage(currentIndex); }
+  });
+
+  modalEl.addEventListener('shown.bs.modal', function() {
+    document.addEventListener('keydown', handleKeydown);
+  });
+  modalEl.addEventListener('hidden.bs.modal', function() {
+    document.removeEventListener('keydown', handleKeydown);
+  });
+
+  function handleKeydown(e) {
+    if (e.key === 'ArrowLeft') prevBtn.click();
+    else if (e.key === 'ArrowRight') nextBtn.click();
+    else if (e.key === 'Escape') modal.hide();
+  }
+});
+</script>
+{% endif %}
+
+{% else %}
+<p class="cosmos-resource-list__empty">Resources coming soon. Check back after our next catchup.</p>
+{% endif %}

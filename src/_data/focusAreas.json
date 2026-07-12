@@ -13,7 +13,65 @@
       "icon": "bi-rocket-takeoff-fill",
       "href": "/resources/getting-started/",
       "linkText": "Get started",
-      "featured": true
+      "featured": true,
+      "resources": [
+        {
+          "name": "Ollama",
+          "logo": "/assets/images/resources/ollama.png",
+          "screenshot": "/assets/images/resources/ollama-screenshot.png",
+          "tags": ["cli", "easy"],
+          "highlight": "Quickstart Pick",
+          "description": "The easiest way to get a local model running. Pull a model with one command and chat with it straight from the terminal or over a local API.",
+          "website": "https://ollama.com",
+          "docs": "https://docs.ollama.com/quickstart"
+        },
+        {
+          "name": "Jan",
+          "logo": "/assets/images/resources/jan.svg",
+          "screenshot": "/assets/images/resources/jan-screenshot.png",
+          "tags": ["gui", "easy"],
+          "highlight": "Quickstart Pick",
+          "description": "An open source, privacy-first desktop app for running local models, built as a ChatGPT alternative that works fully offline.",
+          "website": "https://jan.ai",
+          "docs": "https://jan.ai/docs/desktop/quickstart"
+        },
+        {
+          "name": "LM Studio",
+          "logo": "/assets/images/resources/lm-studio.png",
+          "screenshot": "/assets/images/resources/lm-studio-screenshot.webp",
+          "tags": ["gui", "easy"],
+          "description": "A polished desktop app for discovering, downloading, and chatting with local models. No command line required.",
+          "website": "https://lmstudio.ai",
+          "docs": "https://lmstudio.ai/docs/app/basics"
+        },
+        {
+          "name": "GPT4All",
+          "logo": "/assets/images/resources/gpt4all.svg",
+          "screenshot": "/assets/images/resources/gpt4all-screenshot.png",
+          "tags": ["gui", "easy"],
+          "description": "A free desktop app from Nomic AI for running local models, with a built-in LocalDocs feature for chatting with your own files completely offline.",
+          "website": "https://www.nomic.ai/gpt4all",
+          "docs": "https://docs.gpt4all.io/gpt4all_desktop/quickstart.html"
+        },
+        {
+          "name": "Open WebUI",
+          "logo": "/assets/images/resources/open-webui.png",
+          "screenshot": "/assets/images/resources/open-webui-screenshot.png",
+          "tags": ["gui", "medium", "feature-rich"],
+          "description": "A self-hosted, feature-rich web interface for chatting with local models, built to run on top of Ollama or any OpenAI-compatible API.",
+          "website": "https://openwebui.com",
+          "docs": "https://docs.openwebui.com/getting-started/quick-start/"
+        },
+        {
+          "name": "AnythingLLM",
+          "logo": "/assets/images/resources/anythingllm.png",
+          "screenshot": "/assets/images/resources/anythingllm-screenshot.png",
+          "tags": ["gui", "easy", "feature-rich"],
+          "description": "An all-in-one desktop app for chatting with local models and your own documents, with built-in RAG, multi-user workspaces, and support for AI agents.",
+          "website": "https://anythingllm.com",
+          "docs": "https://docs.anythingllm.com/installation-desktop/overview"
+        }
+      ]
     },
     {
       "slug": "models",
