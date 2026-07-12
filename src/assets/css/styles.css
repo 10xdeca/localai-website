@@ -2226,7 +2226,7 @@ h1, h2, h3, h4, h5, h6,
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-text);
-  margin: 0;
+  margin: 0 0 0.35rem;
 }
 
 .cosmos-resource-section__lead {
@@ -2476,7 +2476,160 @@ a.cosmos-resource-card:hover .cosmos-focus-card__link .bi-arrow-right { transfor
 
 .cosmos-tool-card__links {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.6rem;
+  align-items: center;
+}
+
+.cosmos-icon-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 31px;
+  padding: 0 0.6rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.cosmos-icon-link:hover {
+  border-color: rgba(var(--color-primary-rgb), 0.45);
+  color: var(--color-primary);
+}
+
+.cosmos-icon-link__logo {
+  width: 15px;
+  height: 15px;
+  object-fit: contain;
+}
+
+.cosmos-resource-section__lead--nowrap {
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 992px) {
+  .cosmos-resource-section__lead--nowrap {
+    white-space: nowrap;
+  }
+}
+
+.cosmos-meta-dates--build {
+  margin-top: 0;
+  margin-bottom: 2.75rem;
+  opacity: 0.55;
+}
+
+.cosmos-meta-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  opacity: 0.75;
+  margin: 0.85rem 0 0;
+}
+
+.cosmos-meta-dates__sep {
+  opacity: 0.6;
+}
+
+/* Model provider cards */
+.cosmos-provider-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  height: 100%;
+  position: relative;
+  transition: border-color 0.25s ease;
+}
+
+.cosmos-provider-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 40px; height: 2px;
+  background: var(--color-primary);
+}
+
+.cosmos-provider-card:hover {
+  border-color: rgba(var(--color-primary-rgb), 0.4);
+}
+
+.cosmos-provider-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cosmos-provider-card__logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  padding: 3px;
+}
+
+.cosmos-provider-card__title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  flex: 1;
+}
+
+.cosmos-provider-card__country {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cosmos-provider-card__latest {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+
+.cosmos-provider-card__latest:hover {
+  border-color: rgba(var(--color-primary-rgb), 0.45);
+}
+
+.cosmos-provider-card__latest-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.cosmos-provider-card__latest-model {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.cosmos-provider-card__latest-date {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
 }
 
 .cosmos-back-link {

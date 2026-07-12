@@ -1,0 +1,32 @@
+{% if modelProviders and modelProviders.length %}
+<div class="row g-4">
+  {% for provider in modelProviders %}
+  <div class="col-md-6 col-lg-4">
+    <div class="cosmos-provider-card">
+      <div class="cosmos-provider-card__header">
+        <img src="{{ provider.logo }}" alt="{{ provider.name }} logo" class="cosmos-provider-card__logo" loading="lazy" />
+        <h3 class="cosmos-provider-card__title">{{ provider.name }}</h3>
+        <span class="cosmos-provider-card__country">{{ provider.flag }} {{ provider.country }}</span>
+      </div>
+      <a href="{{ provider.latest.url }}" class="cosmos-provider-card__latest" target="_blank" rel="noopener">
+        <span class="cosmos-provider-card__latest-label">
+          Latest release{% if provider.latest.stale %} <i class="bi bi-exclamation-circle" title="Live lookup failed at build time; showing last known value"></i>{% endif %}
+        </span>
+        <span class="cosmos-provider-card__latest-model">{{ provider.latest.display }}</span>
+        <span class="cosmos-provider-card__latest-date">{{ provider.latest.date | formatDate('MMM Do, YYYY') }}</span>
+      </a>
+      <div class="cosmos-tool-card__links">
+        <a href="{{ provider.website }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Website<i class="bi bi-box-arrow-up-right ms-1 small"></i></a>
+        <a href="{{ provider.hfUrl }}" class="cosmos-icon-link" target="_blank" rel="noopener" aria-label="View {{ provider.name }} on Hugging Face" title="View on Hugging Face">
+          <img src="/assets/images/resources/huggingface.svg" alt="" class="cosmos-icon-link__logo" />
+          <span>{{ provider.hfUrl | replace("https://huggingface.co/", "/") }}</span>
+          <i class="bi bi-box-arrow-up-right small"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p class="cosmos-resource-list__empty">Providers coming soon. Check back after our next catchup.</p>
+{% endif %}

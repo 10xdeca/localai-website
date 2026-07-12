@@ -14,14 +14,25 @@ areaSlug: models
     <p class="cosmos-section__label">{{ area.label }}</p>
     <h1 class="cosmos-section__title mb-2">{{ area.title }}</h1>
     <p class="cosmos-section__lead" style="max-width:none;">{{ area.lead }}</p>
+    {% include "partials/publishedUpdated.njk" %}
   </div>
 </section>
 
 <section class="cosmos-section">
   <div class="container">
     <a href="/resources/" class="cosmos-back-link"><i class="bi bi-arrow-left me-1"></i>All focus areas</a>
+
     <div class="mt-4">
+      <h2 class="cosmos-resource-section__title">Model Hubs</h2>
+      <p class="cosmos-resource-section__lead">Places to search, browse, and download open models yourself.</p>
       {% include "partials/resourceCards.njk" %}
+    </div>
+
+    <div class="mt-5">
+      <h2 class="cosmos-resource-section__title">Model Providers</h2>
+      <p class="cosmos-resource-section__lead cosmos-resource-section__lead--nowrap">Who makes the models. Latest release per provider is fetched automatically at build time.</p>
+      <p class="cosmos-meta-dates cosmos-meta-dates--build">Latest Build: {{ global.buildDate | formatDate('MMM Do, YYYY') }}</p>
+      {% include "partials/modelProviderCards.njk" %}
     </div>
   </div>
 </section>

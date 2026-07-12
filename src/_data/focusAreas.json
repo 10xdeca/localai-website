@@ -14,6 +14,8 @@
       "href": "/resources/getting-started/",
       "linkText": "Get started",
       "featured": true,
+      "published": "2026-05-31",
+      "updated": "2026-07-12",
       "resources": [
         {
           "name": "Ollama",
@@ -80,7 +82,48 @@
       "lead": "What is out there, who makes it, and where to find it. Links to HuggingFace, model makers, leaderboards, and anything worth knowing about the open model ecosystem.",
       "icon": "bi-box-seam",
       "href": "/resources/models/",
-      "linkText": "Explore models"
+      "linkText": "Explore models",
+      "published": "2026-05-31",
+      "updated": "2026-07-12",
+      "resources": [
+        {
+          "name": "Hugging Face",
+          "logo": "/assets/images/resources/huggingface.svg",
+          "description": "The largest hub for open models, datasets, and demos. Search and download almost any open model in GGUF, safetensors, or MLX format.",
+          "website": "https://huggingface.co",
+          "docs": "https://huggingface.co/docs/hub/en/models-downloading"
+        },
+        {
+          "name": "Unsloth",
+          "logo": "/assets/images/resources/unsloth.png",
+          "description": "Day-one GGUF and 4-bit quantizations of nearly every major model release, plus the open source framework behind them for fine-tuning locally.",
+          "website": "https://unsloth.ai/",
+          "docs": "https://docs.unsloth.ai/get-started",
+          "hfUrl": "https://huggingface.co/unsloth"
+        },
+        {
+          "name": "MLX Community",
+          "logo": "/assets/images/resources/mlx-community.png",
+          "description": "Pre-converted MLX-format models optimized to run natively and efficiently on Apple Silicon Macs.",
+          "website": "https://github.com/ml-explore/mlx",
+          "docs": "https://ml-explore.github.io/mlx/build/html/install.html",
+          "hfUrl": "https://huggingface.co/mlx-community"
+        },
+        {
+          "name": "bartowski",
+          "logo": "/assets/images/resources/bartowski.png",
+          "description": "One of the most prolific and trusted community quantizers, with near-simultaneous GGUF releases for almost every notable new model.",
+          "website": "https://github.com/bartowski1182",
+          "hfUrl": "https://huggingface.co/bartowski"
+        },
+        {
+          "name": "Ollama Library",
+          "logo": "/assets/images/resources/ollama.png",
+          "description": "Browse and pull ready-to-run quantized models straight into Ollama. Not the full ecosystem, but the fastest path from browse to ollama run.",
+          "website": "https://ollama.com/library",
+          "docs": "https://docs.ollama.com/quickstart"
+        }
+      ]
     },
     {
       "slug": "coding-harnesses",

@@ -1,0 +1,7 @@
+{% if area.published or area.updated %}
+<p class="cosmos-meta-dates">
+  {% if area.published %}<span>Published {{ area.published | formatDate('MMM Do, YYYY') }}</span>{% endif %}
+  {% if area.published and area.updated %}<span class="cosmos-meta-dates__sep">&middot;</span>{% endif %}
+  {% if area.updated %}<span>Updated {{ area.updated | formatDate('MMM Do, YYYY') }}</span>{% endif %}
+</p>
+{% endif %}

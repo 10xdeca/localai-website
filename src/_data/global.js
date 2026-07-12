@@ -1,1 +1,1 @@
-module.exports = { currentYear: new Date().getFullYear() };
+module.exports = { currentYear: new Date().getFullYear(), buildDate: new Date().toISOString() };

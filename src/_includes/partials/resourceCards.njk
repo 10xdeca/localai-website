@@ -1,5 +1,5 @@
 {% if area.resources and area.resources.length %}
-{% set tagVariants = {"gui": "resources", "cli": "resources", "developer": "resources", "easy": "primary", "medium": "primary", "feature-rich": "orange"} %}
+{% set tagVariants = {"gui": "resources", "cli": "resources", "developer": "resources", "easy": "primary", "medium": "primary", "feature-rich": "orange", "gguf": "resources", "mlx": "resources", "apple-silicon": "primary", "day-1-quants": "orange", "quantizer": "muted", "curated": "primary", "ollama-format": "resources", "general": "muted", "all-formats": "orange"} %}
 {% set lightboxImages = [] %}
 {% for item in area.resources %}
 {% if item.screenshot %}
@@ -37,7 +37,16 @@
         <p class="cosmos-tool-card__desc">{{ item.description }}</p>
         <div class="cosmos-tool-card__links">
           <a href="{{ item.website }}" class="btn btn-primary btn-sm" target="_blank" rel="noopener">Website<i class="bi bi-box-arrow-up-right ms-1 small"></i></a>
+          {% if item.docs %}
           <a href="{{ item.docs }}" class="btn btn-outline-primary btn-sm" target="_blank" rel="noopener">Docs<i class="bi bi-box-arrow-up-right ms-1 small"></i></a>
+          {% endif %}
+          {% if item.hfUrl %}
+          <a href="{{ item.hfUrl }}" class="cosmos-icon-link" target="_blank" rel="noopener" aria-label="View {{ item.name }} on Hugging Face" title="View on Hugging Face">
+            <img src="/assets/images/resources/huggingface.svg" alt="" class="cosmos-icon-link__logo" />
+            <span>{{ item.hfUrl | replace("https://huggingface.co/", "/") }}</span>
+            <i class="bi bi-box-arrow-up-right small"></i>
+          </a>
+          {% endif %}
         </div>
       </div>
     </div>
