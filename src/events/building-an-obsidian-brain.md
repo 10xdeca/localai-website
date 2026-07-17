@@ -21,7 +21,7 @@ Good for anyone curious about local models, or who's been meaning to get more ou
 - 19:30 Networking
 - 20:00 Doors close
 
-**About the Speaker**
+**About the Speaker**   
 Leo co-founded SolidAI, a Melbourne-based AI automation agency that helps small and medium businesses automate repetitive work like lead capture, quoting, and scheduling, typically setting things up with cloud AI first and then shifting the repetitive or sensitive parts over to local models running on the business's own machines.
 
 Thanks to our venue sponsor [Inspire9](https://inspire9.com) - Melbourne's original coworking space and a longstanding supporter of social enterprise and tech community.
