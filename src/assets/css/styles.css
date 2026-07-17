@@ -1632,6 +1632,59 @@ h1, h2, h3, h4, h5, h6,
 
 .cosmos-event-detail-meta i { color: var(--color-events); opacity: 0.75; }
 
+.cosmos-add-to-calendar {
+  position: relative;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+.cosmos-add-to-calendar__toggle {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-events);
+  border: 1px solid var(--color-events);
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.cosmos-add-to-calendar__toggle::-webkit-details-marker { display: none; }
+.cosmos-add-to-calendar__toggle::marker { content: ''; }
+.cosmos-add-to-calendar__toggle:hover {
+  background-color: var(--color-events);
+  color: #fff;
+}
+
+.cosmos-add-to-calendar__menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  z-index: 5;
+  min-width: 230px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.cosmos-add-to-calendar__menu a {
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  transition: color 0.15s ease;
+}
+.cosmos-add-to-calendar__menu a:last-child { border-bottom: none; }
+.cosmos-add-to-calendar__menu a:hover { color: var(--color-events); }
+.cosmos-add-to-calendar__menu i { color: var(--color-events); opacity: 0.75; }
+
 .cosmos-event-hero-grid {
   display: grid;
   grid-template-columns: 1fr;

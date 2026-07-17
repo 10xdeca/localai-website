@@ -1,0 +1,11 @@
+{% if eventDate %}
+{% set googleUrl = googleCalendarUrl(title, description, location, eventDate, startTime, endTime, page.url) %}
+{% set icsUri = icsDataUri(title, description, location, eventDate, startTime, endTime, page.url, page.fileSlug) %}
+<details class="cosmos-add-to-calendar">
+  <summary class="cosmos-add-to-calendar__toggle"><i class="bi bi-calendar-plus me-2" aria-hidden="true"></i>Add to calendar</summary>
+  <div class="cosmos-add-to-calendar__menu">
+    <a href="{{ googleUrl }}" target="_blank" rel="noopener"><i class="bi bi-calendar-check me-2" aria-hidden="true"></i>Google Calendar</a>
+    <a href="{{ icsUri }}" download="{{ page.fileSlug }}.ics"><i class="bi bi-file-earmark-arrow-down me-2" aria-hidden="true"></i>Apple / Outlook (.ics)</a>
+  </div>
+</details>
+{% endif %}

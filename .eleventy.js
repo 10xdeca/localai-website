@@ -22,6 +22,75 @@ module.exports = function (eleventyConfig) {
   const siteData = JSON.parse(fs.readFileSync('./src/_data/site.json', 'utf8'));
   const SITE_TIMEZONE = siteData.timezone || 'Australia/Sydney';
   const DEFAULT_DATE_FORMAT = siteData.dateFormat || 'dddd, Do MMMM YYYY';
+  const SITE_URL = 'https://localai.xdeca.com';
+
+  // Parse an event date + a "1:00 PM" / "9:00AM" / "13:00" style time string
+  // into a timezone-aware dayjs instant, in the configured SITE_TIMEZONE.
+  function parseEventDateTime(eventDate, timeStr) {
+    if (!eventDate) return null;
+    const dateOnly = dayjs.utc(eventDate).format('YYYY-MM-DD');
+
+    if (!timeStr) {
+      const dayStart = dayjs.tz(dateOnly, 'YYYY-MM-DD', SITE_TIMEZONE);
+      return dayStart.isValid() ? dayStart : null;
+    }
+
+    // Normalise "9:00AM" -> "9:00 AM" so the "h:mm A" format matches
+    const ts = timeStr.toString().trim().replace(/(\d)(am|pm)$/i, '$1 $2');
+    let candidate = dayjs.tz(`${dateOnly} ${ts}`, 'YYYY-MM-DD h:mm A', SITE_TIMEZONE);
+    if (!candidate.isValid()) {
+      candidate = dayjs.tz(`${dateOnly} ${ts}`, 'YYYY-MM-DD H:mm', SITE_TIMEZONE);
+    }
+    return candidate.isValid() ? candidate : null;
+  }
+
+  function formatICSDateTime(d) {
+    return d.utc().format('YYYYMMDD[T]HHmmss[Z]');
+  }
+
+  function escapeICSText(str) {
+    return String(str || '')
+      .replace(/\\/g, '\\\\')
+      .replace(/;/g, '\\;')
+      .replace(/,/g, '\\,')
+      .replace(/\r\n|\n|\r/g, '\\n');
+  }
+
+  // RFC5545 line folding: continuation lines are prefixed with a space
+  function foldICSLine(line) {
+    const maxLen = 74;
+    if (line.length <= maxLen) return line;
+    let result = '';
+    let i = 0;
+    while (i < line.length) {
+      const len = i === 0 ? maxLen : maxLen - 1;
+      const chunk = line.slice(i, i + len);
+      result += (i === 0 ? '' : '\r\n ') + chunk;
+      i += chunk.length;
+    }
+    return result;
+  }
+
+  function buildICS({ title, description, location, pageUrl, start, end, uid }) {
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//local AI//events//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${uid}@localai.xdeca.com`,
+      `DTSTAMP:${formatICSDateTime(dayjs.utc())}`,
+      `DTSTART:${formatICSDateTime(start)}`,
+      `DTEND:${formatICSDateTime(end)}`,
+      `SUMMARY:${escapeICSText(title)}`,
+    ];
+    if (description) lines.push(`DESCRIPTION:${escapeICSText(description)}`);
+    if (location) lines.push(`LOCATION:${escapeICSText(location.replace(/\n/g, ', '))}`);
+    if (pageUrl) lines.push(`URL:${SITE_URL}${pageUrl}`);
+    lines.push('END:VEVENT', 'END:VCALENDAR');
+    return lines.map(foldICSLine).join('\r\n');
+  }
 
   // Helper function to get event end date/time
   function getEventEndDateTime(event) {
@@ -410,6 +479,37 @@ module.exports = function (eleventyConfig) {
       console.warn(`Error formatting date: ${dateInput} - ${err.message}`);
       return String(dateInput);
     }
+  });
+
+  // Google Calendar "add event" link, built from event frontmatter
+  eleventyConfig.addNunjucksGlobal("googleCalendarUrl", function (title, description, location, eventDate, startTime, endTime, pageUrl) {
+    const start = parseEventDateTime(eventDate, startTime);
+    if (!start) return '';
+    const end = endTime ? parseEventDateTime(eventDate, endTime) : start.add(1, 'hour');
+
+    let details = description || '';
+    if (pageUrl) details += `${details ? '\n\n' : ''}More info: ${SITE_URL}${pageUrl}`;
+
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: title || '',
+      dates: `${formatICSDateTime(start)}/${formatICSDateTime(end)}`,
+      details,
+      ctz: SITE_TIMEZONE,
+    });
+    if (location) params.set('location', location.replace(/\n/g, ', '));
+
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  });
+
+  // .ics download (data URI) for Apple Calendar / Outlook / anything else, built from event frontmatter
+  eleventyConfig.addNunjucksGlobal("icsDataUri", function (title, description, location, eventDate, startTime, endTime, pageUrl, slug) {
+    const start = parseEventDateTime(eventDate, startTime);
+    if (!start) return '';
+    const end = endTime ? parseEventDateTime(eventDate, endTime) : start.add(1, 'hour');
+
+    const ics = buildICS({ title, description, location, pageUrl, start, end, uid: slug || 'event' });
+    return `data:text/calendar;charset=utf8,${encodeURIComponent(ics)}`;
   });
 
   // Concat filter for Nunjucks
