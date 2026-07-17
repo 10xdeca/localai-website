@@ -1632,6 +1632,27 @@ h1, h2, h3, h4, h5, h6,
 
 .cosmos-event-detail-meta i { color: var(--color-events); opacity: 0.75; }
 
+.cosmos-event-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.cosmos-event-hero-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-border);
+}
+
+@media (min-width: 992px) {
+  .cosmos-event-hero-grid {
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+  }
+}
+
 .cosmos-glow-btn--events {
   background-color: var(--color-events) !important;
   border-color: var(--color-events) !important;

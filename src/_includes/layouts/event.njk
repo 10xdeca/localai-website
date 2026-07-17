@@ -7,13 +7,22 @@ bodyClass: page-event
 <!-- ── EVENT HERO ────────────────────────── -->
 <section class="cosmos-page-hero cosmos-page-hero--events">
   <div class="container">
-    <a href="/events/" class="cosmos-back-link cosmos-back-link--events"><i class="bi bi-arrow-left me-1"></i>All Events</a>
-    <h1 class="cosmos-section__title cosmos-section__title--events mb-3 mt-2">{{ title }}</h1>
-    {% if not hideEventDetails %}
-    <div class="cosmos-event-detail-meta">
-      {% include "partials/event-details.njk" %}
+    <div class="cosmos-event-hero-grid">
+      <div class="cosmos-event-hero-text">
+        <a href="/events/" class="cosmos-back-link cosmos-back-link--events"><i class="bi bi-arrow-left me-1"></i>All Events</a>
+        <h1 class="cosmos-section__title cosmos-section__title--events mb-3 mt-2">{{ title }}</h1>
+        {% if not hideEventDetails %}
+        <div class="cosmos-event-detail-meta">
+          {% include "partials/event-details.njk" %}
+        </div>
+        {% endif %}
+      </div>
+      {% if image %}
+      <div class="cosmos-event-hero-image">
+        <img src="{{ image }}" alt="{{ title }}">
+      </div>
+      {% endif %}
     </div>
-    {% endif %}
   </div>
 </section>
 

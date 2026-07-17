@@ -94,6 +94,11 @@ fullWidth: true
           <div class="cosmos-focus-card__body">
             <h5 class="cosmos-focus-card__title">{{ area.title }}</h5>
             <p class="cosmos-focus-card__desc">{{ area.lead }}</p>
+            {% if area.updated %}
+            <p class="cosmos-meta-dates">Updated: {{ area.updated | formatDate('MMM Do, YYYY') }}</p>
+            {% else %}
+            <p class="cosmos-meta-dates">Coming soon</p>
+            {% endif %}
             <span class="cosmos-focus-card__link">{{ area.linkText }} <i class="bi bi-arrow-right"></i></span>
           </div>
         </a>

@@ -1,0 +1,63 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&amp;family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Share+Tech+Mono&amp;display=swap');
+    </style>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1080" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#eef8f6"/>
+      <stop offset="1" stop-color="#dcf0ec"/>
+    </linearGradient>
+    <pattern id="grid" x="0" y="0" width="46" height="46" patternUnits="userSpaceOnUse">
+      <path d="M 46 0 L 0 0 0 46" fill="none" stroke="#077a6e" stroke-opacity="0.14" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="ringFade" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#077a6e" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#077a6e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1080" fill="url(#bgGrad)"/>
+  <rect width="1080" height="1080" fill="url(#grid)"/>
+
+  <!-- Radar / gathering motif, bottom right (unchanged position) -->
+  <g transform="translate(830,830)">
+    <circle r="260" fill="url(#ringFade)"/>
+    <path d="M 0,-215 L 186.2,-107.5 L 186.2,107.5 L 0,215 L -186.2,107.5 L -186.2,-107.5 Z" fill="none" stroke="#077a6e" stroke-opacity="0.3" stroke-width="2"/>
+    <path d="M 0,-150 L 129.9,-75 L 129.9,75 L 0,150 L -129.9,75 L -129.9,-75 Z" fill="none" stroke="#077a6e" stroke-opacity="0.35" stroke-width="2"/>
+    <path d="M 0,-80 L 69.3,-40 L 69.3,40 L 0,80 L -69.3,40 L -69.3,-40 Z" fill="none" stroke="#077a6e" stroke-opacity="0.4" stroke-width="2"/>
+    <circle cx="0" cy="0" r="11" fill="#077a6e"/>
+    <circle cx="108" cy="-52" r="8" fill="#077a6e" fill-opacity="0.85"/>
+    <circle cx="-122" cy="20" r="8" fill="#077a6e" fill-opacity="0.85"/>
+    <circle cx="58" cy="134" r="8" fill="#077a6e" fill-opacity="0.85"/>
+    <circle cx="-72" cy="-122" r="7" fill="#077a6e" fill-opacity="0.7"/>
+    <line x1="0" y1="0" x2="108" y2="-52" stroke="#077a6e" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="-122" y2="20" stroke="#077a6e" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="58" y2="134" stroke="#077a6e" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="-72" y2="-122" stroke="#077a6e" stroke-opacity="0.3" stroke-width="1.5"/>
+  </g>
+
+  <!-- Frame accent -->
+  <rect x="24" y="24" width="1032" height="1032" fill="none" stroke="#077a6e" stroke-opacity="0.25" stroke-width="2"/>
+
+  <!-- Eyebrow -->
+  <text x="72" y="132" font-family="'Share Tech Mono', monospace" font-size="26" letter-spacing="0.2em" fill="#077a6e" fill-opacity="0.7">LOCAL AI &#8226; MEETUP</text>
+
+  <!-- Title (bigger, two-tone) -->
+  <text x="68" y="240" font-family="Orbitron, monospace" font-size="76" font-weight="700" fill="#077a6e">localAI</text>
+  <text x="68" y="346" font-family="Orbitron, monospace" font-size="92" font-weight="900" fill="#04a893">Catchup</text>
+  <text x="68" y="452" font-family="Orbitron, monospace" font-size="76" font-weight="700" fill="#077a6e">Canberra</text>
+
+  <!-- Divider -->
+  <line x1="72" y1="494" x2="520" y2="494" stroke="#077a6e" stroke-opacity="0.35" stroke-width="3"/>
+
+  <!-- Details (bigger, overlapping the motif) -->
+  <text x="72" y="566" font-family="'Plus Jakarta Sans', sans-serif" font-size="46" font-weight="800" fill="#0a3330">Saturday, 18th July</text>
+  <text x="72" y="616" font-family="'Plus Jakarta Sans', sans-serif" font-size="46" font-weight="800" fill="#0a3330">2026</text>
+  <text x="72" y="672" font-family="'Plus Jakarta Sans', sans-serif" font-size="42" font-weight="700" fill="#04a893">1:00 PM &#8211; 3:00 PM</text>
+  <text x="72" y="742" font-family="'Plus Jakarta Sans', sans-serif" font-size="38" font-weight="800" fill="#0a3330">CMAG Cafe</text>
+  <text x="72" y="784" font-family="'Plus Jakarta Sans', sans-serif" font-size="32" font-weight="600" fill="#0a4a44">176 London Cct, Canberra ACT 2601</text>
+
+  <!-- Domain link -->
+  <text x="1008" y="1032" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="600" fill="#077a6e" fill-opacity="0.65">localai.xdeca.com</text>
+</svg>
