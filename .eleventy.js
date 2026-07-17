@@ -92,59 +92,33 @@ module.exports = function (eleventyConfig) {
     return lines.map(foldICSLine).join('\r\n');
   }
 
-  // Helper function to get event end date/time
+  // An event isn't "past" until this long after its end time, since the
+  // site is a static build and shouldn't flip an event to "past" the
+  // instant it ends.
+  const PAST_EVENT_GRACE_HOURS = 1;
+
+  // Helper function to get event end date/time, in SITE_TIMEZONE, with the
+  // grace period applied. Reuses parseEventDateTime so events are always
+  // interpreted in the site's configured timezone rather than whatever
+  // timezone the machine building the site happens to be in.
   function getEventEndDateTime(event) {
     if (!event.data.eventDate) return null;
-    
-    try {
-      // Try to parse the event date without timezone first
-      let eventDate = dayjs(event.data.eventDate);
-      
-      // If invalid date, return null
-      if (!eventDate.isValid()) {
-        console.warn(`Invalid eventDate for event: ${event.data.title || 'Unknown'} - ${event.data.eventDate}`);
-        return null;
-      }
-      
-      // If endTime is specified, use it
-      if (event.data.endTime) {
-        try {
-          const timeStr = event.data.endTime.toString().trim();
-          let endTime;
-          
-          // Try parsing different formats
-          if (timeStr.includes(':')) {
-            // Format like "4:00PM", "16:00", "4:00 PM"
-            endTime = dayjs(`${eventDate.format('YYYY-MM-DD')} ${timeStr}`);
-          } else if (timeStr.length === 3 || timeStr.length === 4) {
-            // Format like "1400" or "400" (24-hour without colon)
-            const paddedTime = timeStr.padStart(4, '0');
-            const hours = paddedTime.slice(0, 2);
-            const minutes = paddedTime.slice(2);
-            endTime = dayjs(`${eventDate.format('YYYY-MM-DD')} ${hours}:${minutes}`);
-          } else {
-            // Fallback: try parsing as-is
-            endTime = dayjs(`${eventDate.format('YYYY-MM-DD')} ${timeStr}`);
-          }
-          
-          if (endTime.isValid()) {
-            return endTime;
-          } else {
-            console.warn(`Invalid endTime for event: ${event.data.title || 'Unknown'} - ${event.data.endTime}`);
-            return eventDate.endOf('day');
-          }
-        } catch (err) {
-          console.warn(`Error parsing endTime for event: ${event.data.title || 'Unknown'} - ${err.message}`);
-          return eventDate.endOf('day');
-        }
-      }
-      
-      // Default: event ends at midnight (end of day)
-      return eventDate.endOf('day');
-    } catch (err) {
-      console.warn(`Error parsing date for event: ${event.data.title || 'Unknown'} - ${err.message}`);
+
+    if (event.data.endTime) {
+      const endTime = parseEventDateTime(event.data.eventDate, event.data.endTime);
+      if (endTime) return endTime.add(PAST_EVENT_GRACE_HOURS, 'hour');
+      console.warn(`Invalid endTime for event: ${event.data.title || 'Unknown'} - ${event.data.endTime}`);
+    }
+
+    // No endTime (or invalid): treat the event as lasting the whole day,
+    // in the site's timezone.
+    const dateOnly = dayjs.utc(event.data.eventDate).format('YYYY-MM-DD');
+    const dayEnd = dayjs.tz(dateOnly, 'YYYY-MM-DD', SITE_TIMEZONE).endOf('day');
+    if (!dayEnd.isValid()) {
+      console.warn(`Invalid eventDate for event: ${event.data.title || 'Unknown'} - ${event.data.eventDate}`);
       return null;
     }
+    return dayEnd.add(PAST_EVENT_GRACE_HOURS, 'hour');
   }
 
   //admin is left unprocessed and copied to site
