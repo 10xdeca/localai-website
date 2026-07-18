@@ -1,0 +1,73 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Share+Tech+Mono&amp;display=swap');
+    </style>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1200" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#eef8f6"/>
+      <stop offset="1" stop-color="#dcf0ec"/>
+    </linearGradient>
+    <pattern id="grid" x="0" y="0" width="46" height="46" patternUnits="userSpaceOnUse">
+      <path d="M 46 0 L 0 0 0 46" fill="none" stroke="#077a6e" stroke-opacity="0.14" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="ringFade" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#077a6e" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#077a6e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="600" fill="url(#bgGrad)"/>
+  <rect width="1200" height="600" fill="url(#grid)"/>
+
+  <!-- Right-side Sydney Harbour motif: Opera House sails (true logo silhouette), reflection & ripple network -->
+  <g transform="translate(960,360)">
+    <circle r="255" fill="url(#ringFade)"/>
+
+    <path id="sailB" d="M -125.46,-82.30 C -144.09,-93.46 -183.56,-99.27 -205.00,-97.93 c 16.03,19.29 42.87,53.52 56.32,82.55 C -142.73,-30.25 -129.33,-69.11 -125.46,-82.30 Z" fill="#077a6e" fill-opacity="0.04" stroke="#077a6e" stroke-opacity="0.28" stroke-width="2"/>
+    <path id="sailA" d="M -49.43,-105.61 c -24.70,-18.45 -72.81,-26.69 -107.69,-24.29 c 29.75,31.77 73.12,120.60 77.35,129.91 C -66.84,-25.80 -51.54,-92.11 -49.43,-105.61 Z" fill="#077a6e" fill-opacity="0.05" stroke="#077a6e" stroke-opacity="0.34" stroke-width="2"/>
+    <path id="sailC" d="M 76.37,-89.65 c 0.73,-0.58 1.46,-1.12 2.19,-1.70 C 41.40,-136.14 -10.78,-179.07 -88.18,-192.60 c 18.72,26.38 58.17,130.19 75.45,192.59 C 16.70,-24.62 60.29,-74.06 76.37,-89.65 Z" fill="#077a6e" fill-opacity="0.06" stroke="#077a6e" stroke-opacity="0.4" stroke-width="2"/>
+    <path id="sailD" d="M 205.82,-128.49 c -56.68,-1.09 -88.37,7.24 -127.26,37.16 c 25.65,30.94 44.17,62.75 58.90,86.50 C 162.64,-68.70 182.60,-97.09 205.82,-128.49 Z" fill="#077a6e" fill-opacity="0.08" stroke="#077a6e" stroke-opacity="0.48" stroke-width="2"/>
+
+    <line x1="-215" y1="0" x2="214" y2="0" stroke="#077a6e" stroke-opacity="0.25" stroke-width="2"/>
+
+    <g transform="scale(1,-0.42)" opacity="0.18">
+      <use href="#sailB"/>
+      <use href="#sailA"/>
+      <use href="#sailC"/>
+      <use href="#sailD"/>
+    </g>
+
+    <ellipse cx="25" cy="16" rx="34" ry="9" fill="none" stroke="#077a6e" stroke-opacity="0.32" stroke-width="1.5"/>
+    <ellipse cx="25" cy="16" rx="66" ry="18" fill="none" stroke="#077a6e" stroke-opacity="0.22" stroke-width="1.5"/>
+    <ellipse cx="25" cy="16" rx="100" ry="28" fill="none" stroke="#077a6e" stroke-opacity="0.13" stroke-width="1.5"/>
+
+    <line x1="25" y1="16" x2="-95" y2="24" stroke="#077a6e" stroke-opacity="0.4" stroke-width="1.5"/>
+    <line x1="25" y1="16" x2="155" y2="28" stroke="#077a6e" stroke-opacity="0.4" stroke-width="1.5"/>
+    <circle cx="25" cy="16" r="8" fill="#077a6e"/>
+    <circle cx="-95" cy="24" r="7" fill="#077a6e" fill-opacity="0.85"/>
+    <circle cx="155" cy="28" r="7" fill="#077a6e" fill-opacity="0.85"/>
+  </g>
+
+  <!-- Frame accent -->
+  <rect x="24" y="24" width="1152" height="552" fill="none" stroke="#077a6e" stroke-opacity="0.25" stroke-width="2"/>
+
+  <!-- Eyebrow -->
+  <text x="80" y="118" font-family="'Share Tech Mono', monospace" font-size="22" letter-spacing="0.18em" fill="#077a6e" fill-opacity="0.7">LOCAL AI &#8226; MEETUP</text>
+
+  <!-- Title -->
+  <text x="80" y="196" font-family="Orbitron, monospace" font-size="50" font-weight="700" fill="#077a6e">localAI Catchup</text>
+  <text x="80" y="256" font-family="Orbitron, monospace" font-size="50" font-weight="700" fill="#077a6e">Sydney #1</text>
+
+  <!-- Divider -->
+  <line x1="80" y1="298" x2="440" y2="298" stroke="#077a6e" stroke-opacity="0.35" stroke-width="2"/>
+
+  <!-- Details -->
+  <text x="80" y="360" font-family="'Plus Jakarta Sans', sans-serif" font-size="36" font-weight="700" fill="#0a3330">Sunday, 19th July 2026</text>
+  <text x="80" y="406" font-family="'Plus Jakarta Sans', sans-serif" font-size="34" font-weight="600" fill="#0a4a44">1:00 PM &#8211; 3:00 PM</text>
+  <text x="80" y="458" font-family="'Plus Jakarta Sans', sans-serif" font-size="30" font-weight="700" fill="#0a3330">ICC Sydney</text>
+  <text x="80" y="494" font-family="'Plus Jakarta Sans', sans-serif" font-size="28" font-weight="600" fill="#0a4a44">14 Darling Dr, Sydney NSW 2000</text>
+
+  <!-- Domain link -->
+  <text x="1120" y="548" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-size="22" font-weight="600" fill="#077a6e" fill-opacity="0.65">localai.xdeca.com</text>
+</svg>
