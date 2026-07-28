@@ -2,6 +2,7 @@
   "title": "local AI",
   "description": "A community for people curious about running AI on their own computer. Offline, private, and free. Events, guides, and open discussions.",
   "logo": "/assets/images/logo.svg",
+  "logoIcon": "/assets/images/logo-icon.svg",
   "favicon": "/assets/images/favicon.png",
   "baseUrl": "/",
   "timezone": "Australia/Melbourne",

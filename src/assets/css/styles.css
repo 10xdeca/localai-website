@@ -301,6 +301,11 @@ h1, h2, h3, h4, h5, h6,
   text-decoration: none;
 }
 
+.navbar-brand__icon {
+  height: 1.6rem;
+  width: auto;
+}
+
 .navbar-brand__name {
   font-family: 'Orbitron', monospace;
   font-size: 1.4rem;
