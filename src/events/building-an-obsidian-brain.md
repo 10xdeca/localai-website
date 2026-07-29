@@ -6,7 +6,7 @@ startTime: 6:00 PM
 endTime: 7:30 PM
 location: "Inspire9\nLevel 1/41-43 Stewart St, Richmond VIC 3121"
 image: /assets/images/events/building-an-obsidian-brain.svg
-ogImage: /assets/images/events/building-an-obsidian-brain.png
+ogImage: /assets/images/events/building-an-obsidian-brain-aug6.png
 ---
 
 ### {{title}}
