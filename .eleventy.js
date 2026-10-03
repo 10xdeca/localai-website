@@ -456,7 +456,7 @@ module.exports = function (eleventyConfig) {
   });
 
   // Google Calendar "add event" link, built from event frontmatter
-  eleventyConfig.addNunjucksGlobal("googleCalendarUrl", function (title, description, location, eventDate, startTime, endTime, pageUrl) {
+  function googleCalendarUrl(title, description, location, eventDate, startTime, endTime, pageUrl) {
     const start = parseEventDateTime(eventDate, startTime);
     if (!start) return '';
     const end = endTime ? parseEventDateTime(eventDate, endTime) : start.add(1, 'hour');
@@ -474,16 +474,34 @@ module.exports = function (eleventyConfig) {
     if (location) params.set('location', location.replace(/\n/g, ', '));
 
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
-  });
+  }
 
   // .ics download (data URI) for Apple Calendar / Outlook / anything else, built from event frontmatter
-  eleventyConfig.addNunjucksGlobal("icsDataUri", function (title, description, location, eventDate, startTime, endTime, pageUrl, slug) {
+  function icsDataUri(title, description, location, eventDate, startTime, endTime, pageUrl, slug) {
     const start = parseEventDateTime(eventDate, startTime);
     if (!start) return '';
     const end = endTime ? parseEventDateTime(eventDate, endTime) : start.add(1, 'hour');
 
     const ics = buildICS({ title, description, location, pageUrl, start, end, uid: slug || 'event' });
     return `data:text/calendar;charset=utf8,${encodeURIComponent(ics)}`;
+  }
+
+  eleventyConfig.addNunjucksGlobal("googleCalendarUrl", googleCalendarUrl);
+  eleventyConfig.addNunjucksGlobal("icsDataUri", icsDataUri);
+
+  // Same helpers as filters, so JavaScript templates (e.g. webmcp-data.11ty.js) can call them via `this`
+  eleventyConfig.addFilter("googleCalendarUrl", googleCalendarUrl);
+  eleventyConfig.addFilter("icsDataUri", icsDataUri);
+
+  // Event start/end as ISO 8601 instants in the site timezone, for machine-readable output
+  eleventyConfig.addFilter("eventStartISO", function (eventDate, startTime) {
+    const start = parseEventDateTime(eventDate, startTime);
+    return start ? start.format() : null;
+  });
+  eleventyConfig.addFilter("eventEndISO", function (eventDate, startTime, endTime) {
+    const start = parseEventDateTime(eventDate, startTime);
+    const end = endTime ? parseEventDateTime(eventDate, endTime) : start && start.add(1, 'hour');
+    return end ? end.format() : null;
   });
 
   // Concat filter for Nunjucks

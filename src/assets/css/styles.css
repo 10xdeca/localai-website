@@ -2796,3 +2796,180 @@ a.cosmos-resource-card:hover .cosmos-focus-card__link .bi-arrow-right { transfor
 @media (max-width: 992px)  { .divider::before { padding-bottom: 15%; } .divider::after { width: 300%; } }
 @media (max-width: 768px)  { .divider::before { padding-bottom: 20%; } .divider::after { width: 300%; } }
 @media (max-width: 576px)  { .divider::before { padding-bottom: 28%; } .divider::after { width: 300%; } }
+
+/* Form sent / error card, shown in place of the form (forms.js) */
+.form-sent {
+  --accent: var(--color-primary);
+  --accent-rgb: var(--color-primary-rgb);
+  max-width: 440px;
+  margin: 0.5rem auto 0;
+  padding: 2rem 1.75rem 1.75rem;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.15);
+  animation: form-sent-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.form-sent--chat { --accent: var(--color-chat); --accent-rgb: var(--color-chat-rgb); }
+.form-sent--error { --accent: #dc3545; --accent-rgb: 220, 53, 69; }
+.form-sent__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.5);
+  animation: form-sent-pop 0.45s 0.15s cubic-bezier(0.3, 1.6, 0.5, 1) both, form-sent-ring 1.6s 0.6s ease-out 2;
+}
+.form-sent__title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+.form-sent__text { color: var(--color-text-muted); margin: 0; }
+
+/* Copy of what was sent */
+.form-sent__summary {
+  margin: 1.5rem 0 0;
+  padding: 1rem 1.25rem;
+  text-align: left;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+.form-sent__summary dt {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.form-sent__summary dd {
+  margin: 0.15rem 0 0.75rem;
+  color: var(--color-text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.form-sent__summary dd:last-child { margin-bottom: 0; }
+
+/* What next: small PCB buttons, as on the thank-you page */
+.form-sent__next {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.5rem;
+}
+.form-sent__next .pcb-cta {
+  padding: 0.6rem 1rem;
+  animation-delay: 0.4s;
+}
+.form-sent__next .pcb-cta__label { font-size: 0.8rem; }
+@keyframes form-sent-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes form-sent-pop { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes form-sent-ring { to { box-shadow: 0 0 0 18px rgba(var(--accent-rgb), 0); } }
+@media (prefers-reduced-motion: reduce) { .form-sent, .form-sent__icon { animation: none; } }
+
+/* Event card highlighted by the WebMCP show-event tool */
+.webmcp-highlight { outline: 3px solid var(--color-primary); outline-offset: 4px; transition: outline-color 0.3s; }
+
+/* ─────────────────────────────────────────────────
+   CONTACT PAGE: purple dotted section, as on the community page
+───────────────────────────────────────────────── */
+
+.contact-hero {
+  --color-primary: var(--color-chat);
+  --color-primary-rgb: var(--color-chat-rgb);
+  --color-primary-dark: #5b21b6;
+  --color-surface: #ede8fc;
+  --color-text: #3b1560;
+  --color-text-muted: #7c5cb5;
+  --color-border: rgba(109, 40, 217, 0.18);
+  --hero-text-secondary: #7c5cb5;
+  --hero-cta-bg: rgba(245, 240, 255, 0.9);
+  position: relative;
+  min-height: calc(100vh - 68px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 3rem 1rem 6rem;
+  background-color: #f5f0ff;
+  background-image: radial-gradient(circle, rgba(var(--color-chat-rgb), 0.22) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+[data-bs-theme="dark"] .contact-hero {
+  --color-primary-dark: #8b5cf6;
+  --color-surface: #130a20;
+  --color-text: #c4a8f0;
+  --color-text-muted: #7a5ab0;
+  --color-border: rgba(167, 139, 250, 0.15);
+  --hero-text-secondary: #7a5ab0;
+  --hero-cta-bg: rgba(19, 10, 32, 0.92);
+  background-color: #0c0514;
+}
+.contact-hero .hero-content { padding-top: 0; }
+
+.form-panel {
+  width: 100%;
+  max-width: 580px;
+  padding: 2rem;
+  background: var(--hero-cta-bg);
+  border: 1px solid rgba(var(--color-primary-rgb), 0.32);
+  box-shadow: 0 0 40px rgba(var(--color-primary-rgb), 0.12);
+  opacity: 0;
+  animation: hero-fade 0.6s ease-out 0.9s forwards;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.form-panel:focus-within {
+  border-color: rgba(var(--color-primary-rgb), 0.6);
+  box-shadow: 0 0 48px rgba(var(--color-primary-rgb), 0.2);
+}
+
+.form-panel__label {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 0.4rem;
+}
+
+.form-panel .form-control {
+  border-radius: 0 !important;
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+}
+.form-panel .form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-primary-rgb), 0.15);
+}
+.form-panel textarea.form-control { resize: vertical; }
+
+/* Thank-you card inside the panel: the panel already has the frame */
+.form-panel .form-sent {
+  max-width: none;
+  margin: 0;
+  padding: 1rem 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 576px) {
+  .form-panel { padding: 1.5rem 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .form-panel { animation: none; opacity: 1; }
+}
