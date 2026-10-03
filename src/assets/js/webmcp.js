@@ -62,6 +62,53 @@
     }
   });
 
+  mc.registerTool({
+    name: "go-to-page",
+    description: "Open a page on the local AI website, e.g. /events/, /community/, or an event or post URL from another tool. The page reloads, so this page's tools are replaced by the new page's tools.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        path: { type: "string", description: "Site path starting with /, e.g. \"/events/\" or \"/events/localai-catchup-canberra-aug15/\"." }
+      },
+      required: ["path"]
+    },
+    async execute({ path: to }) {
+      if (!to.startsWith("/") || to.startsWith("//")) return fail("Only pages on this site are allowed. Use a path starting with /.");
+      // Reply first, then navigate; navigating straight away would unload the page before the reply is sent
+      setTimeout(() => { location.href = to; }, 100);
+      return reply({ navigating: to });
+    }
+  });
+
+  // ---------- Pages with event cards (home, events) ----------
+
+  const eventCard = (slug) => {
+    const link = document.querySelector(`.cosmos-event-card a[href="/events/${slug}/"]`);
+    return link && link.closest(".cosmos-event-card");
+  };
+
+  if (document.querySelector(".cosmos-event-card")) {
+    mc.registerTool({
+      name: "show-event",
+      description: "Scroll to an event card on this page and highlight it so the visitor can see it.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          slug: { type: "string", description: "The event's slug, e.g. \"building-an-obsidian-brain\"." }
+        },
+        required: ["slug"]
+      },
+      async execute({ slug }) {
+        const card = eventCard(slug);
+        if (!card) return fail(`"${slug}" isn't on this page. Use go-to-page with "/events/${slug}/" to open it instead.`);
+        document.querySelectorAll(".webmcp-highlight").forEach((el) => el.classList.remove("webmcp-highlight"));
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+        card.classList.add("webmcp-highlight");
+        return reply({ shown: slug });
+      }
+    });
+  }
+
   // ---------- Events pages ----------
 
   if (path.startsWith("/events/")) {
@@ -119,6 +166,20 @@
         return reply({ title: event.title, googleCalendar: event.googleCalendarUrl, icsFile: event.icsDataUri });
       }
     });
+
+    const calendarMenu = document.querySelector(".cosmos-add-to-calendar");
+    if (calendarMenu) {
+      mc.registerTool({
+        name: "open-calendar-menu",
+        description: "Open this event's \"Add to calendar\" menu on the page so the visitor can pick Google Calendar or Apple/Outlook.",
+        inputSchema: { type: "object", properties: {} },
+        async execute() {
+          calendarMenu.open = true;
+          calendarMenu.scrollIntoView({ behavior: "smooth", block: "center" });
+          return reply({ opened: "Add to calendar menu. The visitor can now choose Google Calendar or Apple/Outlook (.ics)." });
+        }
+      });
+    }
   }
 
   // ---------- Posts pages ----------

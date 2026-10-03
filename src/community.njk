@@ -52,7 +52,7 @@ ogImage: /assets/images/og-community.png
   <div class="container text-center">
     <h2 class="cosmos-section__title cosmos-section__title--chat mb-2">{{ community.subscribe.title }}</h2>
     <p class="cosmos-section__lead mb-4" style="max-width:none;">{{ community.subscribe.lead | safe }}</p>
-    <form name="{{ community.subscribe.formName }}" data-netlify="true" netlify-honeypot="bot-field" method="POST" action="/thank-you/" class="cosmos-newsletter-form" toolname="{{ community.subscribe.toolName }}" tooldescription="{{ community.subscribe.toolDescription }}">
+    <form name="{{ community.subscribe.formName }}" data-netlify="true" netlify-honeypot="bot-field" method="POST" action="/thank-you/" class="cosmos-newsletter-form" data-sent-accent="chat" data-sent-title="{{ community.subscribe.sentTitle }}" data-sent-message="{{ community.subscribe.sentMessage }}" toolname="{{ community.subscribe.toolName }}" tooldescription="{{ community.subscribe.toolDescription }}" toolautosubmit>
       <input type="hidden" name="form-name" value="{{ community.subscribe.formName }}" />
       <p hidden><input name="bot-field" toolparamdescription="Spam trap. Always leave empty." /></p>
       <div class="d-inline-flex flex-column align-items-start">

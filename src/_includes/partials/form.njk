@@ -1,29 +1,30 @@
-<section class="bg-body mt-5">
-
-<div class="text-center text-md-start bg-body-tertiary px-5 py-4 rounded-3 shadow-sm border border-primary border-opacity-25 shadow-sm mb-4 col-md-6">
-<h2 class="mb-3 text-primary">{{ formTitle }}</h2>
-<p class="text-muted small mb-3">{{ formDescription }}</p>
+<div class="form-panel">
 <form class="needs-validation" 
 name="{{ formName }}" 
 id="{{ formName }}" 
 method="post" 
 netlify 
+data-sent-summary 
+data-sent-title="{{ formSentTitle or "Thank you!" }}" 
+data-sent-message="{{ formSentMessage or "We'll be in touch soon." }}" 
 {% if formToolName %}toolname="{{ formToolName }}" 
 tooldescription="{{ formToolDescription }}" 
+toolautosubmit 
 {% endif %}novalidate>
+<div class="row g-3">
 {# Loop through fields defined in front matter #}
 {% for field in formFields %}
 {% set fieldName = field.name if field is mapping else field %}
 {% set fieldType = field.type if field is mapping and field.type else ("email" if fieldName == "email" else "text") %}
-<div class="mb-3">
-<label for="{{ formName }}{{ fieldName | capitalize }}" class="form-label">
+<div class="{{ 'col-12' if fieldName == 'message' else 'col-sm-6' }}">
+<label for="{{ formName }}{{ fieldName | capitalize }}" class="form-panel__label">
 {{ fieldName | capitalize }}
 </label>
 {% if fieldName == "message" %}
 <textarea class="form-control" 
 id="{{ formName }}{{ fieldName | capitalize }}" 
 name="{{ fieldName }}" 
-rows="4" 
+rows="5" 
 toolparamdescription="Your {{ fieldName }}" 
 required></textarea>
 <div class="invalid-feedback">Please enter your {{ fieldName }}.</div>
@@ -38,10 +39,18 @@ required>
 {% endif %}
 </div>
 {% endfor %}
-<button type="submit" class="btn btn-outline-primary">Send Message</button>
-</form>
 </div>
-</section>
+<button type="submit" class="btn btn-primary cosmos-glow-btn w-100 mt-4">Send message <i class="bi bi-send ms-1"></i></button>
+</form>
+{# Shown in the thank-you card after sending (forms.js) #}
+<template class="form-next">
+<div class="form-sent__next">
+<a href="https://lu.ma/localai" class="pcb-cta pcb-cta--events" target="_blank" rel="noopener"><span class="pcb-cta__label"><i class="bi bi-calendar-event me-1"></i>Upcoming events<i class="bi bi-box-arrow-up-right ms-1 small"></i></span></a>
+<a href="/resources/" class="pcb-cta pcb-cta--resources"><span class="pcb-cta__label"><i class="bi bi-book me-1"></i>Resources</span></a>
+<a href="/community/" class="pcb-cta pcb-cta--chat"><span class="pcb-cta__label"><i class="bi bi-chat-dots me-1"></i>Community chat</span></a>
+</div>
+</template>
+</div>
 {# --- Bootstrap validation --- #}
 <script>
 (() => {

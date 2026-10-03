@@ -50,6 +50,8 @@
     "checkboxLabel": "Notify me when new platforms are added",
     "formName": "community-subscribe",
     "toolName": "subscribe-newsletter",
-    "toolDescription": "Subscribe an email address to the monthly local AI newsletter. Fill in the email; the visitor reviews and presses subscribe."
+    "toolDescription": "Subscribe an email address to the monthly local AI newsletter.",
+    "sentTitle": "You're in!",
+    "sentMessage": "The next newsletter will land in your inbox."
   }
 }
