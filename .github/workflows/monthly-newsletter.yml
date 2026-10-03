@@ -1,0 +1,49 @@
+name: Monthly newsletter issue
+
+# Every Thursday, check whether next Thursday is the first Thursday of the month.
+# If it is, open that month's newsletter issue, due next Thursday.
+on:
+  schedule:
+    - cron: "0 0 * * 4" # Thursdays 00:00 UTC (10am/11am Melbourne)
+  workflow_dispatch: # "Run workflow" button; skips the first-Thursday check
+
+permissions:
+  issues: write
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Work out due date
+        id: dates
+        env:
+          TZ: Australia/Melbourne
+        run: |
+          dow=$(date +%u)                  # 1 = Monday ... 7 = Sunday
+          offset=$(( (4 - dow + 7) % 7 ))  # days until Thursday
+          [ "$offset" -eq 0 ] && offset=7  # on a Thursday, use next Thursday
+          due=$(date -d "+$offset days" +%F)
+
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$(date -d "$due" +%-d)" -gt 7 ]; then
+            echo "Next Thursday isn't the first Thursday of the month, nothing to do."
+            echo "create=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "create=true" >> "$GITHUB_OUTPUT"
+          echo "month=$(date -d "$due" +'%B %Y')" >> "$GITHUB_OUTPUT"
+          echo "due=$(date -d "$due" +'%a %-d %b')" >> "$GITHUB_OUTPUT"
+
+      - name: Create newsletter issue
+        if: steps.dates.outputs.create == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --repo "${{ github.repository }}" \
+            --title "Write ${{ steps.dates.outputs.month }} newsletter (due ${{ steps.dates.outputs.due }})" \
+            --assignee starship-droid \
+            --body "- [ ] Major news
+          - [ ] Latest models
+          - [ ] Evaluations
+          - [ ] New resources on the site
+          - [ ] Upcoming ecosystem events"
