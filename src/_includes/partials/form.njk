@@ -8,7 +8,9 @@ name="{{ formName }}"
 id="{{ formName }}" 
 method="post" 
 netlify 
-novalidate>
+{% if formToolName %}toolname="{{ formToolName }}" 
+tooldescription="{{ formToolDescription }}" 
+{% endif %}novalidate>
 {# Loop through fields defined in front matter #}
 {% for field in formFields %}
 {% set fieldName = field.name if field is mapping else field %}
@@ -22,6 +24,7 @@ novalidate>
 id="{{ formName }}{{ fieldName | capitalize }}" 
 name="{{ fieldName }}" 
 rows="4" 
+toolparamdescription="Your {{ fieldName }}" 
 required></textarea>
 <div class="invalid-feedback">Please enter your {{ fieldName }}.</div>
 {% else %}
@@ -29,6 +32,7 @@ required></textarea>
 class="form-control" 
 id="{{ formName }}{{ fieldName | capitalize }}" 
 name="{{ fieldName }}" 
+toolparamdescription="Your {{ fieldName }}" 
 required>
 <div class="invalid-feedback">Please enter a valid {{ fieldName }}.</div>
 {% endif %}

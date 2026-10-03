@@ -52,16 +52,16 @@ ogImage: /assets/images/og-community.png
   <div class="container text-center">
     <h2 class="cosmos-section__title cosmos-section__title--chat mb-2">{{ community.subscribe.title }}</h2>
     <p class="cosmos-section__lead mb-4" style="max-width:none;">{{ community.subscribe.lead | safe }}</p>
-    <form name="{{ community.subscribe.formName }}" data-netlify="true" netlify-honeypot="bot-field" method="POST" action="/thank-you/" class="cosmos-newsletter-form">
+    <form name="{{ community.subscribe.formName }}" data-netlify="true" netlify-honeypot="bot-field" method="POST" action="/thank-you/" class="cosmos-newsletter-form" toolname="{{ community.subscribe.toolName }}" tooldescription="{{ community.subscribe.toolDescription }}">
       <input type="hidden" name="form-name" value="{{ community.subscribe.formName }}" />
-      <p hidden><input name="bot-field" /></p>
+      <p hidden><input name="bot-field" toolparamdescription="Spam trap. Always leave empty." /></p>
       <div class="d-inline-flex flex-column align-items-start">
         <div class="d-flex gap-2 mb-2">
-          <input type="email" name="email" class="form-control" placeholder="{{ community.subscribe.placeholder }}" required style="max-width:320px;" />
+          <input type="email" name="email" toolparamdescription="The visitor's email address" class="form-control" placeholder="{{ community.subscribe.placeholder }}" required style="max-width:320px;" />
           <button type="submit" class="btn cosmos-glow-btn cosmos-glow-btn--chat flex-shrink-0">{{ community.subscribe.buttonLabel }}</button>
         </div>
         <div class="d-flex align-items-center gap-2">
-          <input class="form-check-input mt-0 flex-shrink-0" type="checkbox" name="notify_new_platforms" id="notify-platforms" checked />
+          <input class="form-check-input mt-0 flex-shrink-0" type="checkbox" name="notify_new_platforms" id="notify-platforms" toolparamdescription="Also email when new chat platforms are added" checked />
           <label class="form-check-label cosmos-newsletter-form__note" for="notify-platforms">{{ community.subscribe.checkboxLabel }}</label>
         </div>
       </div>
