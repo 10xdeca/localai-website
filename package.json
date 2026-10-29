@@ -1,13 +1,17 @@
 {
   "name": "localai-xdeca-website",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Website for local AI Group — a community for running AI offline and privately on your own computer. Part of xdeca.com.",
   "private": true,
   "scripts": {
     "build": "npx @11ty/eleventy && npx pagefind --site _site",
     "start": "npx @11ty/eleventy --serve"
   },
-  "keywords": ["local-ai", "eleventy", "community"],
+  "keywords": [
+    "local-ai",
+    "eleventy",
+    "community"
+  ],
   "author": "xdeca.com",
   "license": "ISC",
   "dependencies": {
