@@ -1,0 +1,42 @@
+name: New model labs
+
+# Every Monday, look for labs releasing popular open models that the Model Providers
+# section doesn't track yet, and list them in one open issue (created or updated).
+on:
+  schedule:
+    - cron: "0 0 * * 1" # Mondays 00:00 UTC (10am/11am Melbourne)
+  workflow_dispatch: # "Run workflow" button
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Find labs we don't track
+        run: node scripts/find-new-providers.js > report.md
+
+      - name: Create or update the issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: New model labs to consider
+        run: |
+          if [ ! -s report.md ]; then
+            echo "No new labs this week."
+            exit 0
+          fi
+          number=$(gh issue list --repo "${{ github.repository }}" --state open --search "in:title \"$TITLE\"" --json number,title \
+            --jq "map(select(.title == \"$TITLE\")) | .[0].number // empty")
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --repo "${{ github.repository }}" --body-file report.md
+          else
+            gh issue create --repo "${{ github.repository }}" --title "$TITLE" --assignee starship-droid --body-file report.md
+          fi

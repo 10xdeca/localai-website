@@ -1,6 +1,6 @@
 {
   "name": "localai-xdeca-website",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Website for local AI Group — a community for running AI offline and privately on your own computer. Part of xdeca.com.",
   "private": true,
   "scripts": {
