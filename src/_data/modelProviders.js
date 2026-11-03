@@ -6,22 +6,30 @@
 // etc). If the API is unreachable or nothing matches, we fall back to the
 // last-known-good value baked in below so the build never breaks.
 
-const BLOCKLIST = /guard|safety|classifier|tokenizer|audio|speech|asr|-tts|align|assistant|unquantized|rerank|-qat-|reward|bench|agentworld|labs-|proxy|-ocr|ground|world/i;
-const NOISY_SUFFIX = /-(original|fp8|bf16|gptq|awq|int4|int8|nvfp4|w4a\d+|gguf|onnx)(-|$)/i;
+// Not a release people would run: helper models (draft models for speculative decoding,
+// probes, parsers), safety and audio models, and on-device export formats
+const BLOCKLIST = /guard|safety|classifier|tokenizer|audio|speech|asr|transcribe|-tts|align|assistant|unquantized|rerank|embed|-qat-|reward|bench|agentworld|labs-|proxy|-ocr|parse|ground|world|dspark|dflash|eagle|probe|executorch|-pte/i;
+// Quantised or converted copies of a release; the original upload is preferred
+const QUANTISED = /-(fp8|gptq|awq|int4|int8|nvfp4|mxfp4|w4a\d+|gguf|onnx|mlx|\d+bit|q\d(_k_m)?)(-|$)/i;
+// Stripped from display names only (bf16 is often how the original weights are published)
+const NOISY_SUFFIX = /-(original|bf16|fp8|gptq|awq|int4|int8|nvfp4|w4a\d+|gguf|onnx)(-|$)/i;
+const BASE = /-base(-|$)/i;
 const INSTRUCT_HINT = /instruct|-it$|-it-/i;
+// An instruct model only wins over a newer release if it came out within this many days of it
+const INSTRUCT_WINDOW_DAYS = 14;
 
 const PROVIDERS = [
   {
     name: "Meta",
-    model: "Llama",
+    model: "Muse",
     country: "USA",
     flag: "🇺🇸",
     logo: "/assets/images/resources/providers/meta.png",
-    website: "https://www.llama.com",
-    hfUrl: "https://huggingface.co/meta-llama",
-    hfAuthor: "meta-llama",
-    namePattern: /^Llama-[34]/i,
-    fallback: { display: "Llama 4 Scout 17B 16E Instruct", date: "2025-04-02", url: "https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct" },
+    website: "https://ai.meta.com",
+    hfUrl: "https://huggingface.co/meta-models",
+    hfAuthor: "meta-models",
+    namePattern: /^Muse-/i,
+    fallback: { display: "Muse Spark Open 816B A42B", date: "2026-09-15", url: "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B" },
   },
   {
     name: "Mistral AI",
@@ -107,7 +115,7 @@ const PROVIDERS = [
     hfUrl: "https://huggingface.co/nvidia",
     hfAuthor: "nvidia",
     hfSearch: "Nemotron",
-    namePattern: /^Nemotron-\d/i,
+    namePattern: /^(NVIDIA-)?Nemotron-\d/i,
     fallback: { display: "Nemotron 3 Nano Omni 30B A3B Reasoning", date: "2026-04-24", url: "https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-FP8" },
   },
   {
@@ -136,6 +144,82 @@ const PROVIDERS = [
     namePattern: /^granite-[\d.]/i,
     fallback: { display: "Granite 4.1 30B", date: "2026-04-06", url: "https://huggingface.co/ibm-granite/granite-4.1-30b-base" },
   },
+  {
+    name: "OpenAI",
+    model: "gpt-oss",
+    country: "USA",
+    flag: "🇺🇸",
+    logo: "/assets/images/resources/providers/openai.png",
+    website: "https://openai.com/open-models",
+    hfUrl: "https://huggingface.co/openai",
+    hfAuthor: "openai",
+    namePattern: /^gpt-oss/i,
+    fallback: { display: "Gpt oss 120b", date: "2025-08-04", url: "https://huggingface.co/openai/gpt-oss-120b" },
+  },
+  {
+    name: "Liquid AI",
+    model: "LFM",
+    country: "USA",
+    flag: "🇺🇸",
+    logo: "/assets/images/resources/providers/liquid.png",
+    website: "https://www.liquid.ai",
+    hfUrl: "https://huggingface.co/LiquidAI",
+    hfAuthor: "LiquidAI",
+    hfSearch: "LFM",
+    namePattern: /^LFM\d/i,
+    fallback: { display: "LFM3 1.7B", date: "2026-10-23", url: "https://huggingface.co/LiquidAI/LFM3-1.7B" },
+  },
+  {
+    name: "Ai2",
+    model: "Olmo",
+    country: "USA",
+    flag: "🇺🇸",
+    logo: "/assets/images/resources/providers/ai2.png",
+    website: "https://allenai.org/olmo",
+    hfUrl: "https://huggingface.co/allenai",
+    hfAuthor: "allenai",
+    hfSearch: "Olmo",
+    namePattern: /^Olmo-\d/i,
+    fallback: { display: "Olmo 3.1 32B Think", date: "2025-12-10", url: "https://huggingface.co/allenai/Olmo-3.1-32B-Think" },
+  },
+  {
+    name: "JetBrains",
+    model: "Mellum",
+    country: "Czech Republic",
+    flag: "🇨🇿",
+    logo: "/assets/images/resources/providers/jetbrains.png",
+    website: "https://www.jetbrains.com/ai",
+    hfUrl: "https://huggingface.co/JetBrains",
+    hfAuthor: "JetBrains",
+    hfSearch: "Mellum",
+    namePattern: /^Mellum/i,
+    fallback: { display: "Mellum2.1 12B A2.5B Thinking", date: "2026-09-20", url: "https://huggingface.co/JetBrains/Mellum2.1-12B-A2.5B-Thinking" },
+  },
+  {
+    name: "Nanbeige",
+    model: "Nanbeige",
+    country: "China",
+    flag: "🇨🇳",
+    logo: "/assets/images/resources/providers/nanbeige.png",
+    website: "https://huggingface.co/Nanbeige",
+    hfUrl: "https://huggingface.co/Nanbeige",
+    hfAuthor: "Nanbeige",
+    namePattern: /^Nanbeige\d/i,
+    fallback: { display: "Nanbeige4.3 33B", date: "2026-10-24", url: "https://huggingface.co/Nanbeige/Nanbeige4.3-33B" },
+  },
+  {
+    name: "inclusionAI",
+    model: "Ling",
+    country: "China",
+    flag: "🇨🇳",
+    logo: "/assets/images/resources/providers/inclusionai.png",
+    website: "https://huggingface.co/inclusionAI",
+    hfUrl: "https://huggingface.co/inclusionAI",
+    hfAuthor: "inclusionAI",
+    hfSearch: "Ling",
+    namePattern: /^Ling-\d/i,
+    fallback: { display: "Ling 3.1 flash 1019", date: "2026-10-27", url: "https://huggingface.co/inclusionAI/Ling-3.1-flash-1019" },
+  },
 ];
 
 function toDisplayName(repoId) {
@@ -163,10 +247,16 @@ async function fetchLatest(provider) {
     const name = m.id.split("/").slice(1).join("/");
     return provider.namePattern.test(name) && !BLOCKLIST.test(m.id);
   });
-  const clean = candidates.filter((m) => !NOISY_SUFFIX.test(m.id));
-  const instructFirst = clean.filter((m) => INSTRUCT_HINT.test(m.id));
-  const pick = instructFirst[0] || clean[0] || candidates[0];
-  if (!pick) throw new Error("no matching release found");
+  // Prefer the original upload of a finished model: not a quantised copy, not a base checkpoint
+  const originals = candidates.filter((m) => !QUANTISED.test(m.id));
+  const finished = originals.filter((m) => !BASE.test(m.id));
+  const pool = finished.length ? finished : originals.length ? originals : candidates;
+  const newest = pool[0];
+  if (!newest) throw new Error("no matching release found");
+
+  // An instruct version beats the newest release only if it's from the same launch
+  const windowStart = new Date(newest.createdAt) - INSTRUCT_WINDOW_DAYS * 86400000;
+  const pick = pool.find((m) => INSTRUCT_HINT.test(m.id) && new Date(m.createdAt) >= windowStart) || newest;
 
   return {
     display: toDisplayName(pick.id),
@@ -189,3 +279,7 @@ module.exports = async function () {
   );
   return results.sort((a, b) => (a.latest.date < b.latest.date ? 1 : -1));
 };
+
+// The tracked list, for scripts/find-new-providers.js
+module.exports.PROVIDERS = PROVIDERS;
+module.exports.QUANTISED = QUANTISED;
