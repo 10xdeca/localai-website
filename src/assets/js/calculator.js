@@ -77,6 +77,9 @@
     return { model: m, need, fit, quant, speed };
   }
 
+  // Verdicts that say it all; their reason only shows in the details
+  const SELF_EXPLAINING = ["Works, a bit slow", "Works, spills into RAM", "Too big"];
+
   const LICENCES = { "apache-2.0": "Apache 2.0", mit: "MIT", "cc-by-4.0": "CC BY 4.0", "openrail++": "OpenRAIL++", openrail: "OpenRAIL", "cc-by-nc-4.0": "CC BY-NC 4.0 (non-commercial)", openmdw: "OpenMDW" };
 
   // One honest verdict per model: [label, tone, reason]. "Works" is not the same as "worth it".
@@ -88,8 +91,8 @@
     if (r.fit === "spill" && r.speed != null && r.speed < 12) return ["Works, not recommended", "warn", "Spills into system RAM, so it's slow"];
     if (r.fit === "cpu" && state.modality === "image") return ["Works, not recommended", "warn", "Minutes per image without a GPU"];
     if (r.fit === "tight") return ["Works, but tight", "warn", "Close other apps first"];
-    if (r.speed != null && r.speed < 12) return ["Works, a bit slow", "warn", "Slow but usable"];
-    if (r.fit === "spill") return ["Works, spills into RAM", "warn", "Part of it runs from system RAM"];
+    if (r.speed != null && r.speed < 12) return ["Works, a bit slow", "warn", "Slower than you read, but usable"];
+    if (r.fit === "spill") return ["Works, spills into RAM", "warn", "Part of it runs from system RAM, which is slower"];
     return ["Runs well", "good", r.speed ? (r.speed >= 30 ? "Fast replies" : "Good speed") : "Plenty of room"];
   }
 
@@ -137,6 +140,9 @@
   const sizeText = (m) => (m.active ? `${m.params}B, ${m.active}B active` : m.params < 1 ? Math.round(m.params * 1000) + "M" : m.params + "B");
   // A speed bar is full at 60 tokens/s: faster than anyone reads
   const SPEED_FULL = 60;
+  // Tokens per second in plain words. People read about 4 to 5 words (6 tokens) a second.
+  // Same cut-offs as the verdicts: under 12 is "a bit slow", under 5 isn't recommended.
+  const speedWord = (t) => (t >= 30 ? "Very fast" : t >= 12 ? "Fast" : t >= 5 ? "Reading pace" : "Very slow");
 
   function logo(m) {
     const org = m.id.split("/")[0];
@@ -161,11 +167,14 @@
 
   function details(r, state) {
     const m = r.model;
+    const [label, , reason] = verdict(r, state);
     const org = m.id.split("/")[0];
     const lab = data.labs[org];
     const facts = [
       ["Made by", esc(lab ? lab.name : org)],
       ["Size", `${sizeText(m)} parameters${m.active ? ". Only the active part is read for each word, so it's fast for its size" : ""}`],
+      ["How it runs", `${label}. ${reason}.`],
+      ...(r.speed != null ? [["Speed", `About ${Math.round(r.speed * 0.75)} words a second (${Math.round(r.speed)} tokens/s)`]] : []),
       ["Needs", `About ${gb(r.need)} of memory at ${r.quant}`],
       ["Licence", `${LICENCES[m.license] || "Custom, check the model page"}${m.fullyOpen ? ", and the training data is open too" : ""}`],
     ];
@@ -190,11 +199,12 @@
     const open = openDetails.has(m.id);
 
     let third = `<span class="calc-row__muted">${sizeText(m)}</span>`;
-    if (r.speed != null) third = `<span class="calc-speed calc-speed--${tone}"><span class="calc-speed__bar" aria-hidden="true"><span style="width:${Math.max(Math.min(r.speed / SPEED_FULL, 1) * 100, 3)}%"></span></span><span class="calc-speed__num">${Math.round(r.speed)} <small>tok/s</small></span></span>`;
+    if (r.speed != null) third = `<span class="calc-speed calc-speed--${r.speed < 12 ? "warn" : "good"}"><span class="calc-speed__word">${speedWord(r.speed)}</span><span class="calc-speed__line"><span class="calc-speed__bar" aria-hidden="true"><span style="width:${Math.max(Math.min(r.speed / SPEED_FULL, 1) * 100, 3)}%"></span></span><span class="calc-speed__num" title="Tokens per second. A token is about three quarters of a word.">${Math.round(r.speed)} tok/s</span></span></span>`;
     else if (m.steps) third = `${esc(m.steps)} steps`;
     if (r.fit === "no") third = `<span class="calc-row__muted" aria-label="Not applicable">n/a</span>`;
 
-    const tags = caps(m).map((k) => `<span class="calc-tag" title="${CAPS[k][2]}"><i class="bi ${CAPS[k][0]}" aria-hidden="true"></i>${CAPS[k][1]}</span>`);
+    // Every row has the ability the list is filtered by, so that tag would only be noise
+    const tags = caps(m).filter((k) => state.modality !== "text" || k !== state.use).map((k) => `<span class="calc-tag" title="${CAPS[k][2]}"><i class="bi ${CAPS[k][0]}" aria-hidden="true"></i>${CAPS[k][1]}</span>`);
     const downloads = [];
     if (m.modality === "text" && r.fit !== "no") {
       if (state.platform === "mac") downloads.push(extLink(quantsUrl(m.id, "mlx"), "MLX", `MLX downloads of ${m.name}`));
@@ -208,7 +218,7 @@
       </div></div></td>
       <td class="calc-row__need" data-label="Needs">~${gb(r.need)}</td>
       <td class="calc-row__speed" data-label="${thirdLabel(state.modality)}">${third}</td>
-      <td class="calc-row__verdict"><span class="calc-verdict calc-verdict--${tone}">${label}</span>${tone === "good" ? "" : `<span class="calc-row__muted">${reason}</span>`}</td>
+      <td class="calc-row__verdict"><span class="calc-verdict calc-verdict--${tone}">${label}</span>${tone === "good" || SELF_EXPLAINING.includes(label) ? "" : `<span class="calc-row__muted">${reason}</span>`}</td>
       <td class="calc-row__more"><button type="button" class="calc-more" data-more="${esc(m.id)}" aria-expanded="${open}" aria-controls="detail-${key}" aria-label="More about ${esc(m.name)}"><i class="bi bi-chevron-down" aria-hidden="true"></i></button></td>
     </tr>
     <tr class="calc-detail" id="detail-${key}" ${open ? "" : "hidden"}><td colspan="5">${details(r, state)}</td></tr>`;
@@ -242,8 +252,13 @@
     if (hw.fast && hw.slow) rows.push([info("spill", "Spill-over RAM", "System RAM a model can overflow into when it doesn't fit on the graphics card. It works, but that part runs much slower."), gb(hw.slow), ""]);
     rows.push([info("size", "Recommended size", `The biggest models that fit comfortably, in billions of parameters (B). Bigger is smarter but slower. Mixture-of-experts models, like Qwen3.6 35B A3B, can be bigger than this and still run, because they only read a few billion at a time.`), `Up to ${maxB}B`, ""]);
 
-    return `<h3 class="calc-machine__title">Your AI stats</h3>` + rows.map(([i, v, extra]) => `<div class="calc-machine__row"><span class="calc-machine__label">${i.label}</span><span class="calc-machine__value">${v}</span>${i.text}${extra}</div>`).join("");
+    return `<summary class="calc-machine__title"><h3>Your AI stats</h3><span class="calc-machine__peek">~${gb(usable)} for AI, up to ${maxB}B</span><i class="bi bi-chevron-down" aria-hidden="true"></i></summary>` + rows.map(([i, v, extra]) => `<div class="calc-machine__row"><span class="calc-machine__label">${i.label}</span><span class="calc-machine__value">${v}</span>${i.text}${extra}</div>`).join("");
   }
+
+  // What Fast and Smart mean for the top picks, right where their effect shows
+  const pickNote = (s) => (s.modality === "text"
+    ? (s.mode === "fast" ? "Quick replies first" : "The cleverest models that are still usable")
+    : (s.mode === "fast" ? "Quicker models first" : "Best quality first"));
 
   const ready = (s) => s.platform && s.ram && (s.platform !== "mac" || s.chip) && (s.platform !== "gpu" || s.gpu);
 
@@ -252,7 +267,8 @@
     if (!configured || !ready(state)) {
       readoutEl.innerHTML = "";
       summary.textContent = "";
-      results.innerHTML = `<div class="calc-results__empty"><i class="bi bi-cpu calc-results__icon" aria-hidden="true"></i><p>${configured ? "Finish setting up your device on the left to see which models run on it." : "Detect your device, or pick it on the left, to see every model that runs on it and how well."}</p>${configured ? "" : `<button type="button" class="btn btn-primary" data-detect><i class="bi bi-magic me-2" aria-hidden="true"></i>Detect my device</button>`}</div>`;
+      const where = `<span class="calc-where--side">on the left</span><span class="calc-where--top">above</span>`;
+      results.innerHTML = `<div class="calc-results__empty"><i class="bi bi-cpu calc-results__icon" aria-hidden="true"></i><p>${configured ? `Finish setting up your device ${where} to see which models run on it.` : `Set up your device ${where} and the models that run on it show up here, best first.`}</p>${configured ? "" : `<button type="button" class="btn btn-primary" data-detect><i class="bi bi-magic me-2" aria-hidden="true"></i>Detect my device</button>`}</div>`;
       return;
     }
 
@@ -262,6 +278,8 @@
     const tier = (r) => (verdict(r, state)[1] === "good" ? 0 : 1);
     rest.sort((a, b) => tier(a) - tier(b) || (tier(a) && a.speed != null && b.speed != null ? b.speed - a.speed : 0));
     readoutEl.innerHTML = readout(state, hw);
+    // Open beside the results; folded when it would push them down a phone screen, unless opened
+    readoutEl.open = statsOpen != null ? statsOpen : wide.matches;
 
     const warnings = [];
     if (state.platform === "mac" && state.ram <= 8) warnings.push("8 GB Macs can run small models, but close your browser tabs first: macOS and Safari share the same memory.");
@@ -275,7 +293,7 @@
       const shown = !collapsible || openGroups.has(key);
       const header = collapsible
         ? `<button type="button" class="calc-block__head" data-group="${key}" aria-expanded="${shown}" aria-controls="calc-${key}"><span>${title} <span class="calc-block__count">${list.length}</span></span><span class="calc-block__action">${shown ? "Hide" : "Show"}<i class="bi bi-chevron-down" aria-hidden="true"></i></span></button>`
-        : `<h3 class="calc-block__head">${title}</h3>`;
+        : `<h3 class="calc-block__head">${title}<span class="calc-block__note">${pickNote(state)}</span></h3>`;
       return `<section class="calc-block${collapsible ? " calc-block--more" : ""}${shown ? " is-open" : ""}">${header}
         <div class="calc-table-wrap" id="calc-${key}" ${shown ? "" : "hidden"}><table class="calc-table">
           <caption class="visually-hidden">${title}, ${esc(hw.label)}</caption>${cols}${head}
@@ -303,6 +321,13 @@
   const openInfo = new Set();
   const readoutEl = root.querySelector("[data-readout]");
   const summary = root.querySelector("[data-summary]");
+  // Wide enough for the sidebar layout; the stats card stays open there
+  const wide = matchMedia("(min-width: 992px)");
+  let statsOpen = null;
+  // Remember a visitor's own open or close (the click lands before the details toggles)
+  readoutEl.addEventListener("click", (e) => {
+    if (e.target.closest("summary")) statsOpen = !readoutEl.open;
+  });
 
   function readForm() {
     const fd = new FormData(form);
@@ -367,6 +392,7 @@
 
     // Task buttons in the main column mirror the hidden inputs
     root.querySelectorAll("[data-pick]").forEach((b) => b.setAttribute("aria-pressed", String(state[b.dataset.pick] === b.dataset.val)));
+    root.querySelectorAll("[data-pick-select]").forEach((s) => (s.value = state[s.dataset.pickSelect]));
   }
 
   function setOpen(set, open) {
@@ -414,6 +440,7 @@
   // Once a device is set, the big button becomes "Detect again" and the "or pick" line goes
   function showSettings() {
     configured = true;
+    root.classList.add("is-configured");
     root.querySelector("[data-detect-label]").textContent = "Detect again";
     root.querySelector(".calc-start__btn").classList.add("calc-start__btn--quiet");
     root.querySelector("[data-or]").hidden = true;
@@ -546,6 +573,13 @@
     if (!row || e.target.closest("button, input, label")) return;
     const set = row.closest("[data-set]");
     if (set && set.querySelector("[data-choices]")) setOpen(set, set.querySelector("[data-choices]").hidden);
+  });
+
+  root.addEventListener("change", (e) => {
+    const s = e.target.closest("[data-pick-select]");
+    if (!s) return;
+    setValue(s.dataset.pickSelect, s.value);
+    update();
   });
 
   form.addEventListener("submit", (e) => e.preventDefault());

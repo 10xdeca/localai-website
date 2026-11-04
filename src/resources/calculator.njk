@@ -9,6 +9,15 @@ fullWidth: true
 {% set area = calculator.page %}
 
 <div class="calc-app" id="calculator">
+  {# First in the source, so phones get the title before the device panel #}
+  <header class="calc-head">
+    {% include "partials/calculator-logo.svg" %}
+    <div>
+      <h1 class="calc-head__title">{{ calculator.page.title }}</h1>
+      <p class="calc-head__sub">{{ calculator.page.subtitle }}</p>
+    </div>
+  </header>
+
   <aside class="calc-side" aria-label="Your device">
     <form class="calc-side__inner" novalidate>
       <a href="/resources/" class="cosmos-back-link calc-side__back"><i class="bi bi-arrow-left me-1"></i>All resources</a>
@@ -112,7 +121,7 @@ fullWidth: true
           </div>
         </div>
 
-        <section class="calc-machine" data-readout aria-label="Your AI stats"></section>
+        <details class="calc-machine" data-readout></details>
       </div>
 
       {# The task choices live in the main column but belong to this form #}
@@ -123,29 +132,24 @@ fullWidth: true
   </aside>
 
   <div class="calc-main">
-    <header class="calc-head">
-      {% include "partials/calculator-logo.svg" %}
-      <div>
-        <h1 class="calc-head__title">{{ calculator.page.title }}</h1>
-        <p class="calc-head__sub">{{ calculator.page.subtitle }}</p>
-      </div>
-    </header>
-
     <div class="calc-tasks" role="group" aria-label="What do you want to do?">
       {% for m in calculator.modalities %}
       <button type="button" data-pick="modality" data-val="{{ m.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}"><b><i class="bi {{ m.icon }}" aria-hidden="true"></i>{{ m.label }}</b></button>
       {% endfor %}
     </div>
 
-    <div class="calc-toolbar">
-      <div class="calc-pills" data-show-for="modality:text" role="group" aria-label="What kind of text?">
-        {% for u in calculator.useCases %}
-        <button type="button" class="calc-pill" data-pick="use" data-val="{{ u.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ u.label }}</button>
-        {% endfor %}
-      </div>
-      <div class="calc-seg" role="group" aria-label="Fast or smart?">
-        <button type="button" data-pick="mode" data-val="fast" aria-pressed="true"><i class="bi bi-lightning-charge me-1" aria-hidden="true"></i>Fast</button>
-        <button type="button" data-pick="mode" data-val="smart" aria-pressed="false"><i class="bi bi-lightbulb me-1" aria-hidden="true"></i>Smart</button>
+    {# Two quiet controls instead of a row of buttons: what it's for, and fast or smart #}
+    <div class="calc-toolbar" data-toolbar>
+      <label class="calc-field" data-show-for="modality:text">
+        <span class="calc-field__label">Mostly for</span>
+        <select class="calc-select" data-pick-select="use">
+          {% for u in calculator.useCases %}<option value="{{ u.id }}">{{ u.label }}</option>{% endfor %}
+        </select>
+      </label>
+      {# The Top picks header says what each one means #}
+      <div class="calc-seg" role="group" aria-label="Pick for speed or smarts">
+        <button type="button" data-pick="mode" data-val="fast" aria-pressed="true" title="Quick replies first"><i class="bi bi-lightning-charge me-1" aria-hidden="true"></i>Fast</button>
+        <button type="button" data-pick="mode" data-val="smart" aria-pressed="false" title="The cleverest models that are still usable"><i class="bi bi-lightbulb me-1" aria-hidden="true"></i>Smart</button>
       </div>
     </div>
 
