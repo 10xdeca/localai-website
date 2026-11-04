@@ -11,6 +11,7 @@
     "accent": "resources",
     "icon": "bi-book",
     "children": [
+      { "title": "Hardware Calculator", "sub": "What AI can I run on my machine?", "href": "/resources/calculator/", "logo": "calculator", "divider": true },
       { "title": "Where to Start", "href": "/resources/getting-started/" },
       { "title": "Models", "href": "/resources/models/" },
       { "title": "Coding Harnesses", "href": "/resources/coding-harnesses/" },

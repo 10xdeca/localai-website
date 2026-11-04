@@ -1,0 +1,183 @@
+---
+layout: base.njk
+title: localAI Hardware Calculator
+description: A hardware calculator for local AI. Detect your Mac, GPU or laptop, pick what you want to do, and see which open models run well on it.
+permalink: /resources/calculator/
+fullWidth: true
+---
+
+{% set area = calculator.page %}
+
+<div class="calc-app" id="calculator">
+  {# First in the source, so phones get the title before the device panel #}
+  <header class="calc-head">
+    {% include "partials/calculator-logo.svg" %}
+    <div>
+      <h1 class="calc-head__title">{{ calculator.page.title }}</h1>
+      <p class="calc-head__sub">{{ calculator.page.subtitle }}</p>
+    </div>
+  </header>
+
+  <aside class="calc-side" aria-label="Your device">
+    <form class="calc-side__inner" novalidate>
+      <a href="/resources/" class="cosmos-back-link calc-side__back"><i class="bi bi-arrow-left me-1"></i>All resources</a>
+      <h2 class="visually-hidden">Your device</h2>
+
+      {# Detecting is the main way in; the fields are right there for picking by hand #}
+      <div class="calc-start">
+        <button type="button" class="btn btn-primary calc-start__btn" data-detect><i class="bi bi-magic me-2" aria-hidden="true"></i><span data-detect-label>Detect my device</span></button>
+        <p class="calc-start__or" data-or>or pick it yourself</p>
+      </div>
+
+      <div class="calc-settings">
+        <p class="calc-side__status" data-detected role="status"></p>
+
+        {# Each setting shows its value; the pencil opens the choices #}
+        <div class="calc-set" data-set="platform">
+          <div class="calc-set__row">
+            <div><span class="calc-set__label">Type</span><span class="calc-set__value" data-value="platform"></span></div>
+            <button type="button" class="calc-set__edit" data-edit aria-label="Change type" aria-expanded="false" aria-controls="choices-platform"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+          </div>
+          <div class="calc-set__choices" id="choices-platform" data-choices role="radiogroup" aria-label="Device type" hidden>
+            {% for p in [["mac", "bi-apple", "Mac", "Apple Silicon, M1 or newer"], ["cpu", "bi-laptop", "Laptop or PC, no graphics card", "Runs on the processor"], ["gpu", "bi-gpu-card", "I have a graphics card", "NVIDIA, AMD or Intel Arc"]] %}
+            <input type="radio" class="btn-check" name="platform" id="platform-{{ p[0] }}" value="{{ p[0] }}">
+            <label class="calc-option" for="platform-{{ p[0] }}"><i class="bi {{ p[1] }}" aria-hidden="true"></i><span><b>{{ p[2] }}</b><small>{{ p[3] }}</small></span></label>
+            {% endfor %}
+          </div>
+        </div>
+
+        {# Before a type is picked, a placeholder for the chip or graphics card #}
+        <div class="calc-set calc-set--off" data-show-for="platform:none">
+          <div class="calc-set__row">
+            <div><span class="calc-set__label">Chip or graphics card</span><span class="calc-set__value calc-set__value--off">Pick a type first</span></div>
+          </div>
+        </div>
+
+        <div class="calc-set" data-set="chip" data-show-for="platform:mac">
+          <div class="calc-set__row">
+            <div><span class="calc-set__label">Chip</span><span class="calc-set__value" data-value="chip"></span></div>
+            <button type="button" class="calc-set__edit" data-edit aria-label="Change chip" aria-expanded="false" aria-controls="choices-chip"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+          </div>
+          <div class="calc-set__choices" id="choices-chip" data-choices hidden>
+            <p class="calc-hint">Apple menu, then About This Mac.</p>
+            <div class="calc-chips" role="radiogroup" aria-label="Chip">
+              <span></span>{% for t in ["Base", "Pro", "Max", "Ultra"] %}<span class="calc-chips__head">{{ t }}</span>{% endfor %}
+              {% for gen in ["m1", "m2", "m3", "m4", "m5"] %}
+              <span class="calc-chips__row">{{ gen | upper }}</span>
+              {% for tier in ["", "-pro", "-max", "-ultra"] %}
+              {% set chip = calculator.macChips | find("id", gen + tier) %}
+              {% if chip %}
+              <input type="radio" class="btn-check" name="chip" id="chip-{{ chip.id }}" value="{{ chip.id }}">
+              <label class="calc-chip" for="chip-{{ chip.id }}" title="{{ chip.name }}, {{ chip.bandwidth }} GB/s">{{ chip.name | replace(gen | upper, "") | trim or gen | upper }}</label>
+              {% else %}<span></span>{% endif %}
+              {% endfor %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-set" data-set="gpu" data-show-for="platform:gpu">
+          <div class="calc-set__row">
+            <div><span class="calc-set__label">Graphics card</span><span class="calc-set__value" data-value="gpu"></span></div>
+            <button type="button" class="calc-set__edit" data-edit aria-label="Change graphics card" aria-expanded="false" aria-controls="choices-gpu"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+          </div>
+          <div class="calc-set__choices" id="choices-gpu" data-choices role="radiogroup" aria-label="Graphics card" hidden>
+            {% for brand in ["NVIDIA", "AMD", "Intel"] %}
+            <p class="calc-hint calc-hint--group">{{ brand }}</p>
+            <div class="calc-pills">
+              {% for gpu in calculator.gpus %}{% if brand in gpu.name %}
+              <input type="radio" class="btn-check" name="gpu" id="gpu-{{ gpu.id }}" value="{{ gpu.id }}">
+              <label class="calc-pill" for="gpu-{{ gpu.id }}">{{ gpu.name | replace(brand + " ", "") }} <span>{{ gpu.vram }} GB</span></label>
+              {% endif %}{% endfor %}
+              {% if loop.last %}
+              <input type="radio" class="btn-check" name="gpu" id="gpu-other" value="other">
+              <label class="calc-pill" for="gpu-other">Another card</label>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="calc-set" data-set="vram" data-show-for="platform:gpu gpu:other">
+          <div class="calc-set__row calc-set__row--input">
+            <label class="calc-set__label" for="calc-vram">Graphics memory (VRAM)</label>
+            <span class="calc-inline"><input class="form-control" type="number" id="calc-vram" name="vram" min="2" max="192" step="1" value="8" inputmode="numeric"> GB</span>
+          </div>
+        </div>
+
+        <div class="calc-set" data-set="ram">
+          <div class="calc-set__row">
+            <div><span class="calc-set__label" data-ram-label>Memory</span><span class="calc-set__value" data-value="ram"></span></div>
+            <button type="button" class="calc-set__edit" data-edit aria-label="Change memory" aria-expanded="false" aria-controls="choices-ram"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+          </div>
+          <div class="calc-set__choices" id="choices-ram" data-choices hidden>
+            <p class="calc-hint" data-ram-hint></p>
+            <div class="calc-pills" role="radiogroup" aria-label="Memory" data-ram-group>
+              {% for gb in calculator.ramOptions %}
+              <input type="radio" class="btn-check" name="ram" id="ram-{{ gb }}" value="{{ gb }}">
+              <label class="calc-pill" for="ram-{{ gb }}">{{ gb }} GB</label>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <details class="calc-machine" data-readout></details>
+      </div>
+
+      {# The task choices live in the main column but belong to this form #}
+      <input type="hidden" name="modality" value="text" data-hidden="modality">
+      <input type="hidden" name="use" value="general" data-hidden="use">
+      <input type="hidden" name="mode" value="fast" data-hidden="mode">
+    </form>
+  </aside>
+
+  <div class="calc-main">
+    <div class="calc-tasks" role="group" aria-label="What do you want to do?">
+      {% for m in calculator.modalities %}
+      <button type="button" data-pick="modality" data-val="{{ m.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}"><b><i class="bi {{ m.icon }}" aria-hidden="true"></i>{{ m.label }}</b></button>
+      {% endfor %}
+    </div>
+
+    {# Two quiet controls instead of a row of buttons: what it's for, and fast or smart #}
+    <div class="calc-toolbar" data-toolbar>
+      <label class="calc-field" data-show-for="modality:text">
+        <span class="calc-field__label">Mostly for</span>
+        <select class="calc-select" data-pick-select="use">
+          {% for u in calculator.useCases %}<option value="{{ u.id }}">{{ u.label }}</option>{% endfor %}
+        </select>
+      </label>
+      {# The Top picks header says what each one means #}
+      <div class="calc-seg" role="group" aria-label="Pick for speed or smarts">
+        <button type="button" data-pick="mode" data-val="fast" aria-pressed="true" title="Quick replies first"><i class="bi bi-lightning-charge me-1" aria-hidden="true"></i>Fast</button>
+        <button type="button" data-pick="mode" data-val="smart" aria-pressed="false" title="The cleverest models that are still usable"><i class="bi bi-lightbulb me-1" aria-hidden="true"></i>Smart</button>
+      </div>
+    </div>
+
+    <p class="visually-hidden" role="status" data-summary></p>
+    <div class="calc-results" data-results>
+      <noscript><p class="calc-results__empty">The calculator needs JavaScript. The model list is on our <a href="/resources/models/">Models</a> page.</p></noscript>
+    </div>
+
+    <header class="calc-intro">
+      <h2 class="calc-main__title">About {{ calculator.page.title }}</h2>
+      <p class="calc-main__lead">{{ calculator.page.lead }}</p>
+    </header>
+
+    <details class="calc-method">
+      <summary>How the estimate works</summary>
+      <ul>
+        <li><strong>Memory first.</strong> A model has to fit in memory to run well. Most text models are downloaded at 4-bit, which takes about 0.6 GB per billion parameters, plus about 1.5 GB for the conversation and the app running it.</li>
+        <li><strong>Macs share their memory.</strong> The GPU on Apple Silicon can use about two thirds of memory up to 36 GB, and three quarters above that. The rest is left for macOS and your apps.</li>
+        <li><strong>Speed comes from memory bandwidth.</strong> To write each token (about three quarters of a word), the computer reads every active weight once. So tokens per second is roughly bandwidth divided by model size. That's why a big Mac or a fast GPU matters more than the CPU.</li>
+        <li><strong>Mixture-of-experts models are fast for their size.</strong> A model like Qwen3.6 35B A3B needs memory for all 35B parameters, but only reads 3B of them per token.</li>
+        <li><strong>PCs can spill over.</strong> A model too big for the graphics card can run partly from system RAM, but that part runs at RAM speed, which is much slower.</li>
+        <li><strong>Image models are different.</strong> They need room for the image model plus its text encoder, and their speed depends on how many steps they take, so we show steps instead of tokens per second.</li>
+      </ul>
+      <p class="calc-method__note">These are estimates, so treat them as a starting point. Real speed depends on the app (Ollama, LM Studio, MLX, llama.cpp), how long your conversation is, and what else is running.</p>
+      {% include "partials/publishedUpdated.njk" %}
+    </details>
+  </div>
+</div>
+
+<script id="calculator-data" type="application/json">{{ calculator | dump | safe }}</script>
+<script src="/assets/js/calculator.js" defer></script>

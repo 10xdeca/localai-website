@@ -34,5 +34,8 @@ areaSlug: models
       <p class="cosmos-meta-dates cosmos-meta-dates--build">Latest Build: {{ global.buildDate | formatDate('MMM Do, YYYY') }}</p>
       {% include "partials/modelProviderCards.njk" %}
     </div>
+
+    {% set promoLead = "Found a model you like? Check it fits on your machine before you download it." %}
+    <div class="mt-5">{% include "partials/calculatorPromo.njk" %}</div>
   </div>
 </section>
