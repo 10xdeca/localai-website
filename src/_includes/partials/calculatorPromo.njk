@@ -1,0 +1,10 @@
+{# Banner for the hardware calculator. Set promoLead before including to tailor the line to the page. #}
+<a href="/resources/calculator/" class="calc-promo">
+  {% include "partials/calculator-logo.svg" %}
+  <div class="calc-promo__body">
+    <h2 class="calc-promo__title">{{ calculator.page.title }} <span class="calc-promo__new">New</span></h2>
+    <p class="calc-promo__sub">{{ calculator.page.subtitle }}</p>
+    <p class="calc-promo__lead">{{ promoLead or "Pick your Mac, GPU or laptop and what you want to do, and see which open models run comfortably on it." }}</p>
+  </div>
+  <span class="btn btn-primary calc-promo__btn">Open the calculator <i class="bi bi-arrow-right ms-1"></i></span>
+</a>

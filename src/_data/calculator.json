@@ -1,0 +1,551 @@
+{
+  "page": { "title": "localAI Hardware Calculator", "subtitle": "What AI can I run on my machine?", "lead": "Tell us your hardware and what you want to do, and get a list of open models that run comfortably on it. Everything runs in your browser and nothing is sent anywhere.", "published": "2026-10-29", "updated": "2026-11-04" },
+  "useCases": [
+    { "id": "general", "label": "Chat & writing" },
+    { "id": "coding", "label": "Coding" },
+    { "id": "thinking", "label": "Thinking" },
+    { "id": "summary", "label": "Summaries" },
+    { "id": "tools", "label": "Agents & tools" },
+    { "id": "vision", "label": "Reading images" }
+  ],
+  "modalities": [
+    { "id": "text", "label": "Chat & coding", "icon": "bi-chat-dots", "desc": "Write, summarise, code, ask questions" },
+    { "id": "image", "label": "Make images", "icon": "bi-image", "desc": "Turn a prompt into a picture" },
+    { "id": "stt", "label": "Speech to text", "icon": "bi-mic", "desc": "Transcribe audio" },
+    { "id": "tts", "label": "Text to speech", "icon": "bi-volume-up", "desc": "Read text aloud" }
+  ],
+  "labs": {
+    "Aleph-Alpha": { "name": "Aleph Alpha", "logo": "/assets/images/resources/providers/aleph-alpha.png" },
+    "LiquidAI": { "name": "Liquid AI", "logo": "/assets/images/resources/providers/liquid.png" },
+    "Nanbeige": { "name": "Nanbeige", "logo": "/assets/images/resources/providers/nanbeige.png" },
+    "Qwen": { "name": "Qwen", "logo": "/assets/images/resources/providers/alibaba.png" },
+    "Tongyi-MAI": { "name": "Alibaba Tongyi", "logo": "/assets/images/resources/providers/alibaba.png" },
+    "allenai": { "name": "Ai2", "logo": "/assets/images/resources/providers/ai2.png" },
+    "black-forest-labs": { "name": "Black Forest Labs", "logo": "/assets/images/resources/providers/bfl.png" },
+    "deepseek-ai": { "name": "DeepSeek", "logo": "/assets/images/resources/providers/deepseek.png" },
+    "google": { "name": "Google", "logo": "/assets/images/resources/providers/google.png" },
+    "hexgrad": { "name": "hexgrad", "logo": "/assets/images/resources/providers/hexgrad.png" },
+    "ibm-granite": { "name": "IBM", "logo": "/assets/images/resources/providers/ibm.png" },
+    "lodestones": { "name": "Lodestones", "logo": "/assets/images/resources/providers/lodestones.png" },
+    "microsoft": { "name": "Microsoft", "logo": "/assets/images/resources/providers/microsoft.png" },
+    "mistralai": { "name": "Mistral AI", "logo": "/assets/images/resources/providers/mistral.png" },
+    "nvidia": { "name": "NVIDIA", "logo": "/assets/images/resources/providers/nvidia.png" },
+    "openai": { "name": "OpenAI", "logo": "/assets/images/resources/providers/openai.png" },
+    "openbmb": { "name": "OpenBMB", "logo": "/assets/images/resources/providers/openbmb.png" },
+    "stabilityai": { "name": "Stability AI", "logo": "/assets/images/resources/providers/stability.png" },
+    "zai-org": { "name": "Z.ai", "logo": "/assets/images/resources/providers/zai.png" },
+    "k2-fsa": { "name": "k2-fsa", "logo": "/assets/images/resources/providers/k2-fsa.png" },
+    "ResembleAI": { "name": "Resemble AI", "logo": "/assets/images/resources/providers/resemble.png" },
+    "Supertone": { "name": "Supertone", "logo": "/assets/images/resources/providers/supertone.png" },
+    "fishaudio": { "name": "Fish Audio", "logo": "/assets/images/resources/providers/fishaudio.png" },
+    "bosonai": { "name": "Boson AI", "logo": "/assets/images/resources/providers/boson.png" },
+    "neuphonic": { "name": "Neuphonic", "logo": "/assets/images/resources/providers/neuphonic.png" },
+    "nari-labs": { "name": "Nari Labs", "logo": "/assets/images/resources/providers/nari.png" },
+    "FunAudioLLM": { "name": "Alibaba FunAudioLLM", "logo": "/assets/images/resources/providers/funaudio.png" },
+    "IndexTeam": { "name": "bilibili Index", "logo": "/assets/images/resources/providers/indexteam.png" },
+    "maya-research": { "name": "Maya Research", "logo": "/assets/images/resources/providers/maya.png" },
+    "canopylabs": { "name": "Canopy Labs", "logo": "/assets/images/resources/providers/canopy.png" },
+    "coqui": { "name": "Coqui", "logo": "/assets/images/resources/providers/coqui.png" },
+    "Zyphra": { "name": "Zyphra", "logo": "/assets/images/resources/providers/zyphra.png" },
+    "sesame": { "name": "Sesame", "logo": "/assets/images/resources/providers/sesame.png" },
+    "krea": { "name": "Krea", "logo": "/assets/images/resources/providers/krea.png" },
+    "OpenMOSS-Team": { "name": "OpenMOSS", "logo": "/assets/images/resources/providers/openmoss.png" },
+    "HiDream-ai": { "name": "HiDream", "logo": "/assets/images/resources/providers/hidream.png" },
+    "briaai": { "name": "Bria", "logo": "/assets/images/resources/providers/bria.png" },
+    "CohereLabs": { "name": "Cohere", "logo": "/assets/images/resources/providers/cohere.png" },
+    "Cactus-Compute": { "name": "Cactus", "logo": "/assets/images/resources/providers/cactus.png" },
+    "moondream": { "name": "Moondream", "logo": "/assets/images/resources/providers/moondream.png" },
+    "distil-whisper": { "name": "Hugging Face", "logo": "/assets/images/resources/providers/distil-whisper.png" }
+  },
+  "macChips": [
+    {
+      "id": "m1",
+      "name": "M1",
+      "bandwidth": 68,
+      "ram": [8, 16]
+    },
+    {
+      "id": "m1-pro",
+      "name": "M1 Pro",
+      "bandwidth": 200,
+      "ram": [16, 32]
+    },
+    {
+      "id": "m1-max",
+      "name": "M1 Max",
+      "bandwidth": 400,
+      "ram": [32, 64]
+    },
+    {
+      "id": "m1-ultra",
+      "name": "M1 Ultra",
+      "bandwidth": 800,
+      "ram": [64, 128]
+    },
+    {
+      "id": "m2",
+      "name": "M2",
+      "bandwidth": 100,
+      "ram": [8, 16, 24]
+    },
+    {
+      "id": "m2-pro",
+      "name": "M2 Pro",
+      "bandwidth": 200,
+      "ram": [16, 32]
+    },
+    {
+      "id": "m2-max",
+      "name": "M2 Max",
+      "bandwidth": 400,
+      "ram": [32, 64, 96]
+    },
+    {
+      "id": "m2-ultra",
+      "name": "M2 Ultra",
+      "bandwidth": 800,
+      "ram": [64, 128, 192]
+    },
+    {
+      "id": "m3",
+      "name": "M3",
+      "bandwidth": 100,
+      "ram": [8, 16, 24]
+    },
+    {
+      "id": "m3-pro",
+      "name": "M3 Pro",
+      "bandwidth": 150,
+      "ram": [18, 36]
+    },
+    {
+      "id": "m3-max",
+      "name": "M3 Max",
+      "bandwidth": 300,
+      "ram": [36, 48, 64, 96, 128],
+      "note": "400 GB/s on the 16-core CPU version"
+    },
+    {
+      "id": "m3-ultra",
+      "name": "M3 Ultra",
+      "bandwidth": 819,
+      "ram": [96, 256, 512]
+    },
+    {
+      "id": "m4",
+      "name": "M4",
+      "bandwidth": 120,
+      "ram": [16, 24, 32]
+    },
+    {
+      "id": "m4-pro",
+      "name": "M4 Pro",
+      "bandwidth": 273,
+      "ram": [24, 48, 64]
+    },
+    {
+      "id": "m4-max",
+      "name": "M4 Max",
+      "bandwidth": 410,
+      "ram": [36, 48, 64, 128],
+      "note": "546 GB/s on the 16-core CPU version"
+    },
+    {
+      "id": "m5",
+      "name": "M5",
+      "bandwidth": 153,
+      "ram": [16, 24, 32]
+    },
+    {
+      "id": "m5-pro",
+      "name": "M5 Pro",
+      "bandwidth": 307,
+      "ram": [24, 48, 64]
+    },
+    {
+      "id": "m5-max",
+      "name": "M5 Max",
+      "bandwidth": 460,
+      "ram": [36, 48, 64, 128],
+      "note": "614 GB/s on the 40-core GPU version"
+    }
+  ],
+  "gpus": [
+    { "id": "rtx-3060", "name": "NVIDIA RTX 3060", "match": "3060", "vram": 12, "bandwidth": 360 },
+    { "id": "rtx-3070", "name": "NVIDIA RTX 3070", "match": "3070", "vram": 8, "bandwidth": 448 },
+    { "id": "rtx-3080", "name": "NVIDIA RTX 3080", "match": "3080", "vram": 10, "bandwidth": 760 },
+    { "id": "rtx-3090", "name": "NVIDIA RTX 3090", "match": "3090", "vram": 24, "bandwidth": 936 },
+    { "id": "rtx-4060", "name": "NVIDIA RTX 4060", "match": "4060(?! ?ti)", "vram": 8, "bandwidth": 272 },
+    { "id": "rtx-4060-ti-16", "name": "NVIDIA RTX 4060 Ti", "match": "4060 ?ti", "vram": 16, "bandwidth": 288 },
+    { "id": "rtx-4070", "name": "NVIDIA RTX 4070 / 4070 Super", "match": "4070(?! ?ti)", "vram": 12, "bandwidth": 504 },
+    { "id": "rtx-4070-ti-super", "name": "NVIDIA RTX 4070 Ti Super", "match": "4070 ?ti", "vram": 16, "bandwidth": 672 },
+    { "id": "rtx-4080", "name": "NVIDIA RTX 4080 / 4080 Super", "match": "4080", "vram": 16, "bandwidth": 717 },
+    { "id": "rtx-4090", "name": "NVIDIA RTX 4090", "match": "4090", "vram": 24, "bandwidth": 1008 },
+    { "id": "rtx-5060-ti-16", "name": "NVIDIA RTX 5060 Ti", "match": "5060 ?ti", "vram": 16, "bandwidth": 448 },
+    { "id": "rtx-5070", "name": "NVIDIA RTX 5070", "match": "5070(?! ?ti)", "vram": 12, "bandwidth": 672 },
+    { "id": "rtx-5070-ti", "name": "NVIDIA RTX 5070 Ti", "match": "5070 ?ti", "vram": 16, "bandwidth": 896 },
+    { "id": "rtx-5080", "name": "NVIDIA RTX 5080", "match": "5080", "vram": 16, "bandwidth": 960 },
+    { "id": "rtx-5090", "name": "NVIDIA RTX 5090", "match": "5090", "vram": 32, "bandwidth": 1792 },
+    { "id": "rx-7800-xt", "name": "AMD RX 7800 XT", "match": "7800 ?xt", "vram": 16, "bandwidth": 624 },
+    { "id": "rx-7900-xtx", "name": "AMD RX 7900 XTX", "match": "7900 ?xtx", "vram": 24, "bandwidth": 960 },
+    { "id": "rx-9070-xt", "name": "AMD RX 9070 XT", "match": "9070 ?xt", "vram": 16, "bandwidth": 640 },
+    { "id": "arc-b580", "name": "Intel Arc B580", "match": "b580", "vram": 12, "bandwidth": 456 }
+  ],
+  "ramOptions": [8, 16, 18, 24, 32, 36, 48, 64, 96, 128, 192, 256, 512],
+  "cpuBandwidth": 60,
+  "models": [
+    {
+      "id": "Qwen/Qwen3.5-0.8B",
+      "name": "Qwen3.5 0.8B",
+      "modality": "text",
+      "params": 0.87,
+      "uses": ["general", "summary", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "LiquidAI/LFM3-1.7B",
+      "name": "LFM3 1.7B",
+      "modality": "text",
+      "params": 1.73,
+      "uses": ["general", "summary", "tools"],
+      "license": "other"
+    },
+    {
+      "id": "Qwen/Qwen3.5-2B",
+      "name": "Qwen3.5 2B",
+      "modality": "text",
+      "params": 2.27,
+      "uses": ["general", "summary", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "google/gemma-4-E2B-it",
+      "name": "Gemma 4 E2B",
+      "modality": "text",
+      "params": 5.12,
+      "active": 2,
+      "effective": true,
+      "uses": ["general", "summary", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "mistralai/Ministral-3-3B-Instruct-2512",
+      "name": "Ministral 3 3B",
+      "modality": "text",
+      "params": 3.85,
+      "uses": ["general", "summary", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
+      "name": "Nemotron 3 Nano 4B",
+      "modality": "text",
+      "params": 3.97,
+      "uses": ["general", "thinking", "tools"],
+      "license": "other"
+    },
+    {
+      "id": "Qwen/Qwen3.5-4B",
+      "name": "Qwen3.5 4B",
+      "modality": "text",
+      "params": 4.66,
+      "uses": ["general", "summary", "thinking", "tools", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "google/gemma-4-E4B-it",
+      "name": "Gemma 4 E4B",
+      "modality": "text",
+      "params": 8.0,
+      "active": 4,
+      "effective": true,
+      "uses": ["general", "summary", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "allenai/Olmo-3-7B-Think",
+      "name": "Olmo 3 7B Think",
+      "modality": "text",
+      "params": 7.3,
+      "uses": ["thinking"],
+      "license": "apache-2.0",
+      "fullyOpen": true
+    },
+    {
+      "id": "LiquidAI/LFM2.5-8B-A1B",
+      "name": "LFM2.5 8B A1B",
+      "modality": "text",
+      "params": 8.47,
+      "active": 1,
+      "uses": ["general", "summary", "tools"],
+      "license": "other"
+    },
+    {
+      "id": "ibm-granite/granite-4.2-8b",
+      "name": "Granite 4.2 8B",
+      "modality": "text",
+      "params": 8.79,
+      "uses": ["general", "summary", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "mistralai/Ministral-3-8B-Instruct-2512",
+      "name": "Ministral 3 8B",
+      "modality": "text",
+      "params": 8.92,
+      "uses": ["general", "summary", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "Qwen/Qwen3.5-9B",
+      "name": "Qwen3.5 9B",
+      "modality": "text",
+      "params": 9.65,
+      "uses": ["general", "coding", "thinking", "tools", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "google/gemma-4-12B-it",
+      "name": "Gemma 4 12B",
+      "modality": "text",
+      "params": 11.96,
+      "uses": ["general", "tools", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "mistralai/Ministral-3-14B-Instruct-2512",
+      "name": "Ministral 3 14B",
+      "modality": "text",
+      "params": 13.95,
+      "uses": ["general", "summary", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "mistralai/Ministral-3-14B-Reasoning-2512",
+      "name": "Ministral 3 14B Reasoning",
+      "modality": "text",
+      "params": 13.95,
+      "uses": ["thinking"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "openai/gpt-oss-20b",
+      "name": "gpt-oss 20B",
+      "modality": "text",
+      "params": 20.91,
+      "active": 3.6,
+      "uses": ["general", "coding", "thinking", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "LiquidAI/LFM2.5-24B-A2B",
+      "name": "LFM2.5 24B A2B",
+      "modality": "text",
+      "params": 23.97,
+      "active": 2,
+      "uses": ["general", "summary", "tools"],
+      "license": "other"
+    },
+    {
+      "id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+      "name": "Devstral Small 2 24B",
+      "modality": "text",
+      "params": 24.01,
+      "uses": ["coding", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "mistralai/Magistral-Small-2509",
+      "name": "Magistral Small 24B",
+      "modality": "text",
+      "params": 24.01,
+      "uses": ["general", "thinking"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "google/gemma-4-26B-A4B-it",
+      "name": "Gemma 4 26B A4B",
+      "modality": "text",
+      "params": 25.81,
+      "active": 4,
+      "uses": ["general", "coding", "tools", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "Qwen/Qwen3.8-27B",
+      "name": "Qwen3.8 27B",
+      "modality": "text",
+      "params": 27.78,
+      "uses": ["general", "coding", "thinking", "tools", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+      "name": "Qwen3 Coder 30B A3B",
+      "modality": "text",
+      "params": 30.53,
+      "active": 3.3,
+      "uses": ["coding", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "zai-org/GLM-4.7-Flash",
+      "name": "GLM-4.7 Flash",
+      "modality": "text",
+      "params": 31.22,
+      "active": 5,
+      "uses": ["general", "coding", "thinking", "tools"],
+      "license": "mit"
+    },
+    {
+      "id": "google/gemma-4-31B-it",
+      "name": "Gemma 4 31B",
+      "modality": "text",
+      "params": 31.27,
+      "uses": ["general", "coding", "thinking", "tools", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16",
+      "name": "Nemotron 3.5 Lightning 30B A3B",
+      "modality": "text",
+      "params": 31.58,
+      "active": 3,
+      "uses": ["general", "coding", "thinking", "tools"],
+      "license": "other"
+    },
+    {
+      "id": "allenai/Olmo-3.1-32B-Think",
+      "name": "Olmo 3.1 32B Think",
+      "modality": "text",
+      "params": 32.23,
+      "uses": ["thinking"],
+      "license": "apache-2.0",
+      "fullyOpen": true
+    },
+    {
+      "id": "Nanbeige/Nanbeige4.3-33B",
+      "name": "Nanbeige 4.3 33B",
+      "modality": "text",
+      "params": 33.12,
+      "uses": ["general", "thinking", "coding"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "Qwen/Qwen3.6-35B-A3B",
+      "name": "Qwen3.6 35B A3B",
+      "modality": "text",
+      "params": 35.95,
+      "active": 3,
+      "uses": ["general", "coding", "thinking", "tools", "vision"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "Aleph-Alpha/Kolibri-1",
+      "name": "Aleph Alpha Kolibri-1",
+      "modality": "text",
+      "params": 78.1,
+      "active": 3.5,
+      "uses": ["general", "thinking", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "openai/gpt-oss-120b",
+      "name": "gpt-oss 120B",
+      "modality": "text",
+      "params": 116.83,
+      "active": 5.1,
+      "uses": ["general", "coding", "thinking", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "mistralai/Mistral-Small-4-119B-2603",
+      "name": "Mistral Small 4 119B",
+      "modality": "text",
+      "params": 119.4,
+      "active": 7,
+      "uses": ["general", "coding", "tools"],
+      "license": "apache-2.0"
+    },
+    {
+      "id": "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16",
+      "name": "Nemotron 3 Super 120B A12B",
+      "modality": "text",
+      "params": 123.61,
+      "active": 12,
+      "uses": ["general", "coding", "thinking", "tools"],
+      "license": "other"
+    },
+    {
+      "id": "deepseek-ai/DeepSeek-V4-Flash",
+      "name": "DeepSeek V4 Flash",
+      "modality": "text",
+      "params": 290.94,
+      "active": 20,
+      "uses": ["general", "coding", "thinking", "tools"],
+      "license": "mit"
+    },
+    { "id": "stabilityai/sdxl-turbo", "name": "SDXL Turbo", "modality": "image", "params": 2.6, "encoder": 0.8, "steps": "1 to 4", "fast": true, "license": "other", "note": "Old but tiny. Fine for quick sketches, non-commercial licence." },
+    { "id": "stabilityai/stable-diffusion-xl-base-1.0", "name": "Stable Diffusion XL", "modality": "image", "params": 2.6, "encoder": 0.8, "steps": "25 to 40", "license": "openrail++", "note": "Huge library of community styles and LoRAs." },
+    { "id": "stabilityai/stable-diffusion-3.5-medium", "name": "Stable Diffusion 3.5 Medium", "modality": "image", "params": 2.47, "encoder": 5.4, "steps": "28 to 40", "license": "other", "note": "Community licence: free for most people and small businesses." },
+    { "id": "black-forest-labs/FLUX.2-klein-4B", "name": "FLUX.2 klein 4B", "modality": "image", "params": 3.88, "encoder": 4, "steps": "4", "fast": true, "license": "apache-2.0" },
+    { "id": "Tongyi-MAI/Z-Image-Turbo", "name": "Z-Image Turbo", "modality": "image", "params": 6.15, "encoder": 4, "steps": "8", "fast": true, "license": "apache-2.0" },
+    { "id": "Tongyi-MAI/Z-Image", "name": "Z-Image", "modality": "image", "params": 6.15, "encoder": 4, "steps": "50", "license": "apache-2.0", "note": "The full model behind Z-Image Turbo. Slower, with more variety." },
+    { "id": "briaai/Fibo-2.0-dev", "name": "FIBO 2.0 dev", "modality": "image", "params": 8.15, "encoder": 4.45, "steps": "50", "license": "other", "note": "Trained only on licensed images. Non-commercial licence." },
+    { "id": "OpenMOSS-Team/MOSS-Image-SFT", "name": "MOSS-Image", "modality": "image", "params": 5.1, "encoder": 8.4, "steps": "50", "license": "apache-2.0" },
+    { "id": "lodestones/Kromoss", "name": "Kromoss", "modality": "image", "params": 5.1, "encoder": 8.4, "steps": "8 to 50", "license": "apache-2.0", "note": "A MOSS-Image fine-tune, with 8-step turbo LoRAs included." },
+    { "id": "stabilityai/stable-diffusion-3.5-large-turbo", "name": "Stable Diffusion 3.5 Large Turbo", "modality": "image", "params": 8.15, "encoder": 5.4, "steps": "4", "fast": true, "license": "other", "note": "Community licence: free for most people and small businesses." },
+    { "id": "stabilityai/stable-diffusion-3.5-large", "name": "Stable Diffusion 3.5 Large", "modality": "image", "params": 8.15, "encoder": 5.4, "steps": "28 to 40", "license": "other", "note": "Community licence: free for most people and small businesses." },
+    { "id": "lodestones/Chroma1-HD", "name": "Chroma1 HD", "modality": "image", "params": 8.9, "encoder": 4.7, "steps": "26 to 40", "license": "apache-2.0" },
+    { "id": "Qwen/Qwen-Image-2.1-Turbo", "name": "Qwen-Image 2.1 Turbo", "modality": "image", "params": 7.12, "encoder": 8.75, "steps": "4 to 8", "fast": true, "license": "other", "note": "Best at putting readable text in images." },
+    { "id": "Qwen/Qwen-Image-2.1", "name": "Qwen-Image 2.1", "modality": "image", "params": 7.12, "encoder": 8.75, "steps": "30 to 50", "license": "other", "note": "Best at putting readable text in images." },
+    { "id": "black-forest-labs/FLUX.1-schnell", "name": "FLUX.1 schnell", "modality": "image", "params": 11.89, "encoder": 4.7, "steps": "4", "fast": true, "license": "apache-2.0" },
+    { "id": "black-forest-labs/FLUX.1-dev", "name": "FLUX.1 dev", "modality": "image", "params": 11.9, "encoder": 4.7, "steps": "28 to 50", "license": "other", "note": "The classic, with a huge library of LoRAs. Non-commercial licence." },
+    { "id": "black-forest-labs/FLUX.2-klein-9B", "name": "FLUX.2 klein 9B", "modality": "image", "params": 9.08, "encoder": 8, "steps": "4", "fast": true, "license": "other", "note": "Non-commercial licence, sign-in needed to download." },
+    { "id": "zai-org/GLM-Image", "name": "GLM-Image", "modality": "image", "params": 6.95, "encoder": 10.5, "steps": "50", "license": "mit", "note": "Strong at text, diagrams and posters." },
+    { "id": "krea/Krea-2-Turbo", "name": "Krea 2 Turbo", "modality": "image", "params": 13.15, "encoder": 4.45, "steps": "8", "fast": true, "license": "other", "note": "Photographic look. Community licence, sign-in needed to download." },
+    { "id": "krea/Krea-2-Raw", "name": "Krea 2 Raw", "modality": "image", "params": 13.15, "encoder": 4.45, "steps": "50", "license": "other", "note": "The undistilled Krea 2, for fine-tuning and LoRAs." },
+    { "id": "HiDream-ai/HiDream-I1-Fast", "name": "HiDream I1 Fast", "modality": "image", "params": 17.1, "encoder": 14.4, "steps": "16", "fast": true, "license": "mit" },
+    { "id": "HiDream-ai/HiDream-I1-Full", "name": "HiDream I1 Full", "modality": "image", "params": 17.1, "encoder": 14.4, "steps": "50", "license": "mit" },
+    { "id": "hexgrad/Kokoro-82M", "name": "Kokoro 82M", "modality": "tts", "params": 0.08, "fast": true, "license": "apache-2.0", "note": "Tiny and natural sounding. Runs faster than real time on a laptop CPU." },
+    { "id": "Supertone/supertonic-3", "name": "Supertonic 3", "modality": "tts", "params": 0.1, "fast": true, "license": "openrail", "note": "Tiny and very fast, 31 languages. Runs on the CPU." },
+    { "id": "coqui/XTTS-v2", "name": "XTTS v2", "modality": "tts", "params": 0.47, "license": "other", "note": "The old favourite for voice cloning, 17 languages. Non-commercial licence." },
+    { "id": "neuphonic/neutts-air", "name": "NeuTTS Air", "modality": "tts", "params": 0.75, "fast": true, "license": "apache-2.0", "note": "Made for phones and laptops, with instant voice cloning." },
+    { "id": "ResembleAI/chatterbox", "name": "Chatterbox", "modality": "tts", "params": 0.8, "license": "mit", "note": "23 languages, voice cloning and adjustable emotion." },
+    { "id": "k2-fsa/OmniVoice", "name": "OmniVoice", "modality": "tts", "params": 0.81, "fast": true, "license": "apache-2.0", "note": "Over 600 languages, with voice cloning and voice design." },
+    { "id": "FunAudioLLM/Fun-CosyVoice3-0.5B-2512", "name": "CosyVoice 3 0.5B", "modality": "tts", "params": 0.85, "fast": true, "license": "apache-2.0", "note": "9 languages, streams as it speaks, voice cloning." },
+    { "id": "microsoft/VibeVoice-Realtime-0.5B", "name": "VibeVoice Realtime 0.5B", "modality": "tts", "params": 1.02, "fast": true, "license": "mit", "note": "Starts speaking almost instantly, made for live replies." },
+    { "id": "IndexTeam/IndexTTS-2", "name": "IndexTTS 2", "modality": "tts", "params": 1.5, "license": "other", "note": "Fine control of emotion and timing, voice cloning. English and Chinese." },
+    { "id": "sesame/csm-1b", "name": "CSM 1B", "modality": "tts", "params": 1.55, "license": "apache-2.0", "note": "Conversational speech. English only, sign-in needed to download." },
+    { "id": "nari-labs/Dia-1.6B", "name": "Dia 1.6B", "modality": "tts", "params": 1.61, "license": "apache-2.0", "note": "Whole dialogues with two speakers, laughs and sighs included. English only." },
+    { "id": "Zyphra/Zonos-v0.1-hybrid", "name": "Zonos v0.1", "modality": "tts", "params": 1.65, "license": "apache-2.0", "note": "Voice cloning with control over emotion, speed and pitch." },
+    { "id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice", "name": "Qwen3 TTS 1.7B", "modality": "tts", "params": 1.92, "license": "apache-2.0", "note": "Clone a voice from a short sample." },
+    { "id": "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign", "name": "Qwen3 TTS 1.7B VoiceDesign", "modality": "tts", "params": 1.92, "license": "apache-2.0", "note": "Describe a voice in words and it makes it." },
+    { "id": "openbmb/VoxCPM2", "name": "VoxCPM2", "modality": "tts", "params": 2.29, "license": "apache-2.0", "note": "Expressive, with voice cloning." },
+    { "id": "maya-research/maya2-native", "name": "Maya 2 Native", "modality": "tts", "params": 2.5, "license": "apache-2.0", "note": "11 Indian languages and English, 20 voices, voice cloning." },
+    { "id": "microsoft/VibeVoice-1.5B", "name": "VibeVoice 1.5B", "modality": "tts", "params": 2.7, "license": "mit", "note": "Long podcasts with up to four speakers. English and Chinese." },
+    { "id": "canopylabs/orpheus-3b-0.1-ft", "name": "Orpheus 3B", "modality": "tts", "params": 3.78, "license": "apache-2.0", "note": "Very natural English, with tags for laughs and sighs." },
+    { "id": "mistralai/Voxtral-4B-TTS-2603", "name": "Voxtral 4B TTS", "modality": "tts", "params": 4.0, "license": "cc-by-nc-4.0", "note": "9 languages. Non-commercial licence." },
+    { "id": "fishaudio/s2-pro", "name": "Fish Audio S2 Pro", "modality": "tts", "params": 4.56, "license": "other", "note": "83 languages and voice cloning. Research licence, check it before commercial use." },
+    { "id": "bosonai/higgs-tts-3-4b", "name": "Higgs TTS 3 4B", "modality": "tts", "params": 4.66, "license": "other", "note": "Expressive, 100+ languages, voice cloning. Non-commercial licence." },
+    { "id": "Cactus-Compute/whistle", "name": "Whistle", "modality": "stt", "params": 0.03, "fast": true, "license": "apache-2.0", "note": "A 17 MB model for phones and tiny devices." },
+    { "id": "openai/whisper-base", "name": "Whisper base", "modality": "stt", "params": 0.07, "fast": true, "license": "apache-2.0", "note": "Tiny, for older or slower machines. 99 languages." },
+    { "id": "openai/whisper-small", "name": "Whisper small", "modality": "stt", "params": 0.24, "fast": true, "license": "apache-2.0", "note": "Old faithful. Fine for clear speech on any machine." },
+    { "id": "ibm-granite/granite-speech-5.0-470m-turboctc", "name": "Granite Speech 5.0 TurboCTC", "modality": "stt", "params": 0.47, "fast": true, "license": "apache-2.0", "note": "Fast, 7 languages, with punctuation." },
+    { "id": "nvidia/parakeet-tdt-0.6b-v3", "name": "Parakeet TDT 0.6B v3", "modality": "stt", "params": 0.63, "fast": true, "license": "cc-by-4.0", "note": "Very fast and accurate, 25 European languages." },
+    { "id": "moondream/parakeet-ultra", "name": "Parakeet Ultra", "modality": "stt", "params": 0.63, "fast": true, "license": "cc-by-4.0", "note": "A tuned Parakeet v3: better in noise and on long recordings." },
+    { "id": "nvidia/nemotron-3.5-asr-streaming-0.6b", "name": "Nemotron 3.5 ASR Streaming", "modality": "stt", "params": 0.64, "fast": true, "license": "openmdw", "note": "Live transcription as you talk, 35 languages." },
+    { "id": "distil-whisper/distil-large-v3", "name": "Distil-Whisper large v3", "modality": "stt", "params": 0.76, "fast": true, "license": "mit", "note": "Close to Whisper large, about six times faster. English only." },
+    { "id": "openai/whisper-large-v3-turbo", "name": "Whisper large v3 turbo", "modality": "stt", "params": 0.81, "license": "mit", "note": "The all-rounder, close to 100 languages." },
+    { "id": "Qwen/Qwen3-ASR-0.6B", "name": "Qwen3 ASR 0.6B", "modality": "stt", "params": 0.94, "fast": true, "license": "apache-2.0" },
+    { "id": "nvidia/canary-1b-v2", "name": "Canary 1B v2", "modality": "stt", "params": 0.98, "license": "cc-by-4.0", "note": "25 European languages, and it translates too." },
+    { "id": "openai/whisper-large-v3", "name": "Whisper large v3", "modality": "stt", "params": 1.54, "license": "apache-2.0", "note": "The most accurate Whisper, 99 languages." },
+    { "id": "CohereLabs/cohere-transcribe-03-2026", "name": "Cohere Transcribe", "modality": "stt", "params": 2.07, "license": "apache-2.0", "note": "Very accurate, 14 languages. Sign-in needed to download." },
+    { "id": "ibm-granite/granite-speech-5.0-2b", "name": "Granite Speech 5.0 2B", "modality": "stt", "params": 2.31, "license": "apache-2.0" },
+    { "id": "Qwen/Qwen3-ASR-1.7B", "name": "Qwen3 ASR 1.7B", "modality": "stt", "params": 2.35, "license": "apache-2.0" },
+    { "id": "nvidia/canary-qwen-2.5b", "name": "Canary Qwen 2.5B", "modality": "stt", "params": 2.56, "license": "cc-by-4.0", "note": "Very accurate English." },
+    { "id": "mistralai/Voxtral-Mini-4B-Realtime-2602", "name": "Voxtral Mini 4B Realtime", "modality": "stt", "params": 4.43, "license": "apache-2.0", "note": "Transcribes live as you talk." },
+    { "id": "microsoft/VibeVoice-ASR", "name": "VibeVoice ASR", "modality": "stt", "params": 8.67, "license": "mit", "note": "Hour-long recordings in one go, with who spoke when. 50+ languages." },
+    { "id": "nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B", "name": "Nemotron 3.5 Transcribe 30B", "modality": "stt", "params": 33.7, "license": "openmdw", "note": "Top accuracy, 40 languages, hour-long recordings. GGUF versions need far less memory." }
+  ]
+}
