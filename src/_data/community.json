@@ -10,7 +10,7 @@
       "icon": "bi-grid-3x3-gap-fill",
       "name": "Matrix",
       "qr": "/assets/images/matrix-qr.png",
-      "joinHref": "https://matrix.to/#/#localai:matrix.electronworkshop.com.au",
+      "joinHref": "https://matrix.to/#/#localai-all:matrix.electronworkshop.com.au",
       "active": true
     },
     {
