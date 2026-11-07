@@ -17,7 +17,7 @@
         </a>
         <ul class="dropdown-menu cosmos-dropdown-menu{% if item.accent %} cosmos-dropdown-menu--{{ item.accent }}{% endif %}">
           {% for child in item.children %}
-          <li><a class="cosmos-dropdown-item{% if child.logo %} cosmos-dropdown-item--tool{% endif %}{% if page.url == child.href %} active{% endif %}" href="{{ child.href }}">{% if child.logo %}{% include "partials/" + child.logo + "-logo.svg" %}<span><span class="cosmos-dropdown-item__title">{{ child.title }}</span>{% if child.sub %}<span class="cosmos-dropdown-item__sub">{{ child.sub }}</span>{% endif %}</span>{% else %}{{ child.title }}{% endif %}</a></li>
+          <li><a class="cosmos-dropdown-item{% if child.logo or child.icon %} cosmos-dropdown-item--tool{% endif %}{% if page.url == child.href %} active{% endif %}" href="{{ child.href }}">{% if child.logo or child.icon %}{% if child.logo %}{% include "partials/" + child.logo + "-logo.svg" %}{% else %}<i class="bi {{ child.icon }} tool-logo tool-logo--icon" aria-hidden="true"></i>{% endif %}<span><span class="cosmos-dropdown-item__title">{{ child.title }}</span>{% if child.sub %}<span class="cosmos-dropdown-item__sub">{{ child.sub }}</span>{% endif %}</span>{% else %}{{ child.title }}{% endif %}</a></li>
           {% if child.divider %}<li><hr class="cosmos-dropdown-divider"></li>{% endif %}
           {% endfor %}
         </ul>
@@ -56,7 +56,7 @@
       {% if item.children %}
       {% for child in item.children %}
       <a class="cosmos-nav-link cosmos-nav-link--sub{% if page.url == child.href %} active{% endif %}" href="{{ child.href }}">
-        {% if child.logo %}{% include "partials/" + child.logo + "-logo.svg" %}{% endif %}{{ child.title }}
+        {% if child.logo %}{% include "partials/" + child.logo + "-logo.svg" %}{% elif child.icon %}<i class="bi {{ child.icon }} tool-logo tool-logo--icon" aria-hidden="true"></i>{% endif %}{{ child.title }}
       </a>
       {% if child.divider %}<hr class="cosmos-dropdown-divider cosmos-dropdown-divider--mobile">{% endif %}
       {% endfor %}
