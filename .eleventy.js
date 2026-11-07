@@ -128,6 +128,8 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
+  // The chat's service worker has to sit at the site root to reach every page
+  eleventyConfig.addPassthroughCopy({ "src/webllm-sw.js": "webllm-sw.js" });
 
   // Gallery images reader
   eleventyConfig.addGlobalData('galleries', function() {

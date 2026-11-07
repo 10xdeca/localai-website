@@ -1,0 +1,51 @@
+---
+layout: base.njk
+title: localAI Chat
+description: Chat with an AI model that runs entirely in your web browser. Nothing to install, it works offline after the first download, and nothing you type leaves your computer.
+permalink: /resources/chat/
+fullWidth: true
+---
+
+{% set area = { published: "2026-11-04", updated: "2026-11-04" } %}
+
+{# The chat fills the screen; the explanation waits below it #}
+<div class="chat-app">
+  <header class="chat-app__head">
+    <span class="chat-app__logo" aria-hidden="true"><i class="bi bi-chat-dots"></i></span>
+    <div class="chat-app__titles">
+      <h1 class="chat-app__title">localAI Chat</h1>
+      <p class="chat-app__sub">AI running in your browser, private and offline</p>
+    </div>
+    <a href="/resources/" class="cosmos-back-link chat-app__back"><i class="bi bi-arrow-left me-1"></i>All resources</a>
+  </header>
+
+  <div id="localai-chat" class="chat-app__chat">
+    <noscript><p class="lchat__error">The chat needs JavaScript and a browser with WebGPU.</p></noscript>
+  </div>
+</div>
+
+<section class="chat-about">
+  <h2 class="chat-about__title">How it works</h2>
+  <ul class="chat-about__list">
+    <li><i class="bi bi-cpu" aria-hidden="true"></i><span><strong>It runs on your computer.</strong> The model runs on your graphics chip with <a href="https://webllm.mlc.ai/" target="_blank" rel="noopener">WebLLM</a>. Nothing you type is sent anywhere.</span></li>
+    <li><i class="bi bi-download" aria-hidden="true"></i><span><strong>It downloads once.</strong> Models are about 300 MB to 5 GB. Yours is saved in your browser, so next time it starts straight away, even offline.</span></li>
+    <li><i class="bi bi-search" aria-hidden="true"></i><span><strong>It answers from this site.</strong> It looks through our events, guides and pages first, so it makes less up. Qwen3.5 2B and bigger can also search the site and open pages.</span></li>
+  </ul>
+  <details class="chat-storage" id="storage">
+    <summary>Where is the model stored, and how do I delete it?</summary>
+    <dl class="chat-storage__list">
+      <dt>Where does it go?</dt>
+      <dd>Inside your web browser, on your computer, as data for this website. It's not a file in your Downloads folder, so you won't find it in Finder or File Explorer. Each browser keeps its own copy, and other websites can't use it.</dd>
+      <dt>How much space does it take?</dt>
+      <dd>The size shown next to the model, from about 300 MB to 5 GB. If you switch models, the old one stays saved too until you delete it, so they add up. The model list shows what's saved and the total.</dd>
+      <dt>Does it get deleted automatically?</dt>
+      <dd>Not on a timer. It stays until you delete it or clear your browser's site data. We ask your browser to keep it, but the browser has the final say: it can still remove it if your disk gets very full, and Safari can clear it if you don't visit for a while. In a private window, it's gone when you close the window. If it's ever removed, the chat just downloads it again.</dd>
+      <dt>Where do my chats go?</dt>
+      <dd>They're saved in this browser too, and never sent anywhere. Anyone using this browser profile can see them, so on a shared computer, delete them in the chat's Settings when you're done.</dd>
+      <dt>How do I delete it?</dt>
+      <dd>Open the model list in the chat and choose Delete next to the model. You can also clear the data for this site in your browser's settings, which removes every saved model at once.</dd>
+    </dl>
+  </details>
+  <p class="chat-about__note">On a laptop or desktop, the Ask localAI button on every page carries on the same chat. Want something bigger and faster? <a href="/resources/getting-started/">Where to Start</a> shows how to run models in an app like LM Studio or Ollama.</p>
+  {% include "partials/publishedUpdated.njk" %}
+</section>

@@ -1,9 +1,12 @@
-// /assets/js/webmcp.js: exposes site tools to in-browser AI agents via WebMCP
+// /assets/js/webmcp.js: the site's tools. In-browser AI agents get them through WebMCP, and the
+// localAI chat (webllm-chat.js) uses the same list as window.localaiTools.
 (function () {
-  const mc = document.modelContext;
-  if (!mc) return;
-
   const path = location.pathname;
+
+  // Each tool can say where an agent should see it (`page`, default everywhere) and whether it
+  // works on the page itself (`needsPage`), which the chat can only use when it's that page
+  const tools = [];
+  const add = (tool) => tools.push(tool);
 
   // Every tool replies in the MCP format: a list of text pieces
   const reply = (value) => ({ content: [{ type: "text", text: JSON.stringify(value) }] });
@@ -14,20 +17,22 @@
   const getData = () => (dataPromise ||= fetch("/webmcp-data.json").then((r) => r.json()));
 
   const isUpcoming = (event) => new Date(event.end) > new Date();
-  const eventSummary = (e) => ({ slug: e.slug, title: e.title, date: e.date, startTime: e.startTime, endTime: e.endTime, location: e.location, url: e.url });
+  // Spell the date out, weekday included, so a model doesn't have to work the day out itself
+  const longDate = (d) => (d ? new Date(`${d}T12:00:00`).toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) : null);
+  const eventSummary = (e) => ({ slug: e.slug, title: e.title, date: longDate(e.date), startTime: e.startTime, endTime: e.endTime, location: e.location, url: e.url });
 
   // On /events/<slug>/ the page itself tells us which event the visitor is looking at
   const currentEventSlug = (path.match(/^\/events\/([^/]+)\/?$/) || [])[1];
 
   // ---------- Every page ----------
 
-  mc.registerTool({
+  add({
     name: "get-site-info",
-    description: "Get an overview of the local AI community website and links to its main pages.",
+    description: "Get an overview of the localAI community website and links to its main pages.",
     inputSchema: { type: "object", properties: {} },
     async execute() {
       return reply({
-        name: "local AI",
+        name: "localAI",
         about: "A community for people curious about running AI on their own computer. Offline, private, and free.",
         pages: {
           events: "/events/ (meetups and workshops)",
@@ -40,9 +45,9 @@
     }
   });
 
-  mc.registerTool({
+  add({
     name: "search-site",
-    description: "Search the local AI website (events, posts, resource guides) and return the best matching pages.",
+    description: "Search the localAI website (events, posts, resource guides) and return the best matching pages.",
     inputSchema: {
       type: "object",
       properties: {
@@ -62,9 +67,9 @@
     }
   });
 
-  mc.registerTool({
+  add({
     name: "go-to-page",
-    description: "Open a page on the local AI website, e.g. /events/, /community/, or an event or post URL from another tool. The page reloads, so this page's tools are replaced by the new page's tools.",
+    description: "Open a page on the localAI website, e.g. /events/, /community/, or an event or post URL from another tool. The page reloads, so this page's tools are replaced by the new page's tools.",
     inputSchema: {
       type: "object",
       properties: {
@@ -87,19 +92,29 @@
     return link && link.closest(".cosmos-event-card");
   };
 
-  if (document.querySelector(".cosmos-event-card")) {
-    mc.registerTool({
+  {
+    add({
       name: "show-event",
-      description: "Scroll to an event card on this page and highlight it so the visitor can see it.",
+      page: () => !!document.querySelector(".cosmos-event-card"),
+      needsPage: true,
+      description: "Scroll to an event card on this page and highlight it so the visitor can see it. Leave the slug out to show the next upcoming event.",
       inputSchema: {
         type: "object",
         properties: {
-          slug: { type: "string", description: "The event's slug, e.g. \"building-an-obsidian-brain\"." }
-        },
-        required: ["slug"]
+          slug: { type: "string", description: "The event's slug from list-events, e.g. \"building-an-obsidian-brain\". Leave out for the next upcoming event." }
+        }
       },
-      async execute({ slug }) {
-        const card = eventCard(slug);
+      async execute({ slug } = {}) {
+        let card = slug && eventCard(slug);
+        // No slug, or one that isn't on this page: fall back to the soonest upcoming event that is
+        if (!card) {
+          const { events } = await getData();
+          const next = events.filter(isUpcoming).sort((a, b) => new Date(a.start) - new Date(b.start)).find((e) => eventCard(e.slug));
+          if (next) {
+            slug = next.slug;
+            card = eventCard(slug);
+          }
+        }
         if (!card) return fail(`"${slug}" isn't on this page. Use go-to-page with "/events/${slug}/" to open it instead.`);
         document.querySelectorAll(".webmcp-highlight").forEach((el) => el.classList.remove("webmcp-highlight"));
         card.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -111,10 +126,12 @@
 
   // ---------- Events pages ----------
 
-  if (path.startsWith("/events/")) {
-    mc.registerTool({
+  {
+    const onEvents = () => path.startsWith("/events/");
+    add({
       name: "list-events",
-      description: "List local AI community events (meetups, catchups, workshops) with date, time and location.",
+      page: onEvents,
+      description: "List localAI community events (meetups, catchups, workshops) with date, time and location.",
       inputSchema: {
         type: "object",
         properties: {
@@ -129,8 +146,9 @@
       }
     });
 
-    mc.registerTool({
+    add({
       name: "get-event",
+      page: onEvents,
       description: "Get full details for one event. Use the slug from list-events, or leave it out on an event's own page.",
       inputSchema: {
         type: "object",
@@ -144,12 +162,13 @@
         const event = events.find((e) => e.slug === slug);
         if (!event) return fail(`No event found with slug "${slug}". Call list-events with when "all" to see valid slugs.`);
         const { googleCalendarUrl, icsDataUri, ...details } = event;
-        return reply({ ...details, status: isUpcoming(event) ? "upcoming" : "past" });
+        return reply({ ...details, date: longDate(details.date), status: isUpcoming(event) ? "upcoming" : "past" });
       }
     });
 
-    mc.registerTool({
+    add({
       name: "get-calendar-link",
+      page: onEvents,
       description: "Get links to add an event to a calendar (Google Calendar, or an .ics file for Apple Calendar and Outlook).",
       inputSchema: {
         type: "object",
@@ -168,9 +187,11 @@
     });
 
     const calendarMenu = document.querySelector(".cosmos-add-to-calendar");
-    if (calendarMenu) {
-      mc.registerTool({
+    {
+      add({
         name: "open-calendar-menu",
+        page: () => onEvents() && !!calendarMenu,
+        needsPage: true,
         description: "Open this event's \"Add to calendar\" menu on the page so the visitor can pick Google Calendar or Apple/Outlook.",
         inputSchema: { type: "object", properties: {} },
         async execute() {
@@ -184,10 +205,11 @@
 
   // ---------- Posts pages ----------
 
-  if (path.startsWith("/posts/")) {
-    mc.registerTool({
+  {
+    add({
       name: "list-posts",
-      description: "List posts from the local AI website (news, event recaps), newest first.",
+      page: () => path.startsWith("/posts/"),
+      description: "List posts from the localAI website (news, event recaps), newest first.",
       inputSchema: {
         type: "object",
         properties: {
@@ -203,9 +225,10 @@
 
   // ---------- Resources pages ----------
 
-  if (path.startsWith("/resources/")) {
-    mc.registerTool({
+  {
+    add({
       name: "list-resources",
+      page: () => path.startsWith("/resources/"),
       description: "List the curated local AI resource guides (getting started, models, coding, speech, home labbing and more) and the tools each one recommends.",
       inputSchema: {
         type: "object",
@@ -225,10 +248,11 @@
 
   // ---------- Community page ----------
 
-  if (path.startsWith("/community/")) {
-    mc.registerTool({
+  {
+    add({
       name: "get-community-links",
-      description: "Get the links to join the local AI group chat. The chats are bridged, so joining on any one platform reaches everyone.",
+      page: () => path.startsWith("/community/"),
+      description: "Get the links to join the localAI group chat. The chats are bridged, so joining on any one platform reaches everyone.",
       inputSchema: {
         type: "object",
         properties: {
@@ -243,4 +267,15 @@
       }
     });
   }
+
+  // ---------- Hand the tools out ----------
+
+  const onThisPage = (t) => !t.page || t.page();
+  const strip = ({ page, needsPage, ...tool }) => tool;
+
+  // The chat runs on every page, so it gets every tool except ones that act on a different page
+  window.localaiTools = tools.filter((t) => !t.needsPage || onThisPage(t)).map(strip);
+
+  const mc = document.modelContext;
+  if (mc) tools.filter(onThisPage).forEach((t) => mc.registerTool(strip(t)));
 })();
