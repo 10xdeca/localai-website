@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workshop Handout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  /* Printout for "Make AI Images Offline on Your Laptop", Sun 22 Nov 2026.
+     A4, black and white. Each .page is one printed sheet; the footer (logo, title, date, page number) is added by the script.
+     Print from Chrome or Brave: margins "None", background graphics on. */
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #000;
+    --text: #1a1a1a;
+    --grey: #555;
+    --rule: #bbb;
+    --tint: #eee;
+    --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --display: "Orbitron", "Plus Jakarta Sans", system-ui, sans-serif;
+    --mono: "Share Tech Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #888; }
+  body { font-family: var(--sans); color: var(--text); font-size: 13pt; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .page { position: relative; width: 210mm; height: 297mm; margin: 10mm auto; padding: 18mm 18mm 26mm; background: #fff; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.3); }
+  @media print {
+    html { background: none; }
+    .page { margin: 0; box-shadow: none; break-after: page; }
+  }
+
+  h1 { font-family: var(--display); font-weight: 900; color: var(--ink); font-size: 30pt; line-height: 1.1; }
+  h2 { font-family: var(--display); font-weight: 700; color: var(--ink); font-size: 22pt; line-height: 1.15; margin-bottom: 6mm; display: flex; align-items: center; gap: 4mm; }
+  h2 svg { width: 12mm; height: 12mm; flex: none; }
+  h3 { font-size: 14pt; font-weight: 800; color: var(--ink); margin: 7mm 0 2.5mm; }
+  p + p { margin-top: 2.5mm; }
+  b, strong { color: var(--ink); }
+  .sub { font-size: 16pt; color: var(--ink); margin-top: 3mm; }
+  .when { font-family: var(--mono); font-size: 13pt; color: var(--grey); margin-top: 2mm; }
+  .mono, code { font-family: var(--mono); }
+  code { font-size: 12pt; }
+
+  /* Numbered steps with big black number badges */
+  ol.steps { list-style: none; counter-reset: s; display: grid; gap: 4.5mm; }
+  ol.steps > li { counter-increment: s; position: relative; padding-left: 13mm; min-height: 9mm; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: -.5mm; width: 9mm; height: 9mm; border-radius: 2mm; background: var(--ink); color: #fff;
+    font-family: var(--display); font-weight: 700; font-size: 13pt; display: grid; place-items: center; }
+  ol.steps.cont { counter-reset: s var(--start, 0); }
+  ul.plain { margin: 1.5mm 0 0 5mm; }
+  ul.plain li + li { margin-top: 1mm; }
+
+  /* Terminal commands */
+  pre { font-family: var(--mono); font-size: 12pt; line-height: 1.5; color: var(--ink); background: var(--tint); border-left: 1.2mm solid var(--ink); padding: 2.5mm 4mm; margin-top: 2mm; white-space: pre-wrap; }
+
+  /* A boxed tip */
+  .tip { border: .5mm solid var(--ink); border-radius: 2mm; padding: 3.5mm 4.5mm; margin-top: 6mm; }
+  .tip b:first-child { display: block; margin-bottom: 1mm; }
+  .check { border: .5mm dashed var(--grey); border-radius: 2mm; padding: 3mm 4.5mm; margin-bottom: 6mm; }
+
+  /* Agenda on the cover */
+  ol.agenda { list-style: none; counter-reset: a; columns: 2; column-gap: 10mm; margin-top: 2mm; }
+  ol.agenda li { counter-increment: a; padding: 1.6mm 0 1.6mm 10mm; position: relative; font-weight: 600; color: var(--ink); break-inside: avoid; }
+  ol.agenda li::before { content: counter(a); position: absolute; left: 0; top: 1.4mm; width: 7mm; height: 7mm; border: .5mm solid var(--ink); border-radius: 1.5mm;
+    font-family: var(--display); font-size: 10pt; display: grid; place-items: center; }
+  .links { display: grid; grid-template-columns: 34mm 1fr; gap: 2mm 4mm; margin-top: 2mm; }
+  .links dt { color: var(--grey); }
+  .links dd { font-family: var(--mono); color: var(--ink); font-size: 11pt; white-space: nowrap; }
+  .cover-logo { width: 56mm; margin-bottom: 8mm; }
+
+
+  /* Annotated screenshots, black and white: white marks with a black edge read on the dark app */
+  svg.shot { width: 100%; height: auto; display: block; border: .4mm solid var(--ink); margin: 2mm 0 6mm; }
+  svg.shot .zone { fill: none; stroke: #fff; stroke-width: 5; stroke-dasharray: 14 10; }
+  svg.shot .ghost > rect { fill: #3a3a3a; stroke: #fff; stroke-width: 3; }
+  svg.shot .gt { fill: #fff; font: 600 15px var(--sans); }
+  svg.shot .go, svg.shot .gf { fill: #ddd; font: 13px var(--sans); }
+  svg.shot .field { fill: #222; }
+  svg.shot .dot { fill: #fff; }
+  svg.shot .wire, svg.shot .head { fill: none; stroke: #fff; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+  svg.shot .ring { fill: none; stroke: #fff; stroke-width: 6; }
+  svg.shot .pill { fill: #fff; stroke: #000; stroke-width: 3; }
+  svg.shot .pt { fill: #000; font: 700 21px var(--mono); }
+  svg.shot .badge { fill: #fff; stroke: #000; stroke-width: 5; }
+  svg.shot .bn { fill: #000; font: 900 34px var(--display); text-anchor: middle; }
+
+
+  svg.shot.wide .badge { stroke-width: 7; }
+  svg.shot.wide .bn { font-size: 60px; }
+  svg.shot.wide .ring { stroke-width: 10; }
+  svg.shot.wide .pt { font-size: 40px; }
+  .pics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 3mm 0 5mm; }
+  .pics figure { margin: 0; text-align: center; font-size: 11pt; }
+  .pics img { width: 100%; height: 62mm; object-fit: cover; border: .3mm solid var(--ink); filter: grayscale(1); }
+  .pics figcaption b { display: block; }
+  table.t { width: 100%; border-collapse: collapse; margin-top: 2mm; }
+  table.t th, table.t td { text-align: left; padding: 1.8mm 2.5mm; border-bottom: .3mm solid var(--rule); vertical-align: top; }
+  table.t td:last-child, table.t th:last-child { white-space: nowrap; }
+  table.t th { font-weight: 800; color: var(--ink); border-bottom: .5mm solid var(--ink); }
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 2mm; margin: 2mm 0 5mm; }
+  .chain span { border: .5mm solid var(--ink); border-radius: 1.5mm; padding: 1.5mm 3mm; font-weight: 700; color: var(--ink); }
+  .chain i { font-style: normal; font-size: 14pt; }
+  .prompt { font-family: var(--mono); font-size: 11.5pt; background: var(--tint); border-left: 1.2mm solid var(--ink); padding: 2mm 4mm; margin: 1.5mm 0 3mm; }
+  .appendix-note { font-size: 11pt; color: var(--grey); margin-bottom: 4mm; }
+
+  /* Footer: logo, title and date, page number */
+  .foot { position: absolute; left: 18mm; right: 18mm; bottom: 10mm; display: flex; align-items: center; gap: 5mm; border-top: .3mm solid var(--rule); padding-top: 3mm;
+    font-size: 9.5pt; color: var(--grey); }
+  .foot img { height: 6mm; width: auto; }
+  .foot .t { flex: 1; }
+  .foot .t b { color: var(--ink); font-weight: 700; }
+  .foot .n { font-family: var(--mono); font-size: 11pt; color: var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="page">
+  <img class="cover-logo" src="../assets/logo-wide-bw.svg" alt="localAI">
+  <h1>Make AI Images<br>Offline on Your Laptop</h1>
+  <p class="sub">with ComfyUI</p>
+  <p class="when">Sunday 22 November 2026 · 1 to 3pm · Inspire9 Richmond</p>
+
+  <h3 style="margin-top:9mm">Today</h3>
+  <ol class="agenda">
+    <li>Install ComfyUI</li>
+    <li>Local vs online AI</li>
+    <li>Models for your machine</li>
+    <li>Text to image</li>
+    <li>Edit an image</li>
+    <li>Image from reference</li>
+    <li>Upscaling (separate sheet)</li>
+  </ol>
+
+  <h3>You need</h3>
+  <ul class="plain">
+    <li>A laptop and its charger</li>
+    <li>8 GB of memory (16 GB or more is better)</li>
+    <li>About 10 GB of free disk space</li>
+    <li>Mac: Apple Silicon (M1 or newer), macOS 13 or newer</li>
+    <li>Windows: Windows 10 or newer. An NVIDIA or AMD graphics card makes it faster.</li>
+    <li>Linux: Ubuntu, Debian or any distro that runs an AppImage</li>
+  </ul>
+
+  <h3>Links</h3>
+  <dl class="links">
+    <dt>Download</dt><dd>comfy.org/download</dd>
+    <dt>Website</dt><dd>localai.xdeca.com/events/localai-workshop-image-generation</dd>
+    <dt>Install help</dt><dd>docs.comfy.org</dd>
+    <dt>Install</dt><dd>Mac p2 · Windows p3 · Linux p4</dd>
+    <dt>Then</dt><dd>Models p5 · Add-on p6 · First image p7</dd>
+  </dl>
+</section>
+
+<!-- 2. Mac -->
+<section class="page">
+  <h2><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8 1.6 0 2 .8 3.4.8 1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.1zM13.9 5c.7-.9 1.2-2 1-3.2-1 0-2.3.7-3 1.6-.7.8-1.2 2-1.1 3.1 1.2.1 2.3-.6 3.1-1.5z"/></svg>Install on Mac</h2>
+
+  <div class="check"><b>Check first:</b> Apple menu, then <b>About This Mac</b>. Chip must say <b>Apple M1</b> or newer. Intel Macs can't run ComfyUI Desktop.</div>
+
+  <ol class="steps">
+    <li>Go to <b class="mono">comfy.org/download</b> and download the Mac version.</li>
+    <li>Open the downloaded <b>.dmg</b> file (in your Downloads folder).</li>
+    <li>Drag the <b>ComfyUI</b> icon onto the <b>Applications</b> folder.</li>
+    <li>Open <b>Applications</b> and double-click <b>ComfyUI</b>.<br>
+      If macOS says it can't be opened: <b>System Settings</b>, then <b>Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b>.</li>
+    <li>On the first screen, choose <b>Local</b> (runs on your laptop, not in the cloud).</li>
+    <li>Tick <b>I agree to the EULA and Terms of Service</b>.<br>
+      Sharing anonymous usage data is optional. Untick it if you prefer.</li>
+    <li>Tick <b>Express Install</b> and continue.</li>
+    <li>Wait while it installs. When it's done you'll see a canvas with boxes joined by wires. That's a <b>workflow</b>.</li>
+  </ol>
+
+  <div class="tip"><b>Where things are kept</b>Programs: <code>~/ComfyUI-Installs</code><br>Models and your images: <code>~/ComfyUI-Shared</code></div>
+</section>
+
+<!-- 3. Windows -->
+<section class="page">
+  <h2><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 4.5 10 3.4v7.8H2V4.5zm0 15 8 1.1v-7.7H2v6.6zm9 1.2L22 22v-8.9H11v7.6zM11 3.3v7.9h11V2l-11 1.3z"/></svg>Install on Windows</h2>
+
+  <div class="check"><b>Check first:</b> open <b>Task Manager</b> (Ctrl + Shift + Esc), then <b>Performance</b>. Look for a <b>GPU</b> that says NVIDIA or AMD. No graphics card? It still works, just slower.</div>
+
+  <ol class="steps">
+    <li>Go to <b class="mono">comfy.org/download</b> and download the Windows version.</li>
+    <li>Open the downloaded <b>.exe</b> file (in your Downloads folder) and follow the installer.</li>
+    <li>Open <b>ComfyUI</b> from the Start menu or the desktop shortcut.</li>
+    <li>On the first screen, choose <b>Local</b> (runs on your laptop, not in the cloud).</li>
+    <li>Tick <b>I agree to the EULA and Terms of Service</b>.<br>
+      Sharing anonymous usage data is optional. Untick it if you prefer.</li>
+    <li>Tick <b>Express Install</b> and continue.</li>
+    <li>Wait while it installs. When it's done you'll see a canvas with boxes joined by wires. That's a <b>workflow</b>.</li>
+  </ol>
+
+  <div class="tip"><b>Where things are kept</b>Programs: <code>%LOCALAPPDATA%\Comfy-Desktop\ComfyUI-Installs</code><br>Models and your images: <code>%LOCALAPPDATA%\Comfy-Desktop\ComfyUI-Shared</code><br>Paste either path into the File Explorer address bar to open it.</div>
+</section>
+
+<!-- 4. Linux -->
+<section class="page">
+  <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="19" height="15" rx="2.5"/><path d="M6.5 8.5l3 2.5-3 2.5M12 14h5"/><path d="M8 21.5h8"/></svg>Install on Linux</h2>
+
+  <p>Go to <b class="mono">comfy.org/download</b> and download the Linux version that suits your distro.</p>
+
+  <h3>Ubuntu, Debian, Mint, Pop!_OS: the .deb</h3>
+  <ol class="steps">
+    <li>Open a terminal in your Downloads folder and install it:
+      <pre>cd ~/Downloads
+sudo apt install ./*.deb</pre></li>
+    <li>Open <b>ComfyUI</b> from your applications menu.</li>
+  </ol>
+
+  <h3>Fedora, Arch and everything else: the AppImage</h3>
+  <ol class="steps">
+    <li>AppImages need FUSE 2. On Ubuntu 24.04 or newer:
+      <pre>sudo apt install libfuse2t64</pre>
+      On Ubuntu 22.04: <code>sudo apt install libfuse2</code></li>
+    <li>Make it runnable and start it:
+      <pre>cd ~/Downloads
+chmod +x ./*.AppImage
+./*.AppImage</pre>
+      Once it's runnable you can also double-click it in your file manager.</li>
+  </ol>
+
+  <h3>First launch</h3>
+  <ol class="steps">
+    <li>Choose <b>Local</b>, tick <b>I agree to the EULA and Terms of Service</b>, tick <b>Express Install</b> and continue.</li>
+    <li>Wait while it installs. Then you'll see a canvas with boxes joined by wires. That's a <b>workflow</b>.</li>
+  </ol>
+
+  <div class="tip"><b>Where things are kept</b>Programs: <code>~/ComfyUI-Installs</code> &nbsp; Models and your images: <code>~/ComfyUI-Shared</code></div>
+</section>
+
+<!-- 5. Copy the models -->
+<section class="page">
+  <h2>Copy the models</h2>
+  <p>The USB stick has a <b>models</b> folder with four folders inside. ComfyUI has folders with the same names. Copy the <b>files</b> from each folder on the stick into the folder with the same name on your laptop.</p>
+  <table class="t">
+    <tr><th>Folder</th><th>File</th><th>Size</th></tr>
+    <tr><td><code>diffusion_models</code></td><td><code>z_image_turbo-Q5_K_M.gguf</code></td><td>5.5 GB</td></tr>
+    <tr><td><code>text_encoders</code></td><td><code>Qwen_3_4b-Q6_K.gguf</code></td><td>3.1 GB</td></tr>
+    <tr><td><code>vae</code></td><td><code>ae.safetensors</code></td><td>0.3 GB</td></tr>
+    <tr><td><code>upscale_models</code></td><td><code>4x_foolhardy_Remacri.safetensors</code></td><td>0.03 GB</td></tr>
+  </table>
+
+  <h3>Where the ComfyUI folders are</h3>
+  <p><b>Mac:</b> in Finder press <b>Shift + Cmd + G</b> and paste:</p>
+  <pre>~/ComfyUI-Shared/models</pre>
+  <p style="margin-top:3mm"><b>Windows:</b> paste this into the File Explorer address bar:</p>
+  <pre>%LOCALAPPDATA%\Comfy-Desktop\ComfyUI-Shared\models</pre>
+  <p style="margin-top:3mm"><b>Linux:</b></p>
+  <pre>~/ComfyUI-Shared/models</pre>
+
+  <h3>Also copy</h3>
+  <p>The <b>workflows</b> folder (two <code>.json</code> files) to your Desktop. Then pass the stick on.</p>
+  <div class="tip"><b>Copy, don't run from the stick</b>Models load faster from your laptop, and you keep them after today.</div>
+</section>
+
+<!-- 6. Add GGUF support -->
+<section class="page">
+  <h2>Add GGUF support</h2>
+  <p>Our models are <b>.gguf</b> files: compressed so they fit on a laptop. ComfyUI needs a small add-on to read them. This step needs internet.</p>
+  <svg class="shot wide" viewBox="440 100 1560 660" role="img" aria-label="Nodes Manager: open it from the top right, search gguf, install ComfyUI-GGUF by city96">
+      <image href="../assets/screens/gguf-search.png" x="0" y="0" width="2000" height="1250"/>
+      <g class="step s1"><circle class="ring" cx="1905" cy="143" r="38"/><circle class="badge" cx="1820" cy="143" r="40"/><text class="bn" x="1820" y="163">1</text></g>
+      <g class="step s2"><rect class="ring" x="650" y="190" width="546" height="66" rx="12"/><circle class="badge" cx="1250" cy="223" r="40"/><text class="bn" x="1250" y="243">2</text></g>
+      <g class="step s3"><rect class="ring" x="462" y="278" width="340" height="440" rx="18"/><circle class="badge" cx="840" cy="680" r="40"/><text class="bn" x="840" y="700">3</text></g>
+    </svg>
+  <ol class="steps">
+    <li>Click the <b>Nodes Manager</b> icon (top right, small squares).</li>
+    <li>Type <b>gguf</b> in the search box.</li>
+    <li>On <b>ComfyUI-GGUF</b> by <b>city96</b>, click <b>Install</b>. Not the one just called "gguf".</li>
+    <li>Click <b>Apply changes</b> when asked. ComfyUI restarts its engine.</li>
+  </ol>
+</section>
+
+<!-- 7. Make your first image -->
+<section class="page">
+  <h2>Make your first image</h2>
+  <ol class="steps">
+    <li>Drag <b>z-image-text-to-image.json</b> onto the ComfyUI window. A workflow opens: boxes joined by wires. You can eject the stick now and pass it on.</li>
+    <li>Turn on the live preview: the <b>gear</b> (bottom left), search <b>preview</b>, set <b>Live preview method</b> to <b>auto</b>.</li>
+  </ol>
+  <svg class="shot wide" viewBox="100 170 1810 740" role="img" aria-label="Settings: search preview, set Live preview method to auto">
+      <image href="../assets/screens/settings-live-preview.png" x="0" y="0" width="2000" height="1250"/>
+      <g class="step s2"><rect class="ring" x="112" y="266" width="292" height="58" rx="12"/><circle class="badge" cx="460" cy="295" r="40"/><text class="bn" x="460" y="315">2</text></g>
+      <g class="step s3"><rect class="ring" x="1612" y="808" width="262" height="70" rx="12"/><rect class="pill" x="1300" y="808" width="230" height="70" rx="14"/><text class="pt" x="1415" y="856" text-anchor="middle">auto</text><circle class="badge" cx="1560" cy="740" r="40"/><text class="bn" x="1560" y="760">3</text></g>
+    </svg>
+  <ol class="steps cont" style="--start:2">
+    <li>On the orange box, set <b>width</b> and <b>height</b> to <b>512</b>.</li>
+    <li>Click the <b>prompt</b> box and write what you want. Ideas:
+      <div class="prompt">A tiny lighthouse rising out of a teacup, its beam sweeping across a stormy sea of spilled tea, morning light.</div>
+      <div class="prompt">A glass light bulb on a wooden desk with a tiny jungle growing inside, the filament shining like the sun.</div></li>
+    <li>Close other apps, then click <b>Run</b>. On a 16 GB laptop expect <b>3½ to 5½ minutes</b>. Your picture appears in <b>Save Image</b>.</li>
+  </ol>
+</section>
+
+<!-- 8. Tips and what's inside -->
+<section class="page">
+  <h2>Tips, and what's inside</h2>
+  <h3 style="margin-top:0">Say the main thing first</h3>
+  <p>"A knitted balloon over pancake mountains" put the pancakes <b>on the balloon</b>. Describing the landscape first and the balloon last worked better. The main subject soaks up the details.</p>
+  <h3>Faster</h3>
+  <ul class="plain">
+    <li>Close other apps. When memory is full the laptop swaps to disk and gets many times slower.</li>
+    <li>Use 512 × 512. 1024 × 1024 is four times the work.</li>
+  </ul>
+  <h3>What's in the 9 GB</h3>
+  <table class="t">
+    <tr><th>Part</th><th>Model</th><th>Size</th></tr>
+    <tr><td>Image model</td><td>Z-Image Turbo, 6 billion parameters</td><td>5.5 GB</td></tr>
+    <tr><td>Text encoder</td><td>Qwen 3, 4 billion parameters. Turns your words into numbers.</td><td>3.1 GB</td></tr>
+    <tr><td>VAE</td><td>Turns the result into pixels</td><td>0.3 GB</td></tr>
+  </table>
+  <h3>Parameters and bits</h3>
+  <p><b>Parameters</b> are the numbers a model learned. <b>Bits</b> are how precisely each one is stored. Fewer bits: smaller and lighter, slightly less detail.</p>
+  <table class="t">
+    <tr><th>Z-Image Turbo</th><th>Bits</th><th>Size</th></tr>
+    <tr><td>Full</td><td>16</td><td>11.5 GB</td></tr>
+    <tr><td>Q8</td><td>8</td><td>6.1 GB</td></tr>
+    <tr><td><b>Q5 (ours)</b></td><td>about 5</td><td><b>5.5 GB</b></td></tr>
+    <tr><td>Q3</td><td>about 3</td><td>4.1 GB</td></tr>
+  </table>
+</section>
+
+<!-- 9. Cartoon your photo -->
+<section class="page">
+  <h2>Turn a photo into a cartoon</h2>
+  <p>Same model, but it starts from your photo instead of noise.</p>
+  <ol class="steps">
+    <li>Drag <b>z-image-cartoon.json</b> onto ComfyUI.</li>
+    <li>Click <b>Enter subgraph</b> at the bottom of the orange box.</li>
+    <li>On <b>Load Image</b>, click <b>choose file to upload</b> and pick your photo. Big phone photos are shrunk automatically.</li>
+    <li>On <b>KSampler</b>, set <b>denoise</b> (see below), then click the workflow name at the top to go back out.</li>
+    <li>In <b>prompt</b>, describe what's really in your photo, colours too, and add a style:
+      <div class="prompt">Cartoon illustration of a white Samoyed-type dog with pointy ears, eyes closed, on a sage green couch. Bold outlines, flat colours.</div></li>
+    <li>Click <b>Run</b>.</li>
+  </ol>
+  <h3>Denoise: how much changes</h3>
+  <div class="pics">
+    <figure><img src="../assets/dog-on-couch.jpg" alt=""><figcaption><b>Photo</b></figcaption></figure>
+    <figure><img src="../assets/cartoon-dog-0.6.png" alt=""><figcaption><b>0.6</b>More cartoon, a different dog</figcaption></figure>
+    <figure><img src="../assets/cartoon-dog-0.45.png" alt=""><figcaption><b>0.45</b>Same dog, softer style</figcaption></figure>
+  </div>
+</section>
+
+<!-- Appendix A. Swap in the GGUF loader -->
+<section class="page">
+  <h2>Load the smaller model</h2>
+  <p class="appendix-note">Appendix: how the workflow on the USB stick was built from ComfyUI's Z-Image-Turbo template. You don't need this to make pictures.</p>
+  <p>The smaller model is a <b>.gguf</b> file. ComfyUI's own loader can't read it, so we swap in the <b>GGUF loader</b>. On the Z-Image-Turbo template, click <b>Enter</b> on the <b>Text to Image (Z-Image-Turbo)</b> box to see inside it.</p>
+  <svg class="shot" viewBox="300 160 1380 900" role="img" aria-label="Inside the Z-Image-Turbo node: drop the Unet Loader (GGUF) above Step1, wire its MODEL to ModelSamplingAuraFlow, pick the gguf file">
+      <image href="../assets/screens/z-image-inside.png" x="0" y="0" width="2000" height="1250"/>
+      <!-- 1. Drop the new node here, in the empty space above "Step1 - Load models" -->
+      <g class="step s1">
+        <rect class="zone" x="528" y="176" width="236" height="150" rx="16"/>
+        <g class="ghost">
+          <rect x="545" y="192" width="202" height="118" rx="10"/>
+          <text class="gt" x="558" y="215">Unet Loader (GGUF)</text>
+          <text class="go" x="722" y="247" text-anchor="end">MODEL</text>
+          <circle class="dot" cx="738" cy="242" r="7"/>
+          <rect class="field" x="558" y="268" width="176" height="28" rx="6"/>
+          <text class="gf" x="568" y="287">unet_name</text>
+        </g>
+        <circle class="badge" cx="508" cy="196" r="30"/><text class="bn" x="508" y="208">1</text>
+      </g>
+      <!-- 2. Drag from its MODEL dot to the model dot on ModelSamplingAuraFlow -->
+      <g class="step s2">
+        <path class="wire" d="M738 242 C 960 242, 990 420, 1200 420"/>
+        <path class="head" d="M1186 406 L1206 420 L1186 434"/>
+        <circle class="ring" cx="1212" cy="420" r="18"/>
+        <circle class="badge" cx="985" cy="300" r="30"/><text class="bn" x="985" y="312">2</text>
+      </g>
+      <!-- 3. Pick the gguf file in its dropdown -->
+      <g class="step s3">
+        <rect class="ring" x="552" y="262" width="188" height="40" rx="9"/>
+        <rect class="pill" x="450" y="342" width="330" height="46" rx="12"/>
+        <text class="pt" x="615" y="372" text-anchor="middle">z_image_turbo-Q5_K_M.gguf</text>
+        <circle class="badge" cx="508" cy="282" r="30"/><text class="bn" x="508" y="294">3</text>
+      </g>
+    </svg>
+  <ol class="steps">
+    <li>Open <b>Nodes</b> in the left sidebar and search <b>gguf</b>. Drag <b>Unet Loader (GGUF)</b> into the empty space <b>above Step1 - Load models</b>.</li>
+    <li>Drag from its <b>MODEL</b> dot to the <b>model</b> dot on <b>ModelSamplingAuraFlow</b>. The old wire is replaced.</li>
+    <li>Click its <b>unet_name</b> box and choose <b>z_image_turbo-Q5_K_M.gguf</b>.</li>
+  </ol>
+  <div class="tip"><b>Use a ComfyUI GGUF</b>Some .gguf files are made for other programs and fail with a "size mismatch" error. The jayn7 Z-Image-Turbo-GGUF files on Hugging Face work.</div>
+</section>
+
+<!-- Appendix B. Swap in the GGUF CLIP loader -->
+<section class="page">
+  <h2>Load the smaller text encoder</h2>
+  <p>The text encoder turns your prompt into something the image model understands. It's a <b>.gguf</b> file too, so it gets the same swap.</p>
+  <svg class="shot" viewBox="520 170 1460 920" role="img" aria-label="Drop the CLIPLoader (GGUF) left of the Unet Loader (GGUF), wire its CLIP to the clip input of CLIP Text Encode, pick the gguf file and type lumina2">
+      <image href="../assets/screens/z-image-unet-done.png" x="0" y="0" width="2000" height="1250"/>
+      <!-- 1. Drop the CLIP loader in the empty space left of the new Unet Loader (GGUF) -->
+      <g class="step s1">
+        <rect class="zone" x="640" y="246" width="262" height="146" rx="16"/>
+        <g class="ghost">
+          <rect x="656" y="262" width="230" height="114" rx="10"/>
+          <text class="gt" x="669" y="285">CLIPLoader (GGUF)</text>
+          <text class="go" x="862" y="304" text-anchor="end">CLIP</text>
+          <circle class="dot" cx="877" cy="299" r="7"/>
+          <rect class="field" x="669" y="316" width="204" height="24" rx="6"/>
+          <text class="gf" x="679" y="333">clip_name</text>
+          <rect class="field" x="669" y="345" width="204" height="24" rx="6"/>
+          <text class="gf" x="679" y="362">type</text>
+        </g>
+        <circle class="badge" cx="618" cy="262" r="30"/><text class="bn" x="618" y="274">1</text>
+      </g>
+      <!-- 2. Drag from its CLIP dot to the clip dot on CLIP Text Encode (Prompt) -->
+      <g class="step s2">
+        <path class="wire" d="M877 299 C 1060 299, 1080 448, 1213 448"/>
+        <path class="head" d="M1199 434 L1219 448 L1199 462"/>
+        <circle class="ring" cx="1227" cy="448" r="18"/>
+        <circle class="badge" cx="1170" cy="318" r="30"/><text class="bn" x="1170" y="330">2</text>
+      </g>
+      <!-- 3. Pick the file and the type -->
+      <g class="step s3">
+        <rect class="ring" x="664" y="311" width="214" height="63" rx="9"/>
+        <rect class="pill" x="600" y="404" width="420" height="46" rx="12"/>
+        <text class="pt" x="810" y="434" text-anchor="middle">Qwen_3_4b-Q6_K.gguf · lumina2</text>
+        <circle class="badge" cx="618" cy="342" r="30"/><text class="bn" x="618" y="354">3</text>
+      </g>
+    </svg>
+  <ol class="steps">
+    <li>In <b>Nodes</b>, search <b>gguf</b>. Drag <b>CLIPLoader (GGUF)</b> into the empty space <b>left of Unet Loader (GGUF)</b>.</li>
+    <li>Drag from its <b>CLIP</b> dot to the <b>clip</b> dot on <b>CLIP Text Encode (Prompt)</b>. The old wire is replaced.</li>
+    <li>Click <b>clip_name</b> and choose <b>Qwen_3_4b-Q6_K.gguf</b>. Click <b>type</b> and choose <b>lumina2</b>.</li>
+    <li>Delete the two old orange loaders (<b>Load Diffusion Model</b> and <b>Load CLIP</b>): click each title, press <b>Delete</b>. Keep <b>Load VAE</b>.</li>
+  </ol>
+</section>
+
+<script>
+  // Add the footer to every page: logo, title and date, page number
+  const pages = document.querySelectorAll(".page");
+  pages.forEach((page, i) => {
+    const foot = document.createElement("footer");
+    foot.className = "foot";
+    foot.innerHTML = `<img src="../assets/logo-wide-bw.svg" alt="localAI"><span class="t"><b>Make AI Images Offline</b> · 22 Nov 2026 · <b>localai.xdeca.com</b></span><span class="n">${i + 1} / ${pages.length}</span>`;
+    page.appendChild(foot);
+  });
+</script>
+</body>
+</html>

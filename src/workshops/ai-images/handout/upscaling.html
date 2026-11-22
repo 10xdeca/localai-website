@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upscaling Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  /* Printout for "Make AI Images Offline on Your Laptop", Sun 22 Nov 2026.
+     A4, black and white. Each .page is one printed sheet; the footer (logo, title, date, page number) is added by the script.
+     Print from Chrome or Brave: margins "None", background graphics on. */
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink: #000;
+    --text: #1a1a1a;
+    --grey: #555;
+    --rule: #bbb;
+    --tint: #eee;
+    --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --display: "Orbitron", "Plus Jakarta Sans", system-ui, sans-serif;
+    --mono: "Share Tech Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #888; }
+  body { font-family: var(--sans); color: var(--text); font-size: 13pt; line-height: 1.45; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .page { position: relative; width: 210mm; height: 297mm; margin: 10mm auto; padding: 18mm 18mm 26mm; background: #fff; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.3); }
+  @media print {
+    html { background: none; }
+    .page { margin: 0; box-shadow: none; break-after: page; }
+  }
+
+  h1 { font-family: var(--display); font-weight: 900; color: var(--ink); font-size: 30pt; line-height: 1.1; }
+  h2 { font-family: var(--display); font-weight: 700; color: var(--ink); font-size: 22pt; line-height: 1.15; margin-bottom: 6mm; display: flex; align-items: center; gap: 4mm; }
+  h2 svg { width: 12mm; height: 12mm; flex: none; }
+  h3 { font-size: 14pt; font-weight: 800; color: var(--ink); margin: 7mm 0 2.5mm; }
+  p + p { margin-top: 2.5mm; }
+  b, strong { color: var(--ink); }
+  .sub { font-size: 16pt; color: var(--ink); margin-top: 3mm; }
+  .when { font-family: var(--mono); font-size: 13pt; color: var(--grey); margin-top: 2mm; }
+  .mono, code { font-family: var(--mono); }
+  code { font-size: 12pt; }
+
+  /* Numbered steps with big black number badges */
+  ol.steps { list-style: none; counter-reset: s; display: grid; gap: 4.5mm; }
+  ol.steps > li { counter-increment: s; position: relative; padding-left: 13mm; min-height: 9mm; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: -.5mm; width: 9mm; height: 9mm; border-radius: 2mm; background: var(--ink); color: #fff;
+    font-family: var(--display); font-weight: 700; font-size: 13pt; display: grid; place-items: center; }
+  ol.steps.cont { counter-reset: s var(--start, 0); }
+  ul.plain { margin: 1.5mm 0 0 5mm; }
+  ul.plain li + li { margin-top: 1mm; }
+
+  /* Terminal commands */
+  pre { font-family: var(--mono); font-size: 12pt; line-height: 1.5; color: var(--ink); background: var(--tint); border-left: 1.2mm solid var(--ink); padding: 2.5mm 4mm; margin-top: 2mm; white-space: pre-wrap; }
+
+  /* A boxed tip */
+  .tip { border: .5mm solid var(--ink); border-radius: 2mm; padding: 3.5mm 4.5mm; margin-top: 6mm; }
+  .tip b:first-child { display: block; margin-bottom: 1mm; }
+  .check { border: .5mm dashed var(--grey); border-radius: 2mm; padding: 3mm 4.5mm; margin-bottom: 6mm; }
+
+  /* Agenda on the cover */
+  ol.agenda { list-style: none; counter-reset: a; columns: 2; column-gap: 10mm; margin-top: 2mm; }
+  ol.agenda li { counter-increment: a; padding: 1.6mm 0 1.6mm 10mm; position: relative; font-weight: 600; color: var(--ink); break-inside: avoid; }
+  ol.agenda li::before { content: counter(a); position: absolute; left: 0; top: 1.4mm; width: 7mm; height: 7mm; border: .5mm solid var(--ink); border-radius: 1.5mm;
+    font-family: var(--display); font-size: 10pt; display: grid; place-items: center; }
+  .links { display: grid; grid-template-columns: 34mm 1fr; gap: 2mm 4mm; margin-top: 2mm; }
+  .links dt { color: var(--grey); }
+  .links dd { font-family: var(--mono); color: var(--ink); font-size: 11pt; white-space: nowrap; }
+  .cover-logo { width: 56mm; margin-bottom: 8mm; }
+
+
+  /* Annotated screenshots, black and white: white marks with a black edge read on the dark app */
+  svg.shot { width: 100%; height: auto; display: block; border: .4mm solid var(--ink); margin: 2mm 0 6mm; }
+  svg.shot .zone { fill: none; stroke: #fff; stroke-width: 5; stroke-dasharray: 14 10; }
+  svg.shot .ghost > rect { fill: #3a3a3a; stroke: #fff; stroke-width: 3; }
+  svg.shot .gt { fill: #fff; font: 600 15px var(--sans); }
+  svg.shot .go, svg.shot .gf { fill: #ddd; font: 13px var(--sans); }
+  svg.shot .field { fill: #222; }
+  svg.shot .dot { fill: #fff; }
+  svg.shot .wire, svg.shot .head { fill: none; stroke: #fff; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+  svg.shot .ring { fill: none; stroke: #fff; stroke-width: 6; }
+  svg.shot .pill { fill: #fff; stroke: #000; stroke-width: 3; }
+  svg.shot .pt { fill: #000; font: 700 21px var(--mono); }
+  svg.shot .badge { fill: #fff; stroke: #000; stroke-width: 5; }
+  svg.shot .bn { fill: #000; font: 900 34px var(--display); text-anchor: middle; }
+
+
+  svg.shot.wide .badge { stroke-width: 7; }
+  svg.shot.wide .bn { font-size: 60px; }
+  svg.shot.wide .ring { stroke-width: 10; }
+  svg.shot.wide .pt { font-size: 40px; }
+  .pics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 3mm 0 5mm; }
+  .pics figure { margin: 0; text-align: center; font-size: 11pt; }
+  .pics img { width: 100%; height: 62mm; object-fit: cover; border: .3mm solid var(--ink); filter: grayscale(1); }
+  .pics figcaption b { display: block; }
+  table.t { width: 100%; border-collapse: collapse; margin-top: 2mm; }
+  table.t th, table.t td { text-align: left; padding: 1.8mm 2.5mm; border-bottom: .3mm solid var(--rule); vertical-align: top; }
+  table.t td:last-child, table.t th:last-child { white-space: nowrap; }
+  table.t th { font-weight: 800; color: var(--ink); border-bottom: .5mm solid var(--ink); }
+  .chain { display: flex; flex-wrap: wrap; align-items: center; gap: 2mm; margin: 2mm 0 5mm; }
+  .chain span { border: .5mm solid var(--ink); border-radius: 1.5mm; padding: 1.5mm 3mm; font-weight: 700; color: var(--ink); }
+  .chain i { font-style: normal; font-size: 14pt; }
+  .prompt { font-family: var(--mono); font-size: 11.5pt; background: var(--tint); border-left: 1.2mm solid var(--ink); padding: 2mm 4mm; margin: 1.5mm 0 3mm; }
+  .appendix-note { font-size: 11pt; color: var(--grey); margin-bottom: 4mm; }
+
+  /* Footer: logo, title and date, page number */
+  .foot { position: absolute; left: 18mm; right: 18mm; bottom: 10mm; display: flex; align-items: center; gap: 5mm; border-top: .3mm solid var(--rule); padding-top: 3mm;
+    font-size: 9.5pt; color: var(--grey); }
+  .foot img { height: 6mm; width: auto; }
+  .foot .t { flex: 1; }
+  .foot .t b { color: var(--ink); font-weight: 700; }
+  .foot .n { font-family: var(--mono); font-size: 11pt; color: var(--ink); }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <h2>Make it bigger</h2>
+  <p>An <b>upscale model</b> makes a picture <b>4 times</b> wider and taller in under a minute. It sharpens what's there; it can't invent new detail. We use <b>Remacri</b>: it keeps soft detail soft instead of turning it into harsh texture.</p>
+
+  <h3>The easy way: open a ready-made workflow</h3>
+  <ol class="steps">
+    <li>Copy <b>4x_foolhardy_Remacri.safetensors</b> from the stick's <code>models/upscale_models</code> into ComfyUI's <code>upscale_models</code> folder (same place as page 5 of the main sheet).</li>
+    <li>Drag <b>upscale-4x.json</b> or <b>upscale-8x.json</b> from the stick's <code>workflows</code> folder onto ComfyUI.</li>
+    <li>On box <b>1. Your picture</b>, click <b>choose file to upload</b> and pick your picture.</li>
+    <li>Click <b>Run</b>. The result appears in the <b>Save</b> box with its new size underneath.</li>
+  </ol>
+
+  <h3>4x or 8x?</h3>
+  <table class="t">
+    <tr><th>Workflow</th><th>What it does</th><th>A 2135 × 736 picture becomes</th></tr>
+    <tr><td style="white-space:nowrap"><b>upscale-4x</b></td><td>Remacri</td><td>8,540 × 2,944</td></tr>
+    <tr><td style="white-space:nowrap"><b>upscale-8x</b></td><td>Remacri, then <b>Upscale Image By 2</b> (a plain resize)</td><td>17,080 × 5,888</td></tr>
+  </table>
+  <p style="margin-top:2mm">Don't run Remacri twice: that's 16 times (4 × 4), far too big for most laptops.</p>
+
+  <div class="tip"><b>How big do I need?</b>For a print, divide the pixels by the inches. 5,888 pixels on a wall 1 metre (39 inches) high is about <b>150 pixels per inch</b>: fine for something you look at from a step back. Photos you hold in your hand want about 300.</div>
+</section>
+
+<section class="page">
+  <h2>Build it yourself</h2>
+  <p>Four boxes, all built into ComfyUI:</p>
+  <div class="chain"><span>Load Image</span><i>→</i><span>Load Upscale Model</span><i>→</i><span>Upscale Image (using Model)</span><i>→</i><span>Save Image</span></div>
+  <ol class="steps">
+    <li>Click <b>+</b> next to the tabs at the top for a new, empty workflow.</li>
+    <li><b>Double-click</b> empty canvas, type <b>Load Image</b>, press Enter. Choose your picture.</li>
+    <li>Double-click, add <b>Load Upscale Model</b>. Choose <b>4x_foolhardy_Remacri.safetensors</b>.</li>
+    <li>Double-click, add <b>Upscale Image (using Model)</b>. Wire <b>UPSCALE_MODEL</b> and <b>IMAGE</b> into it.</li>
+    <li>Double-click, add <b>Save Image</b>. Wire the upscaled <b>IMAGE</b> into it. Click <b>Run</b>.</li>
+    <li>For 8x: put an <b>Upscale Image By</b> box (method <b>lanczos</b>, scale <b>2</b>) between the upscale and Save.</li>
+  </ol>
+
+  <h3>We compared five ways to make it 8x bigger</h3>
+  <table class="t">
+    <tr><th>Method</th><th>Result</th></tr>
+    <tr><td>Plain resize</td><td>Soft and blurry, but makes sense</td></tr>
+    <tr><td>4x-UltraSharp</td><td>Sharp, but fine detail turns into harsh stripes</td></tr>
+    <tr><td>4x-UltraSharp V2</td><td>Everything looks like hammered metal</td></tr>
+    <tr><td>Real-ESRGAN</td><td>Clean, smoothed into a painting</td></tr>
+    <tr><td><b>Remacri</b></td><td><b>Best: soft detail stays soft, edges stay sharp</b></td></tr>
+  </table>
+  <p style="margin-top:4mm">The whole 8x picture (17,080 × 5,888) took <b>60 seconds</b> on a 16 GB M1 MacBook.</p>
+  <p style="margin-top:5mm;font-size:10.5pt;color:var(--grey)">Remacri by FoolhardyVEVO (Hugging Face: OzzyGT/4xRemacri), licence CC BY-NC-SA 4.0: non-commercial use.</p>
+</section>
+
+<script>
+  // Add the footer to every page: logo, title and date, page number
+  const pages = document.querySelectorAll(".page");
+  pages.forEach((page, i) => {
+    const foot = document.createElement("footer");
+    foot.className = "foot";
+    foot.innerHTML = `<img src="../assets/logo-wide-bw.svg" alt="localAI"><span class="t"><b>Make AI Images Offline</b> · 22 Nov 2026 · <b>localai.xdeca.com</b></span><span class="n">${i + 1} / ${pages.length}</span>`;
+    page.appendChild(foot);
+  });
+</script>
+</body>
+</html>

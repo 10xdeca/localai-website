@@ -13,6 +13,12 @@ ogImage: /assets/images/events/localai-workshop-image-generation.png
 ### {{title}}
 {{description}}
 
+**Workshop materials**
+- [Slides](/workshops/ai-images/slides/)
+- [Step by step printout](/workshops/ai-images/handout/) (Mac, Windows and Linux)
+- [Upscaling sheet](/workshops/ai-images/handout/upscaling.html)
+- Workflows to open in ComfyUI: [text to image](/workshops/ai-images/workflows/z-image-text-to-image.json), [photo to cartoon](/workshops/ai-images/workflows/z-image-cartoon.json), [upscale 4x](/workshops/ai-images/workflows/upscale-4x.json), [upscale 8x](/workshops/ai-images/workflows/upscale-8x.json)
+
 You don't need a data centre to generate images, and you don't need a Mac either: the laptop you already have will do. In this hands-on workshop you'll set up open source tools and generate images on your own laptop, offline, with nothing leaving your machine.
 
 We'll bring USB sticks with models preloaded for different machines, so nobody waits on a 10 GB download over venue wifi. While your images render, we'll look at what's happening under the hood: how a diffusion model turns noise into a picture one step at a time, why fast images look worse than slow ones, and how to pick a model your hardware can handle.

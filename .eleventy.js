@@ -126,6 +126,10 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.ignores.add("src/admin/**/*.html");
   eleventyConfig.addPassthroughCopy("src/admin");
 
+  // Workshop slides and printouts are plain HTML, copied as they are
+  eleventyConfig.ignores.add("src/workshops/**");
+  eleventyConfig.addPassthroughCopy("src/workshops");
+
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/robots.txt": "robots.txt" });
   // The chat's service worker has to sit at the site root to reach every page
